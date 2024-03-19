@@ -16,12 +16,17 @@
   }
 }
 
-svg:hover path{
-  fill:#00BCD4;
+svg:hover path {
+  fill: #00bcd4;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.container {
+  width: 1180px;
+  /* энэ containeriig lg max-width болгож ашиглал гое байж магад  */
 }
