@@ -11,7 +11,7 @@ export const NavBar = () => {
           <IconPinecon />
         </a>
       </div>
-      <div className="flex gap-5 items-center">
+      <div className="flex items-center gap-5 items-center">
         <div>
           <a href="">
             <IconBell />
