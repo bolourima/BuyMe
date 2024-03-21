@@ -5,21 +5,33 @@ import { productRouter } from "./routes/productRouter";
 import upload from "./middlewares/multer";
 import { Request, Response } from "express";
 import { createProduct } from "./controllers/productController";
+import { subCategoryRouter } from "./routes/subCategoryRouter";
+import cors from "cors";
+import { editSubCategories } from "./controllers/subCategoryController";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
 
 app.use("", categoryRouter);
 app.use("", productRouter);
+app.use("", subCategoryRouter);
 connectToDB();
-
 app.post(
   "/createProduct",
-  upload.single("img1"),
+  upload.array("images"),
   async (req: Request, res: Response) => {
     createProduct(req, res);
   }
 );
+app.put("/editSub", async (req: Request, res: Response) => {
+  editSubCategories(req, res);
+});
 const PORT = 8000;
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
