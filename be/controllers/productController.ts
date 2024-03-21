@@ -2,6 +2,15 @@ import { Request, Response } from "express";
 import cloudinary from "../utilities/Cloudinary";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
+export const getProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find();
+    return res.status(200).send(products);
+  } catch (error) {
+    console.error("error in getProducts", error);
+    return res.status(400).send("Failed to getProducts");
+  }
+};
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const {
