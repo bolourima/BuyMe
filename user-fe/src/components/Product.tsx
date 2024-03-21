@@ -1,6 +1,8 @@
 import React from "react";
 import { ProductCardTwo } from "./ProductCardTwo";
 import { ProductCardThree } from "./ProductCardThree";
+import { ProductFilterRecent } from "./ProductFilterRecent";
+import { RelatedProductCard } from "./RelatedProductCard";
 
 type DataType = {
   name: string;
