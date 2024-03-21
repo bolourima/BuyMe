@@ -130,7 +130,6 @@ export const Footer = () => {
             <h1 className=" font-semibold"> Get app</h1>
             <div className=" flex flex-col gap-2">
               <div className="bg-black rounded p-2">
-                {/* <img src="./Appstore.png" alt="appstore" /> */}
                 <img src="./Img/Appstore.png" alt="appstore" />
               </div>
               <div className="bg-black rounded p-2">

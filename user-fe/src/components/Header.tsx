@@ -35,7 +35,7 @@ export const Header = () => {
             <option>Smartphones </option>
             <option>Modern tech </option>
           </select>
-          <button className=" hidden lg:block p-3 bg-cyan-500 text-white r">
+          <button className=" hidden lg:block p-3 bg-cyan-500 text-white">
             Search
           </button>
         </div>
