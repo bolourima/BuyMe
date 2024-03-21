@@ -7,6 +7,7 @@ import { ProductCardTwo } from "@/components/ProductCardTwo";
 import { ProductCardThree } from "@/components/ProductCardThree";
 import Product from "@/components/Product";
 import RecommendedItems from "@/components/RecommendedItems";
+import { ProductFilterRecent } from "@/components/ProductFilterRecent";
 
 const inter = Inter({ subsets: ["latin"] });
 

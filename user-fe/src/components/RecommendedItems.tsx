@@ -35,8 +35,8 @@ export default function RecommendedItems() {
 
   return (
     <div>
-      {Datas.map((data, index) => (
-        <ProductCardOne Data={data} index={index} />
+      {Datas.map((Data, index) => (
+        <ProductCardOne data={Data} index={index} />
       ))}
     </div>
   );
