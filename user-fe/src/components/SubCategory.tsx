@@ -1,196 +1,159 @@
+import { Slider } from "@mui/material";
+import { stringify } from "querystring";
 import React, { useState } from "react";
-import Slider from "react-slider";
-type Brand = {
+type typeBrand = {
   _id: string;
-  brandName: string;
-  category_id: String;
+  name: string;
 };
 
-type Feature = {
+type typeFeature = {
   _id: string;
-  featureName: string;
-  category_id: string;
+  name: string;
 };
 
-type SubCategory = {
+type typeCategory = {
   _id: string;
   categoryName: string;
-  Brand: Brand[];
-  Feature: Feature[];
+  brands: typeBrand[];
+  features: typeFeature[];
 };
 
 export const SubCategory = () => {
-  const mockDataSubCategory: SubCategory[] = [
+  const SubCategory: typeCategory[] = [
     {
-      _id: "kjaewnfkljn123",
+      _id: "SubCategory1",
       categoryName: "electronic1",
-      Brand: [
-        {
-          _id: "brandid1",
-          brandName: "brand1",
-          category_id: "kjaewnfkljn123",
-        },
-        {
-          _id: "brandid2",
-          brandName: "brand2",
-          category_id: "kjaewnfkljn123",
-        },
-        {
-          _id: "brandid3",
-          brandName: "brand3",
-          category_id: "kjaewnfkljn123",
-        },
+      brands: [
+        { _id: "brand1", name: "Samsung" },
+        { _id: "brand2", name: "Apple" },
       ],
-      Feature: [
-        {
-          _id: "feature1",
-          featureName: "feature1",
-          category_id: "kjaewnfkljn123",
-        },
-        {
-          _id: "feature2",
-          featureName: "feature2",
-          category_id: "kjaewnfkljn123",
-        },
-        {
-          _id: "feature3",
-          featureName: "feature3",
-          category_id: "kjaewnfkljn123",
-        },
-        {
-          _id: "feature4",
-          featureName: "feature4",
-          category_id: "kjaewnfkljn123",
-        },
+      features: [
+        { _id: "feature1", name: "Bluetooth" },
+        { _id: "feature2", name: "WiFi" },
       ],
     },
     {
-      _id: "kjaewnfkljn1234",
+      _id: "SubCategory2",
       categoryName: "electronic2",
-      Brand: [
-        {
-          _id: "brandid1",
-          brandName: "brand5",
-          category_id: "kjaewnfkljn1234",
-        },
-        {
-          _id: "brandid2",
-          brandName: "brand6",
-          category_id: "kjaewnfkljn1234",
-        },
-        {
-          _id: "brandid3",
-          brandName: "brand7",
-          category_id: "kjaewnfkljn1234",
-        },
+      brands: [
+        { _id: "brand1", name: "shit" },
+        { _id: "brand2", name: "Apple" },
       ],
-      Feature: [
-        {
-          _id: "feature1",
-          featureName: "feature5",
-          category_id: "kjaewnfkljn1234",
-        },
-        {
-          _id: "feature2",
-          featureName: "feature6",
-          category_id: "kjaewnfkljn1234",
-        },
-        {
-          _id: "feature3",
-          featureName: "feature7",
-          category_id: "kjaewnfkljn1234",
-        },
-        {
-          _id: "feature4",
-          featureName: "feature8",
-          category_id: "kjaewnfkljn1234",
-        },
+      features: [
+        { _id: "features", name: "fuck" },
+        { _id: "feature2", name: "WiFi" },
       ],
     },
     {
-      _id: "kjaewnfkljn1245",
+      _id: "SubCategory3",
       categoryName: "electronic3",
-      Brand: [
-        {
-          _id: "brandid1",
-          brandName: "brand1",
-          category_id: "kjaewnfkljn1245",
-        },
-        {
-          _id: "brandid2",
-          brandName: "brand2",
-          category_id: "kjaewnfkljn1245",
-        },
-        {
-          _id: "brandid3",
-          brandName: "brand3",
-          category_id: "kjaewnfkljn1245",
-        },
+      brands: [
+        { _id: "brand1", name: "bumaa" },
+        { _id: "brand2", name: "Apple" },
       ],
-      Feature: [
-        {
-          _id: "feature1",
-          featureName: "feature1",
-          category_id: "kjaewnfkljn1245",
-        },
-        {
-          _id: "feature2",
-          featureName: "feature1",
-          category_id: "kjaewnfkljn1245",
-        },
-        {
-          _id: "feature3",
-          featureName: "feature1",
-          category_id: "kjaewnfkljn1245",
-        },
-        {
-          _id: "feature4",
-          featureName: "feature1",
-          category_id: "kjaewnfkljn1245",
-        },
+      features: [
+        { _id: "feature1", name: "Bluetooth" },
+        { _id: "feature2", name: "WiFi" },
       ],
     },
   ];
+  const [isOpenCategory, setOpenCategory] = React.useState(true);
+  const [isOpenBrands, setOpenBrands] = React.useState(true);
+  const [isOpenFeatures, setOpenFeatures] = React.useState(true);
+  const [subCategoryIndex, setCategoryIndex] = useState(1);
+  const handlerSubCategory = (categoryindex: number) => {
+    console.log(categoryindex);
+    setCategoryIndex(categoryindex);
+  };
+  const handleOpenCategory = () => {
+    console.log(isOpenCategory);
+    setOpenCategory(!isOpenCategory);
+  };
+  const handleOpenBrands = () => {
+    console.log(isOpenBrands);
+    setOpenBrands(!isOpenBrands);
+  };
+  const handleOpenFeatures = () => {
+    console.log(isOpenFeatures);
+    setOpenFeatures(!isOpenFeatures);
+  };
+
   return (
     <div className="w-64 bg-gray-200 p-4">
       {/* Category */}
       <div className="mb-4">
-        <div className="font-bold">Category</div>
-        <div className="pl-4 mt-2">
-          {mockDataSubCategory.map((subCategory) => (
-            <div
-              key={subCategory._id}
-              className="cursor-pointer hover:bg-blue-200"
-            >
-              {subCategory.categoryName}
+        <div className="flex justify-between" onClick={handleOpenCategory}>
+          <button className="font-bold">Category</button>
+          <p className={`${isOpenCategory ? " rotate-90" : ""}`}> &#62;</p>
+        </div>
+
+        <div className={`pl-4 mt-2 `}>
+          {SubCategory.map((subCategory, index) => (
+            <div>
+              <button
+                key={index}
+                className={`hover:bg-blue-200 transition-all ${
+                  isOpenCategory ? "block" : "hidden"
+                }`}
+                onClick={() => handlerSubCategory(index)}
+              >
+                {subCategory.categoryName}
+              </button>
             </div>
           ))}
         </div>
       </div>
-
       {/* Brands */}
       <div className="mb-4">
-        <div className="font-bold">Brands</div>
+        <div className="flex justify-between" onClick={handleOpenBrands}>
+          <button className="font-bold">Brands</button>
+          <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
+        </div>
         <div className="pl-4 mt-2">
-          {mockDataSubCategory[0].Brand.map((brand) => (
-            <div key={brand._id} className="cursor-pointer hover:bg-blue-200">
-              {brand.brandName}
+          {SubCategory[subCategoryIndex].brands.map((brands) => (
+            <div>
+              <div
+                key={brands._id}
+                className={`hover:bg-blue-200 ${
+                  isOpenBrands ? "block" : "hidden"
+                }`}
+              >
+                <input type="checkbox" />
+                {brands.name}
+              </div>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Features */}
+      {/* Features
       <div className="mb-4">
-        <div className="font-bold">Features</div>
+        <div className="flex justify-between" onClick={handleOpenFeatures}>
+          <button className="font-bold">Features</button>
+          <p className={`${isOpenFeatures ? " rotate-90" : ""}`}> &#62;</p>
+        </div>
         <div className="pl-4 mt-2">
-          {mockDataSubCategory[0].Feature.map((feature) => (
-            <div key={feature._id} className="cursor-pointer hover:bg-blue-200">
-              {feature.featureName}
+          {SubCategory[subCategoryIndex].features.map((feature) => (
+            <div>
+              <button
+                key={feature._id}
+                className={`hover:bg-blue-200 ${
+                  isOpenFeatures ? "block" : "hidden"
+                }`}
+              >
+                {feature.name}
+              </button>
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
+      <Slider
+        getAriaLabel={() => "Minimum distance"}
+        value={[10, 50]}
+        onChange={() => {}}
+        valueLabelDisplay="auto"
+        getAriaValueText={(number) => `${number} tug`}
+        disableSwap
+      />
     </div>
   );
 };
