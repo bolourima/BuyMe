@@ -8,6 +8,7 @@ import { createProduct } from "./controllers/productController";
 import { subCategoryRouter } from "./routes/subCategoryRouter";
 import cors from "cors";
 import { editSubCategories } from "./controllers/subCategoryController";
+import { userRouter } from "./routes/userRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +22,8 @@ app.use(
 app.use("", categoryRouter);
 app.use("", productRouter);
 app.use("", subCategoryRouter);
+app.use(userRouter)
+
 connectToDB();
 app.post(
   "/createProduct",
