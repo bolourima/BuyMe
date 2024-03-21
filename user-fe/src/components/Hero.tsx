@@ -4,7 +4,7 @@ export const Hero = () => {
   return (
     <div className="w-full lg:w-full flex justify-center py-4">
       <div className="flex gap-3">
-        <div className="flex flex-col w-[250px]">
+        <div className="flex flex-col lg:w-[250px]">
           <button className="h-[40px]">Automobiles</button>
           <button className="h-[40px]">Clothes and wear</button>
           <button className="h-[40px]">Home interiors</button>
