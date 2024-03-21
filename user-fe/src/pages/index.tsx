@@ -6,14 +6,16 @@ import { ProductCardOne } from "@/components/ProductCardOne";
 import { ProductCardTwo } from "@/components/ProductCardTwo";
 import { ProductCardThree } from "@/components/ProductCardThree";
 import Product from "@/components/Product";
+import RecommendedItems from "@/components/RecommendedItems";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
     <div>
-      {/* <SubCategory />
+      {/* 
       <Hero /> */}
+      <RecommendedItems />
       <Product />
     </div>
   );
