@@ -4,8 +4,7 @@ import Product from "../models/productModel";
 import Category from "../models/categoryModel";
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find();
-    console.log(products);
+    const products = await Product.find().populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
     console.error("error in getProducts", error);

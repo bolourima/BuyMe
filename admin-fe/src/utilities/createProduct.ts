@@ -1,7 +1,6 @@
 import { instance } from "@/instance";
 import { Product } from "@/types/productType";
 export const createProduct = async (
-  e: React.FormEvent<HTMLFormElement>,
   values: Product,
   touched: any,
   errors: any,
@@ -10,24 +9,26 @@ export const createProduct = async (
   salePercent: any,
   selectedCategory: string,
   subName: string,
-  selectedBrand: string
+  selectedBrand: string,
+  onEdit: boolean,
+  setOnEdit: React.Dispatch<React.SetStateAction<boolean>>,
+  setEditableProduct: any,
+  oldImage: []
 ) => {
-  e.preventDefault();
-  if (!images) return;
   if (
-    !touched.name ||
-    !touched.price ||
-    !touched.description ||
-    !touched.productCode ||
-    !touched.quantity ||
-    !touched.tag ||
+    (!onEdit &&
+      (!touched.name ||
+        !touched.price ||
+        !touched.description ||
+        !touched.productCode ||
+        !touched.quantity ||
+        !touched.tag)) ||
     errors.name ||
     errors.price ||
     errors.description ||
     errors.productCode ||
     errors.quantity ||
-    errors.tag ||
-    images?.length < 0
+    errors.tag
   ) {
     return;
   }
@@ -47,11 +48,25 @@ export const createProduct = async (
     };
     const formData = new FormData();
     formData.append("product", JSON.stringify(newProduct));
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
+    if (!onEdit) {
+      if (!images) {
+        return;
+      }
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+      const res = await instance.post("/createProduct", formData);
+      console.log("created");
+      return res.status;
+    } else {
+      for (let i = 0; i < oldImage.length; i++) {
+        formData.append("images", oldImage[i]);
+      }
+      const res = await instance.put("/editProduct", formData);
+      setEditableProduct(null);
+      setOnEdit(false);
+      return res.status;
     }
-    const res = await instance.post("/createProduct", formData);
-    return res.status;
   } catch (error) {
     console.error(error);
   }

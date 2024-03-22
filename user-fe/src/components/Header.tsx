@@ -9,7 +9,7 @@ import React from "react";
 
 export const Header = () => {
   return (
-    <div className=" w-full lg:w-full flex justify-center py-4">
+    <div className=" w-full lg:w-full flex justify-center py-4  bg-white">
       <div className="w-10/12 lg:flex place-content-between lg:w-10/12">
         <div className=" flex items-center">
           <BrandIcon />
@@ -28,7 +28,7 @@ export const Header = () => {
           />
           <select className=" hidden lg:block select select-info px-2 max-w-xs w-48 border-l-2 border-cyan-500">
             <option disabled selected>
-              Select language
+              All category
             </option>
             <option>Mobile accessory</option>
             <option>Electronics</option>

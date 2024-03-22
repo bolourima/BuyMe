@@ -9,6 +9,7 @@ import Product from "@/components/Product";
 import RecommendedItems from "@/components/RecommendedItems";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
+import { ProductFilterRecent } from "@/components/ProductFilterRecent";
 
 const inter = Inter({ subsets: ["latin"] });
 
