@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const jwtPrivateKey = process.env.JWT_SECRET_KEY;
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -11,7 +14,7 @@ export const getUsers = async (req: Request, res: Response) => {
     return res.status(400).send("Failed to getUser");
   }
 };
-export const createUser = async (req: Request, res: Response) => {
+export const signUp = async (req: Request, res: Response) => {
   const { name, email, phoneNumber, password } = req.body;
   console.log("user req.body", req.body);
   try {
@@ -33,5 +36,48 @@ export const createUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("error in createUser", error);
     return res.status(400).json({ message: "User creation failed" });
+  }
+};
+
+export const signIn = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  console.log("req.body", req.body);
+
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+      return res.status(400).json({ message: "Email not found" });
+    }
+    const checkPassport = await bcrypt.compare(password, foundUser.password);
+    if (!checkPassport) {
+      return res.status(400).json({ message: "Passport not match" });
+    }
+
+    const accessToken = jwt.sign(
+      { id: foundUser._id },
+      jwtPrivateKey as string,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: foundUser._id },
+      jwtPrivateKey as string,
+      {
+        expiresIn: "1d",
+      }
+    );
+    res
+      .status(200)
+      .cookie("refreshToken", refreshToken)
+      .header({ Authorization: accessToken })
+      .send(foundUser);
+  } catch (error) {
+    console.error("Error during signin user. Message is:", error);
+    res.status(400).json({ message: "User signin failed" });
   }
 };

@@ -151,7 +151,7 @@ export const SubCategory = () => {
         value={[10, 50]}
         onChange={() => {}}
         valueLabelDisplay="auto"
-        getAriaValueText={(number) => `${number} tug`}
+        getAriaValueText={(number) => `${number}`}
         disableSwap
       />
     </div>

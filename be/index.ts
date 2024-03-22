@@ -9,6 +9,9 @@ import { subCategoryRouter } from "./routes/subCategoryRouter";
 import cors from "cors";
 import { editSubCategories } from "./controllers/subCategoryController";
 import { userRouter } from "./routes/userRouter";
+import { signIn, signUp } from "./controllers/userController";
+import { signInRouter } from "./routes/signInRouter";
+import { signUpRouter } from "./routes/signUpRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,8 +26,12 @@ app.use("", categoryRouter);
 app.use("", productRouter);
 app.use("", subCategoryRouter);
 app.use(userRouter);
+app.use("", signInRouter);
+app.use("", signUpRouter);
+// app.use(authRouter);
 
 connectToDB();
+
 app.post(
   "/createProduct",
   upload.array("images"),
