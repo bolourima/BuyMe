@@ -4,7 +4,7 @@ export const productSchema = yup.object().shape({
   description: yup
     .string()
     .min(2)
-    .max(30)
+    .max(500)
     .required("Product description required!"),
   productCode: yup.number().min(0).required("Product code required"),
   price: yup.number().min(0).required("Price required!"),
