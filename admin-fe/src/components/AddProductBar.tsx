@@ -67,11 +67,12 @@ export const AddProductBar = ({
       { name: selectedCategory },
       { headers: { "Content-Type": "application/json" } }
     );
-    setSubCategoryData(res.data);
-    setSelectedSub(res.data);
-    setDomSub(res.data);
-    setSelectedBrand(res.data[0].brands[0].name);
-    setSubName(res.data[0].name);
+    const subCategory: SubCategory[] = res.data;
+    setSubCategoryData(subCategory);
+    setSelectedSub(subCategory);
+    setDomSub(subCategory);
+    setSelectedBrand(subCategory[0].brands[0].name);
+    setSubName(subCategory[0].name);
   }, [selectedCategory]);
   const preparingBrands = useMemo(async () => {
     setDomSub(
