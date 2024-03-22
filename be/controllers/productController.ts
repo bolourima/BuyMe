@@ -167,3 +167,13 @@ const uploadImg = async (img: any) => {
     console.error("error in uploadImg", error);
   }
 };
+export const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const deletableId = req.params.id;
+    const deleting = await Product.findByIdAndDelete(deletableId);
+    return res.status(200).json({ msg: "Successfully deleted" });
+  } catch (error) {
+    console.error("error in deleteProduct", error);
+    return res.status(400).json({ msg: "Failed to delete" });
+  }
+};
