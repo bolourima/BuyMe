@@ -12,9 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.getUsers = void 0;
+exports.signIn = exports.signUp = exports.getUsers = void 0;
 const userModel_1 = __importDefault(require("../models/userModel"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const jwtPrivateKey = process.env.JWT_SECRET_KEY;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield userModel_1.default.find();
@@ -26,10 +28,13 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getUsers = getUsers;
-const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, phoneNumber, password } = req.body;
     console.log("user req.body", req.body);
     try {
+        if (!name || !email || !phoneNumber || !password) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
         const hashedPassport = yield bcrypt_1.default.hash(password, 10);
         const newUser = yield userModel_1.default.create({
             name,
@@ -44,6 +49,40 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (error) {
         console.error("error in createUser", error);
+        return res.status(400).json({ message: "User creation failed" });
     }
 });
-exports.createUser = createUser;
+exports.signUp = signUp;
+const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const [email, password] = req.body;
+    console.log("req.body", req.body);
+    try {
+        if (!email || !password) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+        const foundUser = yield userModel_1.default.findOne({ email });
+        if (!foundUser) {
+            return res.status(400).json({ message: "Email not found" });
+        }
+        const checkPassport = yield bcrypt_1.default.compare(password, foundUser.password);
+        if (!checkPassport) {
+            return res.status(400).json({ message: "Passport not match" });
+        }
+        const accessToken = jsonwebtoken_1.default.sign({ id: foundUser._id }, jwtPrivateKey, {
+            expiresIn: "1h",
+        });
+        const refreshToken = jsonwebtoken_1.default.sign({ id: foundUser._id }, jwtPrivateKey, {
+            expiresIn: "1d",
+        });
+        res
+            .status(200)
+            .cookie("refreshToken", refreshToken)
+            .header({ Authorization: accessToken })
+            .send(foundUser);
+    }
+    catch (error) {
+        console.error("Error during signin user. Message is:", error);
+        res.status(400).json({ message: "User signin failed" });
+    }
+});
+exports.signIn = signIn;
