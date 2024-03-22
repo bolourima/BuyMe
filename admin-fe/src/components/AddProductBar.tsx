@@ -25,14 +25,16 @@ export const AddProductBar = ({
   setEditableProduct: any;
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    categoryData[0].name
+    editableProduct.categoryId.name
   );
-  const [selectedBrand, setSelectedBrand] = useState<string>("");
+  const [selectedBrand, setSelectedBrand] = useState<string>(
+    editableProduct.brandName
+  );
   const [selectedSub, setSelectedSub] = useState<SubCategory[]>([]);
   const [domSub, setDomSub] = useState<SubCategory[]>([]);
   const [isSale, setIsSale] = useState(false);
   const [salePercent, setSalePercent] = useState<any>(0);
-  const [subName, setSubName] = useState("");
+  const [subName, setSubName] = useState(editableProduct.subCategoryName);
   const [images, setImages] = useState<FileList>();
   const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
     {
@@ -81,6 +83,7 @@ export const AddProductBar = ({
   const creatingProduct = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const status = await createProduct(
+      editableProduct._id,
       values,
       touched,
       errors,
@@ -237,13 +240,17 @@ export const AddProductBar = ({
                   <span className="">Ерөнхий ангилал</span>
                   <select
                     id="category"
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedCategory(e.target.value);
+                    }}
                     className="w-full h-8 rounded-lg bg-[#F7F7F8]"
+                    defaultValue={editableProduct.categoryId.name}
                   >
                     {categoryData.length > 0 &&
                       categoryData.map((el) => {
                         return (
                           <option
+                            value={el.name}
                             id={el._id}
                             className="text-black"
                             key={el._id}
@@ -260,10 +267,15 @@ export const AddProductBar = ({
                     onChange={(e) => setSubName(e.target.value)}
                     id="sub-category"
                     className="w-full h-8 rounded-lg bg-[#F7F7F8]"
+                    defaultValue={editableProduct.subCategoryName}
                   >
                     {subCategoryData.map((el) => {
                       return (
-                        <option className="text-black" key={el._id}>
+                        <option
+                          value={el.name}
+                          className="text-black"
+                          key={el._id}
+                        >
                           {el.name}
                         </option>
                       );

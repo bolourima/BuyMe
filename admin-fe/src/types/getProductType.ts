@@ -1,6 +1,7 @@
 import { Category } from "./categoryType";
 
 export type GetProductType = {
+  _id: string;
   name: string;
   description: string;
   price: number;

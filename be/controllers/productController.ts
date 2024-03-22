@@ -61,6 +61,94 @@ export const createProduct = async (req: Request, res: Response) => {
     console.error("error in createProduct", error);
   }
 };
+export const editProduct = async (req: Request, res: Response) => {
+  try {
+    const date =
+      `${new Date().getFullYear()}` +
+      "/" +
+      `${new Date().getMonth() + 1}` +
+      "/" +
+      `${new Date().getDate()}`;
+    if (JSON.parse(req.body.product)) {
+      const productWithNewImages = JSON.parse(req.body.product);
+      const {
+        name,
+        description,
+        price,
+        productCode,
+        quantity,
+        tag,
+        disCount,
+        categoryName,
+        subCategoryName,
+        brandName,
+        _id,
+      } = productWithNewImages;
+      const images: any = req.files;
+      const urlContainer: String[] = [];
+      for (let i = 0; i < images?.length; i++) {
+        const url: any = await uploadImg(images[i]);
+        urlContainer.push(url);
+      }
+      const selectedCategory = await Category.findOne({ name: categoryName });
+      const product = await Product.findOneAndUpdate(
+        { _id: _id },
+        {
+          name,
+          description,
+          price,
+          productCode,
+          quantity,
+          tag,
+          disCount,
+          categoryId: selectedCategory?._id,
+          subCategoryName,
+          brandName,
+          images: urlContainer,
+          _id,
+          updatedAt: date,
+        }
+      );
+      return res.status(200).json({ msg: "Updated" });
+    } else {
+      const {
+        name,
+        description,
+        price,
+        productCode,
+        quantity,
+        tag,
+        disCount,
+        categoryName,
+        subCategoryName,
+        brandName,
+        images,
+        _id,
+      } = req.body;
+      const selectedCategory = await Category.findOne({ name: categoryName });
+      const product = await Product.findByIdAndUpdate(
+        { _id: _id },
+        {
+          name,
+          description,
+          price,
+          productCode,
+          quantity,
+          tag,
+          disCount,
+          categoryId: selectedCategory?._id,
+          subCategoryName,
+          brandName,
+          images,
+          updatedAt: date,
+        }
+      );
+    }
+    return res.status(200).json({ msg: "Updated" });
+  } catch (error) {
+    console.error("error in edit product", error);
+  }
+};
 const uploadImg = async (img: any) => {
   try {
     const uploadedFile = img;

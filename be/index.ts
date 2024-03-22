@@ -4,7 +4,7 @@ import { categoryRouter } from "./routes/categoryRouter";
 import { productRouter } from "./routes/productRouter";
 import upload from "./middlewares/multer";
 import { Request, Response } from "express";
-import { createProduct } from "./controllers/productController";
+import { createProduct, editProduct } from "./controllers/productController";
 import { subCategoryRouter } from "./routes/subCategoryRouter";
 import cors from "cors";
 import { editSubCategories } from "./controllers/subCategoryController";
@@ -37,6 +37,13 @@ app.post(
   upload.array("images"),
   async (req: Request, res: Response) => {
     createProduct(req, res);
+  }
+);
+app.put(
+  "/editProduct",
+  upload.array("images"),
+  async (req: Request, res: Response) => {
+    editProduct(req, res);
   }
 );
 app.put("/editSub", async (req: Request, res: Response) => {

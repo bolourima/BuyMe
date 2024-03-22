@@ -1,6 +1,7 @@
 import { instance } from "@/instance";
 import { Product } from "@/types/productType";
 export const createProduct = async (
+  _id: string,
   values: Product,
   touched: any,
   errors: any,
@@ -47,8 +48,8 @@ export const createProduct = async (
       brandName: selectedBrand,
     };
     const formData = new FormData();
-    formData.append("product", JSON.stringify(newProduct));
     if (!onEdit) {
+      formData.append("product", JSON.stringify(newProduct));
       if (!images) {
         return;
       }
@@ -56,16 +57,27 @@ export const createProduct = async (
         formData.append("images", images[i]);
       }
       const res = await instance.post("/createProduct", formData);
-      console.log("created");
       return res.status;
     } else {
-      for (let i = 0; i < oldImage.length; i++) {
-        formData.append("images", oldImage[i]);
-      }
-      const res = await instance.put("/editProduct", formData);
       setEditableProduct(null);
       setOnEdit(false);
-      return res.status;
+      if (images) {
+        const product = { ...newProduct, _id: _id };
+        formData.append("product", JSON.stringify(product));
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+        const res = await instance.put("/editProduct", formData);
+        return res.status;
+      } else {
+        const editedProduct: any = {
+          ...newProduct,
+          images: oldImage,
+          _id: _id,
+        };
+        const res = await instance.put("/editProduct", editedProduct);
+        return res.status;
+      }
     }
   } catch (error) {
     console.error(error);
