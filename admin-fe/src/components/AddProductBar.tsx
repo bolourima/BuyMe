@@ -25,16 +25,21 @@ export const AddProductBar = ({
   setEditableProduct: any;
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    editableProduct.categoryId.name
+    onEdit
+      ? editableProduct
+        ? editableProduct.categoryId.name
+        : ""
+      : categoryData[0].name
   );
   const [selectedBrand, setSelectedBrand] = useState<string>(
-    editableProduct.brandName
+    editableProduct ? editableProduct.brandName : ""
   );
-  const [selectedSub, setSelectedSub] = useState<SubCategory[]>([]);
+  const [subName, setSubName] = useState(
+    editableProduct ? editableProduct.subCategoryName : ""
+  );
   const [domSub, setDomSub] = useState<SubCategory[]>([]);
   const [isSale, setIsSale] = useState(false);
   const [salePercent, setSalePercent] = useState<any>(0);
-  const [subName, setSubName] = useState(editableProduct.subCategoryName);
   const [images, setImages] = useState<FileList>();
   const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
     {
@@ -62,21 +67,27 @@ export const AddProductBar = ({
     onSubmit: () => {},
   });
   const getSubCategoryByCategory = useMemo(async () => {
-    const res = await instance.post(
-      "/getSubCategories",
-      { name: selectedCategory },
-      { headers: { "Content-Type": "application/json" } }
-    );
+    const res = await instance.post("/getSubCategories", {
+      name: selectedCategory,
+    });
     const subCategory: SubCategory[] = res.data;
     setSubCategoryData(subCategory);
-    setSelectedSub(subCategory);
     setDomSub(subCategory);
-    setSelectedBrand(subCategory[0].brands[0].name);
-    setSubName(subCategory[0].name);
+    const selectedSubCategory: SubCategory[] = subCategory.filter((sub) => {
+      return sub.name === editableProduct.subCategoryName;
+    });
+    setSelectedBrand(
+      selectedSubCategory.length > 0
+        ? selectedSubCategory[0].brands[0].name
+        : ""
+    );
+    setSubName(
+      selectedSubCategory.length > 0 ? selectedSubCategory[0].name : ""
+    );
   }, [selectedCategory]);
   const preparingBrands = useMemo(async () => {
     setDomSub(
-      selectedSub.filter((el) => {
+      subCategoryData.filter((el) => {
         return el.name === subName;
       })
     );
@@ -102,6 +113,7 @@ export const AddProductBar = ({
     setIsAddProductVisible(false);
     if (status == 201) return alert("Successfully created");
     if (status == 200) return alert("Successfully updated");
+    if (status == 400) return alert("Failed to update");
   };
   return (
     <>
@@ -240,12 +252,11 @@ export const AddProductBar = ({
                 <div className="flex flex-col gap-2">
                   <span className="">Ерөнхий ангилал</span>
                   <select
-                    id="category"
-                    onChange={(e) => {
-                      setSelectedCategory(e.target.value);
-                    }}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
                     className="w-full h-8 rounded-lg bg-[#F7F7F8]"
-                    defaultValue={editableProduct.categoryId.name}
+                    defaultValue={
+                      editableProduct ? editableProduct.categoryId.name : ""
+                    }
                   >
                     {categoryData.length > 0 &&
                       categoryData.map((el) => {
@@ -268,19 +279,20 @@ export const AddProductBar = ({
                     onChange={(e) => setSubName(e.target.value)}
                     id="sub-category"
                     className="w-full h-8 rounded-lg bg-[#F7F7F8]"
-                    defaultValue={editableProduct.subCategoryName}
+                    value={
+                      editableProduct ? editableProduct.subCategoryName : ""
+                    }
                   >
-                    {subCategoryData.map((el) => {
-                      return (
-                        <option
-                          value={el.name}
-                          className="text-black"
-                          key={el._id}
-                        >
-                          {el.name}
-                        </option>
-                      );
-                    })}
+                    {subCategoryData.map((el) => (
+                      <option
+                        value={el.name}
+                        id={el._id}
+                        className="text-black"
+                        key={el._id}
+                      >
+                        {el.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -288,17 +300,18 @@ export const AddProductBar = ({
                 <select
                   onChange={(e) => setSelectedBrand(e.target.value)}
                   className="w-full h-8 rounded-lg bg-[#F7F7F8]"
+                  id="brandName"
+                  value={editableProduct ? editableProduct.brandName : ""}
                 >
-                  {domSub.map((sub) => {
-                    return (
-                      <option id={sub._id}>
-                        {sub.brands.map((brand) => {
-                          return brand.name;
-                        })}
+                  {domSub.map((sub) =>
+                    sub.brands.map((brand) => (
+                      <option key={brand._id} value={brand.name}>
+                        {brand.name}
                       </option>
-                    );
-                  })}
+                    ))
+                  )}
                 </select>
+
                 <div className="flex items-center px-4 gap-4">
                   {onEdit ? (
                     <input
