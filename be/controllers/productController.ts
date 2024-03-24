@@ -69,7 +69,7 @@ export const editProduct = async (req: Request, res: Response) => {
       `${new Date().getMonth() + 1}` +
       "/" +
       `${new Date().getDate()}`;
-    if (JSON.parse(req.body.product)) {
+    if (req.body.product) {
       const productWithNewImages = JSON.parse(req.body.product);
       const {
         name,
@@ -147,6 +147,7 @@ export const editProduct = async (req: Request, res: Response) => {
     return res.status(200).json({ msg: "Updated" });
   } catch (error) {
     console.error("error in edit product", error);
+    return res.status(400).json({ msg: "Failed to update" });
   }
 };
 const uploadImg = async (img: any) => {
