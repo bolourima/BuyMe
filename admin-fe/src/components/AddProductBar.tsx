@@ -39,12 +39,19 @@ export const AddProductBar = ({
     editableProduct ? editableProduct.subCategoryName : ""
   );
   const [domSub, setDomSub] = useState<SubCategory[]>([]);
-  const [isSale, setIsSale] = useState(false);
-  const [salePercent, setSalePercent] = useState<any>(0);
+  const [isSale, setIsSale] = useState(
+    onEdit ? editableProduct.disCount.isSale : false
+  );
+  const [salePercent, setSalePercent] = useState<any>(
+    onEdit ? editableProduct.disCount.salePercent : 0
+  );
   const [images, setImages] = useState<File[]>([]);
   const [imageOnePreview, setImageOnePreview] = useState<string>("");
+  const [firstFile, setFirstFile] = useState<File>();
   const [imageTwoPreview, setImageTwoPreview] = useState<string>("");
+  const [secondFile, setSecondFile] = useState<File>();
   const [imageThreePreview, setImageThreePreview] = useState<string>("");
+  const [thirdFile, setThirdFile] = useState<File>();
   const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
     {
       _id: "",
@@ -119,7 +126,6 @@ export const AddProductBar = ({
     if (status == 200) return alert("Successfully updated");
     if (status == 400) return alert("Failed to update");
   };
-  console.log(images);
   return (
     <>
       <div className="flex flex-col">
@@ -198,12 +204,32 @@ export const AddProductBar = ({
                 <div className="flex gap-2">
                   <label className="flex cursor-pointer relative w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
+                    {onEdit && editableProduct.images[0] && (
+                      <div className="absolute w-full h-full rounded-xl flex justify-end">
+                        <img
+                          src={editableProduct.images[0]}
+                          alt="Product Image"
+                          className="w-full h-full rounded-xl"
+                        />
+                        <button className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1">
+                          <Trash />
+                        </button>
+                      </div>
+                    )}
                     {imageOnePreview ? (
                       <div className="absolute w-full h-full z-30 flex justify-end">
                         <img className="w-full h-full" src={imageOnePreview} />
                         <button
-                          onClick={() => setImageOnePreview("")}
-                          className="w-4 h-4 absolute z-50 mt-2 mr-2"
+                          type="button"
+                          onClick={(e) => {
+                            setImageOnePreview(""),
+                              setImages(
+                                images.filter((el) => {
+                                  return el.name !== firstFile?.name;
+                                })
+                              );
+                          }}
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
                         >
                           <Trash />
                         </button>
@@ -218,6 +244,7 @@ export const AddProductBar = ({
                           if (!e.target.files || e.target.files.length === 0) {
                             return;
                           }
+                          setFirstFile(e.target.files[0]);
                           setImageOnePreview(
                             URL.createObjectURL(e.target.files[0])
                           );
@@ -229,12 +256,35 @@ export const AddProductBar = ({
 
                   <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
+                    {onEdit && editableProduct.images[1] && (
+                      <div className="absolute w-full h-full rounded-xl flex justify-end">
+                        <img
+                          src={editableProduct.images[1]}
+                          alt="Product Image"
+                          className="w-full h-full rounded-xl"
+                        />
+                        <button
+                          type="button"
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    )}
                     {imageTwoPreview ? (
                       <div className="absolute w-full h-full z-30 flex justify-end">
                         <img className="w-full h-full" src={imageTwoPreview} />
                         <button
-                          onClick={() => setImageTwoPreview("")}
-                          className="w-4 h-4 absolute z-50 mt-2 mr-2"
+                          type="button"
+                          onClick={(e) => {
+                            setImageTwoPreview(""),
+                              setImages(
+                                images.filter((el) => {
+                                  return el.name !== secondFile?.name;
+                                })
+                              );
+                          }}
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
                         >
                           <Trash />
                         </button>
@@ -249,6 +299,7 @@ export const AddProductBar = ({
                           if (!e.target.files || e.target.files.length === 0) {
                             return;
                           }
+                          setSecondFile(e.target.files[0]);
                           setImageTwoPreview(
                             URL.createObjectURL(e.target.files[0])
                           );
@@ -259,6 +310,21 @@ export const AddProductBar = ({
                   </label>
                   <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
+                    {onEdit && editableProduct.images[2] && (
+                      <div className="absolute w-full h-full rounded-xl flex justify-end">
+                        <img
+                          src={editableProduct.images[2]}
+                          alt="Product Image"
+                          className="w-full h-full rounded-xl"
+                        />
+                        <button
+                          type="button"
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    )}
                     {imageThreePreview ? (
                       <div className="absolute w-full h-full z-30 flex justify-end">
                         <img
@@ -266,8 +332,15 @@ export const AddProductBar = ({
                           src={imageThreePreview}
                         />
                         <button
-                          onClick={() => setImageThreePreview("")}
-                          className="w-4 h-4 absolute z-50 mt-2 mr-2"
+                          onClick={(e) => {
+                            setImageThreePreview(""),
+                              setImages(
+                                images.filter((el) => {
+                                  return el.name !== thirdFile?.name;
+                                })
+                              );
+                          }}
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
                         >
                           <Trash />
                         </button>
@@ -282,6 +355,7 @@ export const AddProductBar = ({
                           if (!e.target.files || e.target.files.length === 0) {
                             return;
                           }
+                          setThirdFile(e.target.files[0]);
                           setImageThreePreview(
                             URL.createObjectURL(e.target.files[0])
                           );
@@ -395,7 +469,10 @@ export const AddProductBar = ({
                   {onEdit ? (
                     <input
                       type="checkbox"
-                      checked={editableProduct.disCount.isSale}
+                      onChange={(e) => {
+                        setIsSale(e.target.checked);
+                      }}
+                      defaultChecked={editableProduct.disCount.isSale}
                     />
                   ) : (
                     <div className="form-control">
@@ -412,19 +489,18 @@ export const AddProductBar = ({
                     Хямдралтай эсэх
                   </label>
                 </div>
-                {onEdit ? (
+                {onEdit && isSale ? (
                   <input
                     type="number"
                     defaultValue={editableProduct.disCount.salePercent}
+                    onChange={(e) => setSalePercent(e.target.value)}
                     className="bg-gray-100 pl-4 h-12 rounded-lg"
-                    placeholder="10"
                   />
                 ) : (
                   <div>
                     {!isSale ? (
                       <input
                         className="w-11/12 text-black rounded-lg h-12 mx-4 px-4 bg-gray-100"
-                        placeholder="20%"
                         type="number"
                         disabled
                       />
@@ -433,7 +509,6 @@ export const AddProductBar = ({
                         id="salePercent"
                         onChange={(e) => setSalePercent(e.target.value)}
                         className="w-11/12 text-black rounded-lg h-12 mx-4 px-4 bg-gray-100"
-                        placeholder="20%"
                         type="number"
                       />
                     )}

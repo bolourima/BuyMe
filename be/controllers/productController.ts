@@ -69,6 +69,50 @@ export const editProduct = async (req: Request, res: Response) => {
       `${new Date().getMonth() + 1}` +
       "/" +
       `${new Date().getDate()}`;
+    if (req.body.product && req.files?.length) {
+      const productWithNewImages = JSON.parse(req.body.product);
+      const {
+        name,
+        description,
+        price,
+        productCode,
+        quantity,
+        tag,
+        disCount,
+        categoryName,
+        subCategoryName,
+        brandName,
+        _id,
+        images,
+      } = productWithNewImages;
+      const newImages: any = req.files;
+      let urlContainer: String[] = [];
+      for (let i = 0; i < newImages?.length; i++) {
+        const url: any = await uploadImg(newImages[i]);
+        urlContainer.push(url);
+      }
+      urlContainer = [...urlContainer, ...images];
+      const selectedCategory = await Category.findOne({ name: categoryName });
+      const product = await Product.findOneAndUpdate(
+        { _id: _id },
+        {
+          name,
+          description,
+          price,
+          productCode,
+          quantity,
+          tag,
+          disCount,
+          categoryId: selectedCategory?._id,
+          subCategoryName,
+          brandName,
+          images: urlContainer,
+          _id,
+          updatedAt: date,
+        }
+      );
+      return res.status(200).json({ msg: "Updated" });
+    }
     if (req.body.product) {
       const productWithNewImages = JSON.parse(req.body.product);
       const {
