@@ -8,6 +8,7 @@ import { Category } from "@/types/categoryType";
 import { SubCategory } from "@/types/subCategoryType";
 import { instance } from "@/instance";
 import { GetProductType } from "@/types/getProductType";
+import { Trash } from "@/svg/Trash";
 
 export const AddProductBar = ({
   categoryData,
@@ -40,7 +41,10 @@ export const AddProductBar = ({
   const [domSub, setDomSub] = useState<SubCategory[]>([]);
   const [isSale, setIsSale] = useState(false);
   const [salePercent, setSalePercent] = useState<any>(0);
-  const [images, setImages] = useState<FileList>();
+  const [images, setImages] = useState<File[]>([]);
+  const [imageOnePreview, setImageOnePreview] = useState<string>("");
+  const [imageTwoPreview, setImageTwoPreview] = useState<string>("");
+  const [imageThreePreview, setImageThreePreview] = useState<string>("");
   const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
     {
       _id: "",
@@ -74,7 +78,7 @@ export const AddProductBar = ({
     setSubCategoryData(subCategory);
     setDomSub(subCategory);
     const selectedSubCategory: SubCategory[] = subCategory.filter((sub) => {
-      return sub.name === editableProduct.subCategoryName;
+      return sub.name === subName;
     });
     setSelectedBrand(
       selectedSubCategory.length > 0
@@ -115,6 +119,7 @@ export const AddProductBar = ({
     if (status == 200) return alert("Successfully updated");
     if (status == 400) return alert("Failed to update");
   };
+  console.log(images);
   return (
     <>
       <div className="flex flex-col">
@@ -141,6 +146,7 @@ export const AddProductBar = ({
               <div className="flex  flex-col bg-white rounded-lg w-[563px] p-6 gap-4">
                 <div className="flex flex-col gap-2">
                   <span className="">Бүтээгдэхүүний нэр</span>
+
                   <input
                     id="name"
                     value={values.name}
@@ -190,27 +196,100 @@ export const AddProductBar = ({
                   <span>Бүтээгдэхүүний зураг</span>
                 </div>
                 <div className="flex gap-2">
-                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                  <label className="flex cursor-pointer relative w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                  </div>
-                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                    {imageOnePreview ? (
+                      <div className="absolute w-full h-full z-30 flex justify-end">
+                        <img className="w-full h-full" src={imageOnePreview} />
+                        <button
+                          onClick={() => setImageOnePreview("")}
+                          className="w-4 h-4 absolute z-50 mt-2 mr-2"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    ) : (
+                      <input
+                        type="file"
+                        hidden
+                        multiple={false}
+                        className="relative"
+                        onChange={(e) => {
+                          if (!e.target.files || e.target.files.length === 0) {
+                            return;
+                          }
+                          setImageOnePreview(
+                            URL.createObjectURL(e.target.files[0])
+                          );
+                          setImages([...images, e.target.files[0]]);
+                        }}
+                      />
+                    )}
+                  </label>
+
+                  <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                  </div>
-                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                    {imageTwoPreview ? (
+                      <div className="absolute w-full h-full z-30 flex justify-end">
+                        <img className="w-full h-full" src={imageTwoPreview} />
+                        <button
+                          onClick={() => setImageTwoPreview("")}
+                          className="w-4 h-4 absolute z-50 mt-2 mr-2"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    ) : (
+                      <input
+                        type="file"
+                        hidden
+                        multiple={false}
+                        className="relative"
+                        onChange={(e) => {
+                          if (!e.target.files || e.target.files.length === 0) {
+                            return;
+                          }
+                          setImageTwoPreview(
+                            URL.createObjectURL(e.target.files[0])
+                          );
+                          setImages([...images, e.target.files[0]]);
+                        }}
+                      />
+                    )}
+                  </label>
+                  <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                  </div>
-                  <div className="flex w-[125px] h-[125px] justify-center items-center ">
-                    <input
-                      type="file"
-                      multiple={true}
-                      onChange={(e) => {
-                        if (!e.target.files) {
-                          return;
-                        }
-                        setImages(e.target.files);
-                      }}
-                    />
-                  </div>
+                    {imageThreePreview ? (
+                      <div className="absolute w-full h-full z-30 flex justify-end">
+                        <img
+                          className="w-full h-full"
+                          src={imageThreePreview}
+                        />
+                        <button
+                          onClick={() => setImageThreePreview("")}
+                          className="w-4 h-4 absolute z-50 mt-2 mr-2"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    ) : (
+                      <input
+                        type="file"
+                        hidden
+                        multiple={false}
+                        className="relative"
+                        onChange={(e) => {
+                          if (!e.target.files || e.target.files.length === 0) {
+                            return;
+                          }
+                          setImageThreePreview(
+                            URL.createObjectURL(e.target.files[0])
+                          );
+                          setImages([...images, e.target.files[0]]);
+                        }}
+                      />
+                    )}
+                  </label>
                 </div>
               </div>
               <div className="flex bg-white rounded-lg w-[563px] p-6 gap-4">
