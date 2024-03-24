@@ -7,6 +7,7 @@ import { LeftBar } from "@/components/LeftBar";
 import { NavBar } from "@/components/NavBar";
 import { Product } from "@/types/productType";
 import { GetProductType } from "@/types/getProductType";
+import DataTable from "@/components/DataTable";
 
 export default function Home({
   categoryData,

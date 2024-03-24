@@ -89,7 +89,7 @@ export const ProductsController = ({
                   />
                 </div>
               </div>
-              <div className="flex flex-col bg-white p-4 mt-4 rounded-lg">
+              {/* <div className="flex flex-col bg-white p-4 mt-4 rounded-lg">
                 <div className="flex border-b-[1px] justify-between">
                   <div></div>
                   <div>
@@ -142,7 +142,7 @@ export const ProductsController = ({
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
