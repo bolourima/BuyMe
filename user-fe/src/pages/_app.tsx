@@ -10,8 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Header />
-      <div className="flex container gap-10">
-        <SubCategory />
+      <div className="container">
         <Component {...pageProps} />
       </div>
 
