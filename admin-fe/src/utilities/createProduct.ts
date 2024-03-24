@@ -5,7 +5,7 @@ export const createProduct = async (
   values: Product,
   touched: any,
   errors: any,
-  images: FileList | undefined,
+  images: File[] | undefined,
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,
@@ -14,7 +14,7 @@ export const createProduct = async (
   onEdit: boolean,
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>,
   setEditableProduct: any,
-  oldImage: []
+  oldImage: string[]
 ) => {
   if (
     (!onEdit &&
@@ -59,9 +59,16 @@ export const createProduct = async (
       const res = await instance.post("/createProduct", formData);
       return res.status;
     } else {
-      setEditableProduct(null);
-      setOnEdit(false);
-      if (images) {
+      if (images?.length && oldImage.length) {
+        const product = { ...newProduct, _id: _id, images: oldImage };
+        formData.append("product", JSON.stringify(product));
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+        const res = await instance.put("/editProduct", formData);
+        return res.status;
+      }
+      if (images?.length) {
         const product = { ...newProduct, _id: _id };
         formData.append("product", JSON.stringify(product));
         for (let i = 0; i < images.length; i++) {
@@ -76,6 +83,8 @@ export const createProduct = async (
           _id: _id,
         };
         const res = await instance.put("/editProduct", editedProduct);
+        setEditableProduct(null);
+        setOnEdit(false);
         return res.status;
       }
     }
