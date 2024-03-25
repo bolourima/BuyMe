@@ -125,6 +125,7 @@ export const AddProductBar = ({
     if (status == 201) return alert("Successfully created");
     if (status == 200) return alert("Successfully updated");
     if (status == 400) return alert("Failed to update");
+    if (status == 403) return alert("ProductCode conflict");
   };
   console.log("first");
   return (

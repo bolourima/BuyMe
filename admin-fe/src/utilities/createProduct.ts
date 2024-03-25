@@ -5,7 +5,7 @@ export const createProduct = async (
   values: Product,
   touched: any,
   errors: any,
-  images: File[] | undefined,
+  images: File[],
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,

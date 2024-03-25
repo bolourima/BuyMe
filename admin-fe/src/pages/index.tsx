@@ -4,7 +4,6 @@ import { Category } from "@/types/categoryType";
 import { MainProducts } from "@/components/MainProducts";
 import { LeftBar } from "@/components/LeftBar";
 import { NavBar } from "@/components/NavBar";
-import { CldUploadWidget } from "next-cloudinary";
 import { GetProductType } from "@/types/getProductType";
 
 export default function Home({
