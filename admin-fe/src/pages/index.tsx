@@ -3,12 +3,11 @@ import { AddProductBar } from "@/components/AddProductBar";
 import { instance } from "@/instance";
 import { Category } from "@/types/categoryType";
 
+
 export default function Home({ categoryData }: { categoryData: Category[] }) {
   return (
     <>
-      <div>
-        <AddProductBar categoryData={categoryData} />
-      </div>
+      <div>{/* <AddProductBar categoryData={categoryData} /> */}</div>
     </>
   );
 }
