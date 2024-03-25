@@ -9,7 +9,7 @@ export type ProductType = {
   categoryId: string;
   subCategoryName: string;
   brandName: string;
-  images: [];
+  images: string[];
   createdAt: string;
   updatedAt: string;
 };
