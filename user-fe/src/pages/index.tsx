@@ -11,25 +11,14 @@ import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import { ProductFilterRecent } from "@/components/ProductFilterRecent";
 
-<<<<<<< HEAD
-export default function Home() {
-=======
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home({ productData }: { productData: ProductType[] }) {
   console.log(productData);
->>>>>>> main
   return (
     <div>
       {/* 
       <Hero /> */}
-<<<<<<< HEAD
-      {/* <RecommendedItems />
-      <Product /> */}
-=======
       {/* <RecommendedItems productData={productData} /> */}
       <Product productData={productData} />
->>>>>>> main
     </div>
   );
 }
