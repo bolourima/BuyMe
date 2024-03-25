@@ -5,7 +5,7 @@ export const createProduct = async (
   values: Product,
   touched: any,
   errors: any,
-  images: File[] | undefined,
+  images: File[],
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,
@@ -75,6 +75,7 @@ export const createProduct = async (
           formData.append("images", images[i]);
         }
         const res = await instance.put("/editProduct", formData);
+        console.log(res);
         return res.status;
       } else {
         const editedProduct: any = {
