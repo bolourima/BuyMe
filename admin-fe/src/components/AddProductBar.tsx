@@ -8,7 +8,6 @@ import { Category } from "@/types/categoryType";
 import { SubCategory } from "@/types/subCategoryType";
 import { instance } from "@/instance";
 import { GetProductType } from "@/types/getProductType";
-import { Trash } from "@/svg/Trash";
 
 export const AddProductBar = ({
   categoryData,
@@ -39,19 +38,9 @@ export const AddProductBar = ({
     editableProduct ? editableProduct.subCategoryName : ""
   );
   const [domSub, setDomSub] = useState<SubCategory[]>([]);
-  const [isSale, setIsSale] = useState(
-    onEdit ? editableProduct.disCount.isSale : false
-  );
-  const [salePercent, setSalePercent] = useState<any>(
-    onEdit ? editableProduct.disCount.salePercent : 0
-  );
+  const [isSale, setIsSale] = useState(false);
+  const [salePercent, setSalePercent] = useState<any>(0);
   const [images, setImages] = useState<File[]>([]);
-  const [imageOnePreview, setImageOnePreview] = useState<string>("");
-  const [firstFile, setFirstFile] = useState<File>();
-  const [imageTwoPreview, setImageTwoPreview] = useState<string>("");
-  const [secondFile, setSecondFile] = useState<File>();
-  const [imageThreePreview, setImageThreePreview] = useState<string>("");
-  const [thirdFile, setThirdFile] = useState<File>();
   const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
     {
       _id: "",
@@ -85,7 +74,7 @@ export const AddProductBar = ({
     setSubCategoryData(subCategory);
     setDomSub(subCategory);
     const selectedSubCategory: SubCategory[] = subCategory.filter((sub) => {
-      return sub.name === subName;
+      return sub.name === editableProduct.subCategoryName;
     });
     setSelectedBrand(
       selectedSubCategory.length > 0
@@ -125,6 +114,7 @@ export const AddProductBar = ({
     if (status == 201) return alert("Successfully created");
     if (status == 200) return alert("Successfully updated");
     if (status == 400) return alert("Failed to update");
+    if (status == 403) return alert("ProductCode conflict");
   };
   return (
     <>
@@ -152,7 +142,6 @@ export const AddProductBar = ({
               <div className="flex  flex-col bg-white rounded-lg w-[563px] p-6 gap-4">
                 <div className="flex flex-col gap-2">
                   <span className="">Бүтээгдэхүүний нэр</span>
-
                   <input
                     id="name"
                     value={values.name}
@@ -202,168 +191,27 @@ export const AddProductBar = ({
                   <span>Бүтээгдэхүүний зураг</span>
                 </div>
                 <div className="flex gap-2">
-                  <label className="flex cursor-pointer relative w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                    {onEdit && editableProduct.images[0] && (
-                      <div className="absolute w-full h-full rounded-xl flex justify-end">
-                        <img
-                          src={editableProduct.images[0]}
-                          alt="Product Image"
-                          className="w-full h-full rounded-xl"
-                        />
-                        <button className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1">
-                          <Trash />
-                        </button>
-                      </div>
-                    )}
-                    {imageOnePreview ? (
-                      <div className="absolute w-full h-full z-30 flex justify-end">
-                        <img className="w-full h-full" src={imageOnePreview} />
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            setImageOnePreview(""),
-                              setImages(
-                                images.filter((el) => {
-                                  return el.name !== firstFile?.name;
-                                })
-                              );
-                          }}
-                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
-                        >
-                          <Trash />
-                        </button>
-                      </div>
-                    ) : (
-                      <input
-                        type="file"
-                        hidden
-                        multiple={false}
-                        className="relative"
-                        onChange={(e) => {
-                          if (!e.target.files || e.target.files.length === 0) {
-                            return;
-                          }
-                          setFirstFile(e.target.files[0]);
-                          setImageOnePreview(
-                            URL.createObjectURL(e.target.files[0])
-                          );
-                          setImages([...images, e.target.files[0]]);
-                        }}
-                      />
-                    )}
-                  </label>
-
-                  <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                  </div>
+                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                    {onEdit && editableProduct.images[1] && (
-                      <div className="absolute w-full h-full rounded-xl flex justify-end">
-                        <img
-                          src={editableProduct.images[1]}
-                          alt="Product Image"
-                          className="w-full h-full rounded-xl"
-                        />
-                        <button
-                          type="button"
-                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
-                        >
-                          <Trash />
-                        </button>
-                      </div>
-                    )}
-                    {imageTwoPreview ? (
-                      <div className="absolute w-full h-full z-30 flex justify-end">
-                        <img className="w-full h-full" src={imageTwoPreview} />
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            setImageTwoPreview(""),
-                              setImages(
-                                images.filter((el) => {
-                                  return el.name !== secondFile?.name;
-                                })
-                              );
-                          }}
-                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
-                        >
-                          <Trash />
-                        </button>
-                      </div>
-                    ) : (
-                      <input
-                        type="file"
-                        hidden
-                        multiple={false}
-                        className="relative"
-                        onChange={(e) => {
-                          if (!e.target.files || e.target.files.length === 0) {
-                            return;
-                          }
-                          setSecondFile(e.target.files[0]);
-                          setImageTwoPreview(
-                            URL.createObjectURL(e.target.files[0])
-                          );
-                          setImages([...images, e.target.files[0]]);
-                        }}
-                      />
-                    )}
-                  </label>
-                  <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                  </div>
+                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                    {onEdit && editableProduct.images[2] && (
-                      <div className="absolute w-full h-full rounded-xl flex justify-end">
-                        <img
-                          src={editableProduct.images[2]}
-                          alt="Product Image"
-                          className="w-full h-full rounded-xl"
-                        />
-                        <button
-                          type="button"
-                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
-                        >
-                          <Trash />
-                        </button>
-                      </div>
-                    )}
-                    {imageThreePreview ? (
-                      <div className="absolute w-full h-full z-30 flex justify-end">
-                        <img
-                          className="w-full h-full"
-                          src={imageThreePreview}
-                        />
-                        <button
-                          onClick={(e) => {
-                            setImageThreePreview(""),
-                              setImages(
-                                images.filter((el) => {
-                                  return el.name !== thirdFile?.name;
-                                })
-                              );
-                          }}
-                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
-                        >
-                          <Trash />
-                        </button>
-                      </div>
-                    ) : (
-                      <input
-                        type="file"
-                        hidden
-                        multiple={false}
-                        className="relative"
-                        onChange={(e) => {
-                          if (!e.target.files || e.target.files.length === 0) {
-                            return;
-                          }
-                          setThirdFile(e.target.files[0]);
-                          setImageThreePreview(
-                            URL.createObjectURL(e.target.files[0])
-                          );
-                          setImages([...images, e.target.files[0]]);
-                        }}
-                      />
-                    )}
-                  </label>
+                  </div>
+                  <div className="flex w-[125px] h-[125px] justify-center items-center ">
+                    <input
+                      type="file"
+                      multiple={false}
+                      onChange={(e) => {
+                        if (!e.target.files) {
+                          return;
+                        }
+                        setImages([...images, e.target.files[0]]);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex bg-white rounded-lg w-[563px] p-6 gap-4">
@@ -469,10 +317,7 @@ export const AddProductBar = ({
                   {onEdit ? (
                     <input
                       type="checkbox"
-                      onChange={(e) => {
-                        setIsSale(e.target.checked);
-                      }}
-                      defaultChecked={editableProduct.disCount.isSale}
+                      checked={editableProduct.disCount.isSale}
                     />
                   ) : (
                     <div className="form-control">
@@ -489,18 +334,19 @@ export const AddProductBar = ({
                     Хямдралтай эсэх
                   </label>
                 </div>
-                {onEdit && isSale ? (
+                {onEdit ? (
                   <input
                     type="number"
                     defaultValue={editableProduct.disCount.salePercent}
-                    onChange={(e) => setSalePercent(e.target.value)}
                     className="bg-gray-100 pl-4 h-12 rounded-lg"
+                    placeholder="10"
                   />
                 ) : (
                   <div>
                     {!isSale ? (
                       <input
                         className="w-11/12 text-black rounded-lg h-12 mx-4 px-4 bg-gray-100"
+                        placeholder="20%"
                         type="number"
                         disabled
                       />
@@ -509,6 +355,7 @@ export const AddProductBar = ({
                         id="salePercent"
                         onChange={(e) => setSalePercent(e.target.value)}
                         className="w-11/12 text-black rounded-lg h-12 mx-4 px-4 bg-gray-100"
+                        placeholder="20%"
                         type="number"
                       />
                     )}

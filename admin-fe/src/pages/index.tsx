@@ -22,13 +22,6 @@ export default function Home({
     throw new Error("Function not implemented.");
   }
 
-<<<<<<< HEAD
-
-export default function Home({ categoryData }: { categoryData: Category[] }) {
-  return (
-    <>
-      <div>{/* <AddProductBar categoryData={categoryData} /> */}</div>
-=======
   return (
     <>
       <NavBar />
@@ -40,7 +33,6 @@ export default function Home({ categoryData }: { categoryData: Category[] }) {
           <MainProducts categoryData={categoryData} productData={productData} />
         </div>
       </main>
->>>>>>> main
     </>
   );
 }
