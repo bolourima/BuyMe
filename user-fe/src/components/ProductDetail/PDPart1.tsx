@@ -1,9 +1,9 @@
-import { DotSvg } from '@/icon/DotSvg';
-import { HeartSvg } from '@/icon/HeartSvg';
-import { ReviewSvg } from '@/icon/ReviewSvg';
-import { SoldSvg } from '@/icon/SoldSvg';
-import { StarSvg } from '@/icon/StarSvg';
-import React from 'react'
+import { DotSvg } from "../../icon/DotSvg";
+import { HeartSvg } from "../../icon/HeartSvg";
+import { ReviewSvg } from "../../icon/ReviewSvg";
+import { SoldSvg } from "../../icon/SoldSvg";
+import { StarSvg } from "../../icon/StarSvg";
+import React from "react";
 
 export const PDPart1 = () => {
   return (
@@ -76,7 +76,7 @@ export const PDPart1 = () => {
                 <DotSvg />
               </div>
               <div className="flex justify-center items-center gap-2">
-                <SoldSvg/>
+                <SoldSvg />
                 <p>154 sold</p>
               </div>
             </div>
@@ -152,4 +152,4 @@ export const PDPart1 = () => {
       </div>
     </div>
   );
-}
+};

@@ -1,7 +1,7 @@
 import React, { use, useState } from "react";
 import { ProductCardTwo } from "./ProductCardTwo";
 import { ProductCardThree } from "./ProductCardThree";
-import { ProductType } from "@/types/productType";
+import { ProductType } from "../types/productType";
 import { ProductFilterRecent } from "./ProductFilterRecent";
 import { RelatedProductCard } from "./RelatedProductCard";
 import AppIcon from "@/SVG/AppIcon";

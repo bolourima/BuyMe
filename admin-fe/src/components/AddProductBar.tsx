@@ -35,8 +35,21 @@ export const AddProductBar = ({
   const [selectedBrand, setSelectedBrand] = useState<string>(
     editableProduct ? editableProduct.brandName : ""
   );
+  const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
+    {
+      _id: "",
+      name: "",
+      category: { _id: "", name: "" },
+      brands: [
+        {
+          name: "",
+          _id: "",
+        },
+      ],
+    },
+  ]);
   const [subName, setSubName] = useState(
-    editableProduct ? editableProduct.subCategoryName : ""
+    editableProduct ? editableProduct.subCategoryName : subCategoryData[0].name
   );
   const [domSub, setDomSub] = useState<SubCategory[]>([]);
   const [isSale, setIsSale] = useState(
@@ -52,19 +65,6 @@ export const AddProductBar = ({
   const [secondFile, setSecondFile] = useState<File>();
   const [imageThreePreview, setImageThreePreview] = useState<string>("");
   const [thirdFile, setThirdFile] = useState<File>();
-  const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
-    {
-      _id: "",
-      name: "",
-      category: { _id: "", name: "" },
-      brands: [
-        {
-          name: "",
-          _id: "",
-        },
-      ],
-    },
-  ]);
   const { values, errors, handleChange, handleBlur, touched } = useFormik({
     initialValues: {
       name: onEdit ? editableProduct.name : "",
@@ -121,10 +121,16 @@ export const AddProductBar = ({
       setEditableProduct,
       editableProduct.images
     );
-    setIsAddProductVisible(false);
-    if (status == 201) return alert("Successfully created");
-    if (status == 200) return alert("Successfully updated");
+    if (status == 201) {
+      setIsAddProductVisible(false);
+      return alert("Successfully created");
+    }
+    if (status == 200) {
+      setIsAddProductVisible(false);
+      return alert("Successfully updated");
+    }
     if (status == 400) return alert("Failed to update");
+    if (status == 403) return alert("ProductCode conflict");
   };
   return (
     <>
@@ -432,9 +438,7 @@ export const AddProductBar = ({
                     onChange={(e) => setSubName(e.target.value)}
                     id="sub-category"
                     className="w-full h-8 rounded-lg bg-[#F7F7F8]"
-                    value={
-                      editableProduct ? editableProduct.subCategoryName : ""
-                    }
+                    value={subName}
                   >
                     {subCategoryData.map((el) => (
                       <option
