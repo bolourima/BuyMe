@@ -4,7 +4,6 @@ import { Category } from "@/types/categoryType";
 import { MainProducts } from "@/components/MainProducts";
 import { LeftBar } from "@/components/LeftBar";
 import { NavBar } from "@/components/NavBar";
-import { CldUploadWidget } from "next-cloudinary";
 import { GetProductType } from "@/types/getProductType";
 
 export default function Home({
@@ -23,6 +22,13 @@ export default function Home({
     throw new Error("Function not implemented.");
   }
 
+<<<<<<< HEAD
+
+export default function Home({ categoryData }: { categoryData: Category[] }) {
+  return (
+    <>
+      <div>{/* <AddProductBar categoryData={categoryData} /> */}</div>
+=======
   return (
     <>
       <NavBar />
@@ -34,6 +40,7 @@ export default function Home({
           <MainProducts categoryData={categoryData} productData={productData} />
         </div>
       </main>
+>>>>>>> main
     </>
   );
 }
