@@ -1,4 +1,5 @@
 export type ProductType = {
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -6,7 +7,7 @@ export type ProductType = {
   quantity: number;
   tag: string;
   disCount: DiscountType;
-  categoryId: string;
+  categoryId: { _id: string; name: string };
   subCategoryName: string;
   brandName: string;
   images: string[];

@@ -2,12 +2,15 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import React from "react";
 import SignUp from "../components/SignUp";
+import { BasketBarVisiblity } from "@/context/BasketVisiblity";
+import { ProductsInBasket } from "@/context/FoodsInBasket";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div>
-      <div className="flex container gap-10"></div>
-      <SignUp />
-    </div>
+    <ProductsInBasket>
+      <BasketBarVisiblity>
+        <Component {...pageProps} />
+      </BasketBarVisiblity>
+    </ProductsInBasket>
   );
 }
