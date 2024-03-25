@@ -16,8 +16,8 @@ export default function App({ Component, pageProps }: AppProps) {
         {/* <Component {...pageProps} /> */}
       </div>
       {/* <Footer /> */}
-      {/* <SignUp /> */}
-      <SignIn />
+      <SignUp />
+      {/* <SignIn /> */}
     </div>
   );
 }
