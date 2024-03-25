@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { EyeOff } from "@/icon/EyeOff";
+import { EyeOff } from "../icon/EyeOff";
 import { useRouter } from "../../node_modules/next/router";
 import { Formik, useFormik } from "formik";
-import { signUpValidation } from "@/pages/signUpValidation";
+import { signUpValidation } from "../pages/signUpValidation";
 import * as Yup from "yup";
-import { instance } from "@/instance";
+import { instance } from "../instance";
 
 const SignUp = () => {
   const router = useRouter();
