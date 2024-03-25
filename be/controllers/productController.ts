@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import cloudinary from "../utilities/Cloudinary";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
+import test from "node:test";
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.find().populate("categoryId");
@@ -69,7 +70,7 @@ export const editProduct = async (req: Request, res: Response) => {
       `${new Date().getMonth() + 1}` +
       "/" +
       `${new Date().getDate()}`;
-    if (req.body.product && req.files?.length) {
+    if (req.body.product.images?.length && req.files?.length) {
       const productWithNewImages = JSON.parse(req.body.product);
       const {
         name,
