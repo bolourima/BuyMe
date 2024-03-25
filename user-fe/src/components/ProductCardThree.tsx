@@ -8,6 +8,7 @@ import React from "react";
 export const ProductCardThree = ({ data }: { data: ProductType }) => {
   console.log(data);
   const {
+    _id,
     images,
     name,
     quantity,
@@ -21,8 +22,8 @@ export const ProductCardThree = ({ data }: { data: ProductType }) => {
   const sale = (price * 100) / salePercent;
   return (
     <div className="flex bg-[#FFFFFF] mt-3 p-7 border w-fit gap-4 rounded-lg">
-      <div className=" mr-5">
-        <img className="w-96" src={images[0]} alt="img" />
+      <div className="">
+        <img className="lg:w-96" src={images[0]} alt="img" />
       </div>
       <div className="flex flex-col gap-4">
         <h1 className=" font-medium">

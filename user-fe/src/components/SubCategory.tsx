@@ -57,9 +57,9 @@ export const SubCategory = () => {
       ],
     },
   ];
-  const [isOpenCategory, setOpenCategory] = React.useState(true);
-  const [isOpenBrands, setOpenBrands] = React.useState(true);
-  const [isOpenFeatures, setOpenFeatures] = React.useState(true);
+  const [isOpenCategory, setOpenCategory] = useState(true);
+  const [isOpenBrands, setOpenBrands] = useState(true);
+  const [isOpenFeatures, setOpenFeatures] = useState(true);
   const [subCategoryIndex, setCategoryIndex] = useState(1);
   const handlerSubCategory = (categoryindex: number) => {
     console.log(categoryindex);

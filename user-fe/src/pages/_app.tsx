@@ -10,10 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Header />
-      <div className="container">
-        <Component {...pageProps} />
-      </div>
-
+      <Component {...pageProps} />
       <Footer />
     </div>
   );

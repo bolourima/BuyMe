@@ -1,4 +1,5 @@
 export type ProductType = {
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -6,12 +7,16 @@ export type ProductType = {
   quantity: number;
   tag: string;
   disCount: DiscountType;
-  categoryId: string;
+  categoryId: categoryIdType;
   subCategoryName: string;
   brandName: string;
   images: [];
   createdAt: string;
   updatedAt: string;
+};
+type categoryIdType = {
+  _id: string;
+  name: string;
 };
 type DiscountType = {
   isSale: boolean;
