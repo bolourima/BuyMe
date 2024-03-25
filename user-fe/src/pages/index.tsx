@@ -2,8 +2,6 @@ import Product from "../components/Product";
 import { instance } from "../instance";
 import { ProductType } from "../types/productType";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
   return (
     <div className="bg-white p-4 m-10 rounded-lg ">

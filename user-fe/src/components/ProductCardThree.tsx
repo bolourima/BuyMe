@@ -1,12 +1,18 @@
 import { LoveIcon } from "@/SVG/LoveIcon";
 import { StarTestIcon } from "@/SVG/StarTestIcon";
+import { ClickHandler } from "@/types/handlerType";
 import { ProductType } from "@/types/productType";
 import { title } from "process";
 
 import React from "react";
 
-export const ProductCardThree = ({ data }: { data: ProductType }) => {
-  console.log(data);
+export const ProductCardThree = ({
+  data,
+  setProductData,
+}: {
+  data: ProductType;
+  setProductData: ClickHandler;
+}) => {
   const {
     _id,
     images,
@@ -20,10 +26,12 @@ export const ProductCardThree = ({ data }: { data: ProductType }) => {
   } = data;
   const { isSale, salePercent } = disCount;
   const sale = (price * 100) / salePercent;
+  const imgFirstfix = 0;
+
   return (
     <div className="flex bg-[#FFFFFF] mt-3 p-7 border w-fit gap-4 rounded-lg">
       <div className="">
-        <img className="lg:w-96" src={images[0]} alt="img" />
+        <img className="lg:w-96" src={images[imgFirstfix]} alt="img" />
       </div>
       <div className="flex flex-col gap-4">
         <h1 className=" font-medium">
@@ -54,8 +62,13 @@ export const ProductCardThree = ({ data }: { data: ProductType }) => {
         </div>
       </div>
       <div>
-        <button className="btn bg-white">
-          <LoveIcon />
+        <button
+          className="btn bg-white"
+          onClick={() => {
+            setProductData(data);
+          }}
+        >
+          Add to card
         </button>
       </div>
     </div>

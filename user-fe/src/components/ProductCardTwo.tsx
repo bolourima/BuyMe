@@ -1,10 +1,21 @@
 import { LoveIcon } from "@/SVG/LoveIcon";
 import { StarTestIcon } from "@/SVG/StarTestIcon";
+import { BasketVisiblityContext } from "@/context/BasketVisiblity";
+import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { ProductType } from "@/types/productType";
 
-import React from "react";
+import React, { useContext } from "react";
+import { Basket } from "./Basket";
+import { putIntoBasket } from "@/utilities/putIntoBasket";
+import { ClickHandler } from "@/types/handlerType";
 
-export const ProductCardTwo = ({ data }: { data: ProductType }) => {
+export const ProductCardTwo = ({
+  data,
+  setProductData,
+}: {
+  data: ProductType;
+  setProductData: ClickHandler;
+}) => {
   const {
     _id,
     images,
@@ -18,14 +29,20 @@ export const ProductCardTwo = ({ data }: { data: ProductType }) => {
 
   const { isSale, salePercent } = disCount;
   const sale = (price * 100) / salePercent;
+  const imgFirstfix = 0;
 
   return (
     <div className="bg-white hover:bg-gray-300 hover:border hover:border-gray-300 rounded w-11/12 hover:scale-105 duration-300 cursor-pointer">
       <div className="lg:px-9 lg:pt-4  text-center">
         <a href={`/productDetail${_id}`}>
-          <img src={images[0]} className="h-80 w-10/12 m-auto" />
+          <img src={images[imgFirstfix]} className="h-80 w-10/12 m-auto" />
         </a>
-        <button className=" font-bold text-slate-800 lg:p-4 hover:text-blue-700">
+        <button
+          onClick={() => {
+            setProductData(data);
+          }}
+          className=" font-bold text-slate-800 lg:p-4 hover:text-blue-700"
+        >
           Add to Cart
         </button>
       </div>

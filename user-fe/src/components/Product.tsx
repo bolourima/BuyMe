@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useContext, useState } from "react";
 import { ProductCardTwo } from "./ProductCardTwo";
 import { ProductCardThree } from "./ProductCardThree";
 import { ProductType } from "../types/productType";
@@ -6,7 +6,11 @@ import { ProductFilterRecent } from "./ProductFilterRecent";
 import { RelatedProductCard } from "./RelatedProductCard";
 import AppIcon from "@/SVG/AppIcon";
 import ListIcon from "@/SVG/ListIcon";
-
+import { BasketVisiblityContext } from "@/context/BasketVisiblity";
+import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { Basket } from "./Basket";
+import { ClickHandler } from "@/types/handlerType";
+import { putIntoBasket } from "@/utilities/putIntoBasket";
 export default function Product({
   productData,
 }: {
@@ -20,8 +24,19 @@ export default function Product({
   const [renderedDataindex, setDataIndex] = useState(0);
   const handleChangeBundling = () =>
     setDataIndex(renderedDataindex + maxDatasToShow); //test frot changing product pages
+  const { isBasketVisible, setIsBasketVisible } = useContext(
+    BasketVisiblityContext
+  );
+  const { productsInBasket, setProductsInBasket } = useContext(
+    ProductsInBasketContext
+  );
+  const setProductData: ClickHandler = (product: ProductType) => {
+    setIsBasketVisible(true),
+      putIntoBasket(product, productsInBasket, setProductsInBasket);
+  };
   return (
     <div className="container">
+      {isBasketVisible && <Basket />}
       <div className="flex py-4">
         <button
           onClick={handleIsList}
@@ -39,7 +54,11 @@ export default function Product({
       </div>
       <div className={`${isList ? "hidden" : "block"}`}>
         {productData.slice(renderedDataindex, maxDatasToShow).map((Data, i) => (
-          <ProductCardThree key={i} data={Data} />
+          <ProductCardThree
+            key={i}
+            data={Data}
+            setProductData={setProductData}
+          />
         ))}
       </div>
       <div
@@ -48,7 +67,7 @@ export default function Product({
         } grid grid-cols-3 grid-rows-3 lg:gap-y-5`}
       >
         {productData.slice(renderedDataindex, maxDatasToShow).map((Data, i) => (
-          <ProductCardTwo key={i} data={Data} />
+          <ProductCardTwo key={i} data={Data} setProductData={setProductData} />
         ))}
       </div>
     </div>
