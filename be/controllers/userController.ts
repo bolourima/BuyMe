@@ -3,7 +3,7 @@ import User from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const jwtPrivateKey = process.env.JWT_SECRET_KEY;
+const jwtPrivateKey = process.env.SECRET_KEY;
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -41,7 +41,6 @@ export const signUp = async (req: Request, res: Response) => {
 
 export const signIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log("req.body", req.body);
 
   try {
     if (!email || !password) {
@@ -75,7 +74,7 @@ export const signIn = async (req: Request, res: Response) => {
       .status(200)
       .cookie("refreshToken", refreshToken)
       .header({ Authorization: accessToken })
-      .send(foundUser);
+      .json({ user: foundUser, accessToken: accessToken });
   } catch (error) {
     console.error("Error during signin user. Message is:", error);
     res.status(400).json({ message: "User signin failed" });

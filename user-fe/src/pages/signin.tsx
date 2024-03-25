@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { loginUser } from "@/instance";
+import { loginUser } from "../utilities/userRelatedUtils";
 
 export default function SignIn() {
   const router = useRouter();
@@ -20,7 +20,6 @@ export default function SignIn() {
         .required("Нууц үгээ оруулна уу"),
     }),
     onSubmit: (values) => {
-      console.log("first");
       const accountInfo = {
         email: formik.values.email,
         password: formik.values.password,

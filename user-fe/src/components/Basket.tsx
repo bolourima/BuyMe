@@ -1,8 +1,9 @@
 import DelletIcon from "@/SVG/DelletIcon";
 import { BasketVisiblityContext } from "@/context/BasketVisiblity";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 export const Basket = () => {
   const { isBasketVisible, setIsBasketVisible } = useContext(
@@ -11,7 +12,12 @@ export const Basket = () => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
-  console.log(productsInBasket[0]);
+  const [token, setToken] = useState<string>("");
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    setToken(accessToken);
+  }, []);
   return (
     <div className="absolute z-30 flex flex-col w-1/2 h-[1000px] bg-gray-300 items-end rounded-lg">
       <button
@@ -71,6 +77,12 @@ export const Basket = () => {
           );
         })}
       </div>
+      <button
+        onClick={() => createOrder(productsInBasket, token)}
+        className="w-full h-16 rounded-lg bg-black text-white"
+      >
+        Create Order
+      </button>
     </div>
   );
 };

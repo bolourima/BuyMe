@@ -1,9 +1,16 @@
-import axios from "axios";
-export const instance = axios.create({
-  baseURL: "http://localhost:8000",
-  timeout: 8000,
-  withCredentials: true,
-});
+import { instance } from "@/instance";
+
+export const loginUser = async (data: {}, router: Function) => {
+  try {
+    const response = await instance.post("signin", data);
+    if (response.status == 200) {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      return router("/");
+    }
+  } catch (error) {
+    return alert("Эмайл хаяг эсвэл нууц үг буруу байна");
+  }
+};
 
 export const createUser = async (data: {}, router: Function) => {
   try {
