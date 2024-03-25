@@ -126,6 +126,7 @@ export const AddProductBar = ({
     if (status == 200) return alert("Successfully updated");
     if (status == 400) return alert("Failed to update");
   };
+  console.log("first");
   return (
     <>
       <div className="flex flex-col">
