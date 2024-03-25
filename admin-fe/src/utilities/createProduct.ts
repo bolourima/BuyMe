@@ -1,33 +1,35 @@
 import { instance } from "@/instance";
 import { Product } from "@/types/productType";
 export const createProduct = async (
-  e: React.FormEvent<HTMLFormElement>,
+  _id: string,
   values: Product,
   touched: any,
   errors: any,
-  images: FileList | undefined,
+  images: File[] | undefined,
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,
   subName: string,
-  selectedBrand: string
+  selectedBrand: string,
+  onEdit: boolean,
+  setOnEdit: React.Dispatch<React.SetStateAction<boolean>>,
+  setEditableProduct: any,
+  oldImage: string[]
 ) => {
-  e.preventDefault();
-  if (!images) return;
   if (
-    !touched.name ||
-    !touched.price ||
-    !touched.description ||
-    !touched.productCode ||
-    !touched.quantity ||
-    !touched.tag ||
+    (!onEdit &&
+      (!touched.name ||
+        !touched.price ||
+        !touched.description ||
+        !touched.productCode ||
+        !touched.quantity ||
+        !touched.tag)) ||
     errors.name ||
     errors.price ||
     errors.description ||
     errors.productCode ||
     errors.quantity ||
-    errors.tag ||
-    images?.length < 0
+    errors.tag
   ) {
     return;
   }
@@ -46,12 +48,46 @@ export const createProduct = async (
       brandName: selectedBrand,
     };
     const formData = new FormData();
-    formData.append("product", JSON.stringify(newProduct));
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
+    if (!onEdit) {
+      formData.append("product", JSON.stringify(newProduct));
+      if (!images) {
+        return;
+      }
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+      const res = await instance.post("/createProduct", formData);
+      return res.status;
+    } else {
+      if (images?.length && oldImage.length) {
+        const product = { ...newProduct, _id: _id, images: oldImage };
+        formData.append("product", JSON.stringify(product));
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+        const res = await instance.put("/editProduct", formData);
+        return res.status;
+      }
+      if (images?.length) {
+        const product = { ...newProduct, _id: _id };
+        formData.append("product", JSON.stringify(product));
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+        const res = await instance.put("/editProduct", formData);
+        return res.status;
+      } else {
+        const editedProduct: any = {
+          ...newProduct,
+          images: oldImage,
+          _id: _id,
+        };
+        const res = await instance.put("/editProduct", editedProduct);
+        setEditableProduct(null);
+        setOnEdit(false);
+        return res.status;
+      }
     }
-    const res = await instance.post("/createProduct", formData);
-    return res.status;
   } catch (error) {
     console.error(error);
   }
