@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import React from "react";
-import SignUp from "../components/SignUp";
 import { BasketBarVisiblity } from "@/context/BasketVisiblity";
 import { ProductsInBasket } from "@/context/FoodsInBasket";
 
