@@ -121,9 +121,14 @@ export const AddProductBar = ({
       setEditableProduct,
       editableProduct.images
     );
-    setIsAddProductVisible(false);
-    if (status == 201) return alert("Successfully created");
-    if (status == 200) return alert("Successfully updated");
+    if (status == 201) {
+      setIsAddProductVisible(false);
+      return alert("Successfully created");
+    }
+    if (status == 200) {
+      setIsAddProductVisible(false);
+      return alert("Successfully updated");
+    }
     if (status == 400) return alert("Failed to update");
     if (status == 403) return alert("ProductCode conflict");
   };
