@@ -13,22 +13,18 @@ import { ProductFilterRecent } from "@/components/ProductFilterRecent";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ productData }: { productData: ProductType[] }) {
-  console.log(productData);
+export default function Home() {
   return (
     <div>
-      {/* 
-      <Hero /> */}
-      {/* <RecommendedItems productData={productData} /> */}
-      <Product productData={productData} />
+      <Hero />
     </div>
   );
 }
 
-export const getServerSideProps = async () => {
-  const productRes = await instance.get("/getProducts");
-  const productData = productRes.data;
-  return {
-    props: { productData },
-  };
-};
+// export const getServerSideProps = async () => {
+//   const productRes = await instance.get("/getProducts");
+//   const productData = productRes.data;
+//   return {
+//     props: { productData },
+//   };
+// };
