@@ -1,23 +1,14 @@
 import Product from "../components/Product";
 import { instance } from "../instance";
 import { ProductType } from "../types/productType";
+import ProductDetail from "./productdetail";
 
 export default function Home({ productData }: { productData: ProductType[] }) {
-  console.log(productData);
   return (
-    <div>
-      {/* 
-      <Hero /> */}
-      {/* <RecommendedItems productData={productData} /> */}
-      <Product productData={productData} />
+    <div className="bg-white p-4 m-10 rounded-lg ">
+      <a href="/productList" className="">
+        test for productList
+      </a>
     </div>
   );
 }
-
-// export const getServerSideProps = async () => {
-//   const productRes = await instance.get("/getProducts");
-//   const productData = productRes.data;
-//   return {
-//     props: { productData },
-//   };
-// };

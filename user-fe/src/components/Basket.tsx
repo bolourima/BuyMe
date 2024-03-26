@@ -1,4 +1,4 @@
-import DelletIcon from "@/SVG/DelletIcon";
+import DelletIcon from "@/icon/DelletIcon";
 import { BasketVisiblityContext } from "@/context/BasketVisiblity";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { ProductType } from "@/types/productType";
