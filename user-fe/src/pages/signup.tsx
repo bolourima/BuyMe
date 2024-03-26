@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createUser } from "@/instance";
+import { createUser } from "../utilities/userRelatedUtils";
 
 export default function SignUp() {
   const router = useRouter();
