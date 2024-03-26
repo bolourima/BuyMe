@@ -10,9 +10,10 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const orderNumber = orderNumberGenerator();
     const order = await Order.create({
-      products: req.body,
+      products: req.body.products,
       orderNumber: orderNumber,
       user: req.user.id,
+      total: req.body.total,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

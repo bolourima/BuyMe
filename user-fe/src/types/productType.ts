@@ -13,6 +13,7 @@ export type ProductType = {
   images: string[];
   createdAt: string;
   updatedAt: string;
+  count: number;
 };
 type DiscountType = {
   isSale: boolean;
