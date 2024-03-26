@@ -14,7 +14,7 @@ export default function Product({
 
   return (
     <div className="">
-      <div className={`${isList ? "hidden" : "block"}`}>
+      {/* <div className={`${isList ? "hidden" : "block"}`}>
         {productData.map((Data, i) => (
           <ProductCardThree key={i} data={Data} />
         ))}
@@ -27,7 +27,7 @@ export default function Product({
         {productData.map((Data, i) => (
           <ProductCardTwo key={i} data={Data} />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

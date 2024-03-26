@@ -1,6 +1,6 @@
-import DelletIcon from "@/SVG/DelletIcon";
 import { BasketVisiblityContext } from "@/context/BasketVisiblity";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import DelletIcon from "@/icon/DelletIcon";
 import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
 import React, { useContext, useEffect, useState } from "react";

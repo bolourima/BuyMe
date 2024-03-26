@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+.hero{
+    background-size: 105%;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    position: relative;
+}
+.hero:hover{
+    background-size:110%;
+
+    
+
+}
+.hero:hover span{
+    opacity: 1;
+
+
+}
+span {
+    opacity: 0;
+    color: white;
+    font-family: sans-serif;
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 
 

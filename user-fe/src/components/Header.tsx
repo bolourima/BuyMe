@@ -5,6 +5,7 @@ import { MyCartIcon } from "@/icon/MyCartIcon";
 import { OrderIcon } from "@/icon/OrderIcon";
 import { ProfileIcon } from "@/icon/ProfileIcon";
 import { SearchIcon } from "@/icon/SearchIcon";
+import Link from "next/link";
 
 import React, { useState } from "react";
 
@@ -15,12 +16,15 @@ export const Header = () => {
     setOpenSearch(true);
   };
   return (
-    <div className=" w-full lg:w-full flex justify-center py-4  bg-white">
+    <div className=" w-full lg:w-full flex justify-center py-4  bg-white fixed z-50">
       <div className=" flex items-center w-10/12 place-content-between">
-        <div className="flex">
-          <h1 className=" font-extrabold text-4xl">Buy</h1>
-          <h1 className=" content-center font-semibold text-2xl">me</h1>
-        </div>
+        <Link href={"./"}>
+          <div className="flex">
+            <h1 className=" font-extrabold text-4xl">Buy</h1>
+            <h1 className=" content-center font-semibold text-2xl">me</h1>
+          </div>
+        </Link>
+
         <div className=" flex gap-6">
           <h1 className=" font-semibold text-xl">Home</h1>
           <h1 className=" content-center text-xl flex items-center gap-2 ">
