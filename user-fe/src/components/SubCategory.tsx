@@ -79,20 +79,20 @@ export const SubCategory = () => {
   };
 
   return (
-    <div className="w-64 bg-gray-200 p-4">
+    <div className="bg-[#2F306A] text-white w-2/12 p-4 flex flex-col gap-5">
       {/* Category */}
-      <div className="mb-4">
-        <div className="flex justify-between" onClick={handleOpenCategory}>
-          <button className="font-bold">Category</button>
+      <div className="">
+        <div className="flex justify-between " onClick={handleOpenCategory}>
+          <button className="font-bold uppercase  ">Category</button>
           <p className={`${isOpenCategory ? " rotate-90" : ""}`}> &#62;</p>
         </div>
 
-        <div className={`pl-4 mt-2 `}>
+        <div className={`uppercase ml-1 pl-1 mt-3`}>
           {SubCategory.map((subCategory, index) => (
-            <div>
+            <div className=" p-2 hover:bg-slate-300 rounded-l-lg">
               <button
                 key={index}
-                className={`hover:bg-blue-200 transition-all ${
+                className={`transition-all uppercase ${
                   isOpenCategory ? "block" : "hidden"
                 }`}
                 onClick={() => handlerSubCategory(index)}
@@ -104,23 +104,21 @@ export const SubCategory = () => {
         </div>
       </div>
       {/* Brands */}
-      <div className="mb-4">
+      <div className="">
         <div className="flex justify-between" onClick={handleOpenBrands}>
-          <button className="font-bold">Brands</button>
+          <button className="font-bold uppercase">Brands</button>
           <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
         </div>
-        <div className="pl-4 mt-2">
+        <div className="pl-1 ml-1 uppercase mt-3">
           {SubCategory[subCategoryIndex].brands.map((brands) => (
-            <div>
-              <div
-                key={brands._id}
-                className={`hover:bg-blue-200 ${
-                  isOpenBrands ? "block" : "hidden"
-                }`}
-              >
-                <input type="checkbox" />
-                {brands.name}
-              </div>
+            <div
+              key={brands._id}
+              className={` p-2 hover:bg-slate-300 rounded-l-lg ${
+                isOpenBrands ? "block" : "hidden"
+              }`}
+            >
+              <input type="checkbox" className="" />
+              {brands.name}
             </div>
           ))}
         </div>

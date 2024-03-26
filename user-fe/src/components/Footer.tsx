@@ -10,8 +10,8 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <div className=" lg:w-full bg-gray-100 flex flex-col  items-center  ">
-      <div className=" lg:flex flex-col items-center bg-gray-100 py-10 gap-10 w-9/12">
+    <div className=" lg:w-full bg-[#2F306A] border-t-2 lg:mt-10 flex flex-col  items-center  ">
+      <div className=" lg:flex flex-col items-center py-10 gap-10 w-9/12">
         <div className=" flex flex-col items-center gap-2">
           <h1 className=" text-3xl font-semibold">
             Subscribe on our newsletter
@@ -23,7 +23,7 @@ export const Footer = () => {
         </div>
 
         <div className=" flex gap-2 w-full justify-center ">
-          <div className="flex items-center gap-2 p-2 border rounded bg-white w-3/12">
+          <div className="flex items-center gap-2 p-2 border rounded w-3/12">
             <EmailIcon />
             <input
               type="Email"
@@ -37,7 +37,7 @@ export const Footer = () => {
         </div>
       </div>
 
-      <div className=" hidden lg:block lg:flex w-full bg-white flex-col items-center">
+      <div className=" hidden lg:block lg:flex w-full  flex-col items-center">
         <div className="flex gap-2 w-10/12  py-10 place-content-between ">
           <div className="w-1/6 flex flex-col gap-4">
             <div>

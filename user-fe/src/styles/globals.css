@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  background-color: #ffffff;
+  background-color: #2f306a;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -28,7 +28,7 @@ svg:hover path {
 }
 
 .container {
-  width: 1180px;
+  width: 1100px;
   margin: auto;
   /* энэ containeriig lg max-width болгож ашиглал гое байж магад   */
 }

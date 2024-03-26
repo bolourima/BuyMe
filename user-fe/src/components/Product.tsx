@@ -2,8 +2,6 @@ import React, { use, useContext, useState } from "react";
 import { ProductCardTwo } from "./ProductCardTwo";
 import { ProductCardThree } from "./ProductCardThree";
 import { ProductType } from "../types/productType";
-import { ProductFilterRecent } from "./ProductFilterRecent";
-import { RelatedProductCard } from "./RelatedProductCard";
 import AppIcon from "@/SVG/AppIcon";
 import ListIcon from "@/SVG/ListIcon";
 import { BasketVisiblityContext } from "@/context/BasketVisiblity";
@@ -35,7 +33,7 @@ export default function Product({
       putIntoBasket(product, productsInBasket, setProductsInBasket);
   };
   return (
-    <div className="container">
+    <div className="">
       {isBasketVisible && <Basket />}
       <div className="flex py-4">
         <button
@@ -53,7 +51,7 @@ export default function Product({
         <button onChange={handleChangeBundling}>next page</button>
       </div>
       <div className={`${isList ? "hidden" : "block"}`}>
-        {productData.slice(renderedDataindex, maxDatasToShow).map((Data, i) => (
+        {productData.map((Data, i) => (
           <ProductCardThree
             key={i}
             data={Data}
@@ -62,9 +60,7 @@ export default function Product({
         ))}
       </div>
       <div
-        className={`${
-          isList ? "block" : "hidden"
-        } grid grid-cols-3 grid-rows-3 lg:gap-y-5`}
+        className={`${isList ? "block" : "hidden"} grid grid-cols-3 lg:gap-y-5`}
       >
         {productData.slice(renderedDataindex, maxDatasToShow).map((Data, i) => (
           <ProductCardTwo key={i} data={Data} setProductData={setProductData} />

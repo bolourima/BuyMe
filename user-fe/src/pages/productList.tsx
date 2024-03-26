@@ -10,11 +10,8 @@ export default function productList({
   productData: ProductType[];
 }) {
   return (
-    <div>
+    <div className="">
       <div className="lg:flex lg:gap-5">
-        {/* 
-      <Hero /> */}
-        {/* <RecommendedItems productData={productData} /> */}
         <SubCategory />
         <Product productData={productData} />
       </div>
