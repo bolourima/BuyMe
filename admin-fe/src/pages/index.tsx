@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { AddProductBar } from "@/components/AddProductBar";
+import React from "react";
 import { instance } from "@/instance";
 import { Category } from "@/types/categoryType";
 import { MainProducts } from "@/components/MainProducts";
 import { LeftBar } from "@/components/LeftBar";
 import { NavBar } from "@/components/NavBar";
-import { Product } from "@/types/productType";
 import { GetProductType } from "@/types/getProductType";
 import DataTable from "@/components/DataTable";
 
@@ -16,6 +14,15 @@ export default function Home({
   categoryData: Category[];
   productData: GetProductType[];
 }) {
+  function setResource(
+    info:
+      | string
+      | import("next-cloudinary").CloudinaryUploadWidgetInfo
+      | undefined
+  ) {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <>
       <NavBar />

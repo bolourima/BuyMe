@@ -1,89 +1,69 @@
-import React from "react";
+import React, { use, useContext, useState } from "react";
 import { ProductCardTwo } from "./ProductCardTwo";
 import { ProductCardThree } from "./ProductCardThree";
-import { ProductFilterRecent } from "./ProductFilterRecent";
-import { RelatedProductCard } from "./RelatedProductCard";
-
-type DataType = {
-  name: string;
-  description: string;
-  price: number;
-  productCode: number;
-  quantity: number;
-  tag: string;
-  disCount: number;
-  subCategoryName: string;
-  brandName: string;
-  img: string[];
-  createdAt: string;
-  updatedAt: string;
-};
-
-export default function Product() {
-  const Datas: DataType[] = [
-    {
-      name: "GT-2",
-      description:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores libero sequi veniam quisquam incidunt consequuntur, sunt dolorum ex magnam molestias assumenda, voluptas corporis nesciunt dolore, saepe quam tenetur aliquid aliquam.",
-      price: 150000,
-      productCode: 152415215,
-      quantity: 200,
-      tag: "end yu bichih ve sda ",
-      disCount: 10,
-      subCategoryName: "hud sda",
-      brandName: "sdasdasd",
-      img: ["asdasdasdads"],
-      createdAt: "1972-12-01",
-      updatedAt: "1972-12-01",
-    },
-    {
-      name: "GT-2",
-      description:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores libero sequi veniam quisquam incidunt consequuntur, sunt dolorum ex magnam molestias assumenda, voluptas corporis nesciunt dolore, saepe quam tenetur aliquid aliquam.",
-      price: 150000,
-      productCode: 152415215,
-      quantity: 200,
-      tag: "end yu bichih ve sda ",
-      disCount: 10,
-      subCategoryName: "hud sda",
-      brandName: "sdasdasd",
-      img: ["asdasdasdads"],
-      createdAt: "1972-12-01",
-      updatedAt: "1972-12-01",
-    },
-    {
-      name: "GT-2",
-      description:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores libero sequi veniam quisquam incidunt consequuntur, sunt dolorum ex magnam molestias assumenda, voluptas corporis nesciunt dolore, saepe quam tenetur aliquid aliquam.",
-      price: 150000,
-      productCode: 152415215,
-      quantity: 200,
-      tag: "end yu bichih ve sda ",
-      disCount: 10,
-      subCategoryName: "hud sda",
-      brandName: "sdasdasd",
-      img: ["asdasdasdads"],
-      createdAt: "1972-12-01",
-      updatedAt: "1972-12-01",
-    },
-  ];
-
-  const isList: boolean = true;
-
+import { ProductType } from "../types/productType";
+import AppIcon from "@/icon/AppIcon";
+import ListIcon from "@/icon/ListIcon";
+import { BasketVisiblityContext } from "@/context/BasketVisiblity";
+import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { Basket } from "./Basket";
+import { ClickHandler } from "@/types/handlerType";
+import { putIntoBasket } from "@/utilities/putIntoBasket";
+export default function Product({
+  productData,
+}: {
+  productData: ProductType[];
+}) {
+  const [isList, setIsList] = useState(true);
+  const handleIsList = () => {
+    setIsList(!isList);
+  };
+  const maxDatasToShow = 5;
+  const [renderedDataindex, setDataIndex] = useState(0);
+  const handleChangeBundling = () =>
+    setDataIndex(renderedDataindex + maxDatasToShow); //test frot changing product pages
+  const { isBasketVisible, setIsBasketVisible } = useContext(
+    BasketVisiblityContext
+  );
+  const { productsInBasket, setProductsInBasket } = useContext(
+    ProductsInBasketContext
+  );
+  const setProductData: ClickHandler = (product: ProductType) => {
+    setIsBasketVisible(true),
+      putIntoBasket(product, productsInBasket, setProductsInBasket);
+  };
   return (
-    <div className="">
+    <div className="bg-[#2F306A]">
+      {isBasketVisible && <Basket />}
+      <div className="flex py-4">
+        <button
+          onClick={handleIsList}
+          className={`${isList ? "hidden" : "block"}`}
+        >
+          <AppIcon />
+        </button>
+        <button
+          onClick={handleIsList}
+          className={`${isList ? "block" : "hidden"}`}
+        >
+          <ListIcon />
+        </button>
+        <button onChange={handleChangeBundling}>next page</button>
+      </div>
       <div className={`${isList ? "hidden" : "block"}`}>
-        {Datas.map((Data, i) => (
-          <ProductCardThree key={i} data={Data} index={i} />
+        {productData.map((Data, i) => (
+          <ProductCardThree
+            key={i}
+            data={Data}
+            setProductData={setProductData}
+          />
         ))}
       </div>
       <div
-        className={`${
-          isList ? "block" : "hidden"
-        } grid gap-4 grid-cols-3 grid-rows-3`}
+        className={`${isList ? "block" : "hidden"} grid grid-cols-3 lg:gap-y-5`}
       >
-        {Datas.map((Data: DataType, i) => (
-          <ProductCardTwo key={i} data={Data} index={i} />
+        {productData.slice(renderedDataindex, maxDatasToShow).map((Data, i) => (
+          <ProductCardTwo key={i} data={Data} setProductData={setProductData} />
         ))}
       </div>
     </div>

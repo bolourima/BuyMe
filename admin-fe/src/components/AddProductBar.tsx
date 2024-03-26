@@ -8,6 +8,7 @@ import { Category } from "@/types/categoryType";
 import { SubCategory } from "@/types/subCategoryType";
 import { instance } from "@/instance";
 import { GetProductType } from "@/types/getProductType";
+import { Trash } from "@/svg/Trash";
 
 export const AddProductBar = ({
   categoryData,
@@ -25,15 +26,15 @@ export const AddProductBar = ({
   setEditableProduct: any;
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    categoryData[0].name
+    onEdit
+      ? editableProduct
+        ? editableProduct.categoryId.name
+        : ""
+      : categoryData[0].name
   );
-  const [selectedBrand, setSelectedBrand] = useState<string>("");
-  const [selectedSub, setSelectedSub] = useState<SubCategory[]>([]);
-  const [domSub, setDomSub] = useState<SubCategory[]>([]);
-  const [isSale, setIsSale] = useState(false);
-  const [salePercent, setSalePercent] = useState<any>(0);
-  const [subName, setSubName] = useState("");
-  const [images, setImages] = useState<FileList>();
+  const [selectedBrand, setSelectedBrand] = useState<string>(
+    editableProduct ? editableProduct.brandName : ""
+  );
   const [subCategoryData, setSubCategoryData] = useState<SubCategory[]>([
     {
       _id: "",
@@ -47,6 +48,23 @@ export const AddProductBar = ({
       ],
     },
   ]);
+  const [subName, setSubName] = useState(
+    editableProduct ? editableProduct.subCategoryName : subCategoryData[0].name
+  );
+  const [domSub, setDomSub] = useState<SubCategory[]>([]);
+  const [isSale, setIsSale] = useState(
+    onEdit ? editableProduct.disCount.isSale : false
+  );
+  const [salePercent, setSalePercent] = useState<any>(
+    onEdit ? editableProduct.disCount.salePercent : 0
+  );
+  const [images, setImages] = useState<File[]>([]);
+  const [imageOnePreview, setImageOnePreview] = useState<string>("");
+  const [firstFile, setFirstFile] = useState<File>();
+  const [imageTwoPreview, setImageTwoPreview] = useState<string>("");
+  const [secondFile, setSecondFile] = useState<File>();
+  const [imageThreePreview, setImageThreePreview] = useState<string>("");
+  const [thirdFile, setThirdFile] = useState<File>();
   const { values, errors, handleChange, handleBlur, touched } = useFormik({
     initialValues: {
       name: onEdit ? editableProduct.name : "",
@@ -60,20 +78,27 @@ export const AddProductBar = ({
     onSubmit: () => {},
   });
   const getSubCategoryByCategory = useMemo(async () => {
-    const res = await instance.post(
-      "/getSubCategories",
-      { name: selectedCategory },
-      { headers: { "Content-Type": "application/json" } }
+    const res = await instance.post("/getSubCategories", {
+      name: selectedCategory,
+    });
+    const subCategory: SubCategory[] = res.data;
+    setSubCategoryData(subCategory);
+    setDomSub(subCategory);
+    const selectedSubCategory: SubCategory[] = subCategory.filter((sub) => {
+      return sub.name === subName;
+    });
+    setSelectedBrand(
+      selectedSubCategory.length > 0
+        ? selectedSubCategory[0].brands[0].name
+        : ""
     );
-    setSubCategoryData(res.data);
-    setSelectedSub(res.data);
-    setDomSub(res.data);
-    setSelectedBrand(res.data[0].brands[0].name);
-    setSubName(res.data[0].name);
+    setSubName(
+      selectedSubCategory.length > 0 ? selectedSubCategory[0].name : ""
+    );
   }, [selectedCategory]);
   const preparingBrands = useMemo(async () => {
     setDomSub(
-      selectedSub.filter((el) => {
+      subCategoryData.filter((el) => {
         return el.name === subName;
       })
     );
@@ -81,6 +106,7 @@ export const AddProductBar = ({
   const creatingProduct = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const status = await createProduct(
+      editableProduct._id,
       values,
       touched,
       errors,
@@ -95,9 +121,16 @@ export const AddProductBar = ({
       setEditableProduct,
       editableProduct.images
     );
-    setIsAddProductVisible(false);
-    if (status == 201) return alert("Successfully created");
-    if (status == 200) return alert("Successfully updated");
+    if (status == 201) {
+      setIsAddProductVisible(false);
+      return alert("Successfully created");
+    }
+    if (status == 200) {
+      setIsAddProductVisible(false);
+      return alert("Successfully updated");
+    }
+    if (status == 400) return alert("Failed to update");
+    if (status == 403) return alert("ProductCode conflict");
   };
   return (
     <>
@@ -125,6 +158,7 @@ export const AddProductBar = ({
               <div className="flex  flex-col bg-white rounded-lg w-[563px] p-6 gap-4">
                 <div className="flex flex-col gap-2">
                   <span className="">Бүтээгдэхүүний нэр</span>
+
                   <input
                     id="name"
                     value={values.name}
@@ -174,27 +208,168 @@ export const AddProductBar = ({
                   <span>Бүтээгдэхүүний зураг</span>
                 </div>
                 <div className="flex gap-2">
-                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                  <label className="flex cursor-pointer relative w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                  </div>
-                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                    {onEdit && editableProduct.images[0] && (
+                      <div className="absolute w-full h-full rounded-xl flex justify-end">
+                        <img
+                          src={editableProduct.images[0]}
+                          alt="Product Image"
+                          className="w-full h-full rounded-xl"
+                        />
+                        <button className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1">
+                          <Trash />
+                        </button>
+                      </div>
+                    )}
+                    {imageOnePreview ? (
+                      <div className="absolute w-full h-full z-30 flex justify-end">
+                        <img className="w-full h-full" src={imageOnePreview} />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            setImageOnePreview(""),
+                              setImages(
+                                images.filter((el) => {
+                                  return el.name !== firstFile?.name;
+                                })
+                              );
+                          }}
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    ) : (
+                      <input
+                        type="file"
+                        hidden
+                        multiple={false}
+                        className="relative"
+                        onChange={(e) => {
+                          if (!e.target.files || e.target.files.length === 0) {
+                            return;
+                          }
+                          setFirstFile(e.target.files[0]);
+                          setImageOnePreview(
+                            URL.createObjectURL(e.target.files[0])
+                          );
+                          setImages([...images, e.target.files[0]]);
+                        }}
+                      />
+                    )}
+                  </label>
+
+                  <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                  </div>
-                  <div className="flex w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
+                    {onEdit && editableProduct.images[1] && (
+                      <div className="absolute w-full h-full rounded-xl flex justify-end">
+                        <img
+                          src={editableProduct.images[1]}
+                          alt="Product Image"
+                          className="w-full h-full rounded-xl"
+                        />
+                        <button
+                          type="button"
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    )}
+                    {imageTwoPreview ? (
+                      <div className="absolute w-full h-full z-30 flex justify-end">
+                        <img className="w-full h-full" src={imageTwoPreview} />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            setImageTwoPreview(""),
+                              setImages(
+                                images.filter((el) => {
+                                  return el.name !== secondFile?.name;
+                                })
+                              );
+                          }}
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    ) : (
+                      <input
+                        type="file"
+                        hidden
+                        multiple={false}
+                        className="relative"
+                        onChange={(e) => {
+                          if (!e.target.files || e.target.files.length === 0) {
+                            return;
+                          }
+                          setSecondFile(e.target.files[0]);
+                          setImageTwoPreview(
+                            URL.createObjectURL(e.target.files[0])
+                          );
+                          setImages([...images, e.target.files[0]]);
+                        }}
+                      />
+                    )}
+                  </label>
+                  <label className="flex relative cursor-pointer w-[125px] h-[125px] border-dashed border-2 justify-center items-center rounded-xl">
                     <IconPic />
-                  </div>
-                  <div className="flex w-[125px] h-[125px] justify-center items-center ">
-                    <input
-                      type="file"
-                      multiple={true}
-                      onChange={(e) => {
-                        if (!e.target.files) {
-                          return;
-                        }
-                        setImages(e.target.files);
-                      }}
-                    />
-                  </div>
+                    {onEdit && editableProduct.images[2] && (
+                      <div className="absolute w-full h-full rounded-xl flex justify-end">
+                        <img
+                          src={editableProduct.images[2]}
+                          alt="Product Image"
+                          className="w-full h-full rounded-xl"
+                        />
+                        <button
+                          type="button"
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    )}
+                    {imageThreePreview ? (
+                      <div className="absolute w-full h-full z-30 flex justify-end">
+                        <img
+                          className="w-full h-full"
+                          src={imageThreePreview}
+                        />
+                        <button
+                          onClick={(e) => {
+                            setImageThreePreview(""),
+                              setImages(
+                                images.filter((el) => {
+                                  return el.name !== thirdFile?.name;
+                                })
+                              );
+                          }}
+                          className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
+                        >
+                          <Trash />
+                        </button>
+                      </div>
+                    ) : (
+                      <input
+                        type="file"
+                        hidden
+                        multiple={false}
+                        className="relative"
+                        onChange={(e) => {
+                          if (!e.target.files || e.target.files.length === 0) {
+                            return;
+                          }
+                          setThirdFile(e.target.files[0]);
+                          setImageThreePreview(
+                            URL.createObjectURL(e.target.files[0])
+                          );
+                          setImages([...images, e.target.files[0]]);
+                        }}
+                      />
+                    )}
+                  </label>
                 </div>
               </div>
               <div className="flex bg-white rounded-lg w-[563px] p-6 gap-4">
@@ -236,14 +411,17 @@ export const AddProductBar = ({
                 <div className="flex flex-col gap-2">
                   <span className="">Ерөнхий ангилал</span>
                   <select
-                    id="category"
                     onChange={(e) => setSelectedCategory(e.target.value)}
                     className="w-full h-8 rounded-lg bg-[#F7F7F8]"
+                    defaultValue={
+                      editableProduct ? editableProduct.categoryId.name : ""
+                    }
                   >
                     {categoryData.length > 0 &&
                       categoryData.map((el) => {
                         return (
                           <option
+                            value={el.name}
                             id={el._id}
                             className="text-black"
                             key={el._id}
@@ -260,14 +438,18 @@ export const AddProductBar = ({
                     onChange={(e) => setSubName(e.target.value)}
                     id="sub-category"
                     className="w-full h-8 rounded-lg bg-[#F7F7F8]"
+                    value={subName}
                   >
-                    {subCategoryData.map((el) => {
-                      return (
-                        <option className="text-black" key={el._id}>
-                          {el.name}
-                        </option>
-                      );
-                    })}
+                    {subCategoryData.map((el) => (
+                      <option
+                        value={el.name}
+                        id={el._id}
+                        className="text-black"
+                        key={el._id}
+                      >
+                        {el.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -275,22 +457,26 @@ export const AddProductBar = ({
                 <select
                   onChange={(e) => setSelectedBrand(e.target.value)}
                   className="w-full h-8 rounded-lg bg-[#F7F7F8]"
+                  id="brandName"
+                  value={editableProduct ? editableProduct.brandName : ""}
                 >
-                  {domSub.map((sub) => {
-                    return (
-                      <option id={sub._id}>
-                        {sub.brands.map((brand) => {
-                          return brand.name;
-                        })}
+                  {domSub.map((sub) =>
+                    sub.brands.map((brand) => (
+                      <option key={brand._id} value={brand.name}>
+                        {brand.name}
                       </option>
-                    );
-                  })}
+                    ))
+                  )}
                 </select>
+
                 <div className="flex items-center px-4 gap-4">
                   {onEdit ? (
                     <input
                       type="checkbox"
-                      checked={editableProduct.disCount.isSale}
+                      onChange={(e) => {
+                        setIsSale(e.target.checked);
+                      }}
+                      defaultChecked={editableProduct.disCount.isSale}
                     />
                   ) : (
                     <div className="form-control">
@@ -307,19 +493,18 @@ export const AddProductBar = ({
                     Хямдралтай эсэх
                   </label>
                 </div>
-                {onEdit ? (
+                {onEdit && isSale ? (
                   <input
                     type="number"
                     defaultValue={editableProduct.disCount.salePercent}
+                    onChange={(e) => setSalePercent(e.target.value)}
                     className="bg-gray-100 pl-4 h-12 rounded-lg"
-                    placeholder="10"
                   />
                 ) : (
                   <div>
                     {!isSale ? (
                       <input
                         className="w-11/12 text-black rounded-lg h-12 mx-4 px-4 bg-gray-100"
-                        placeholder="20%"
                         type="number"
                         disabled
                       />
@@ -328,7 +513,6 @@ export const AddProductBar = ({
                         id="salePercent"
                         onChange={(e) => setSalePercent(e.target.value)}
                         className="w-11/12 text-black rounded-lg h-12 mx-4 px-4 bg-gray-100"
-                        placeholder="20%"
                         type="number"
                       />
                     )}

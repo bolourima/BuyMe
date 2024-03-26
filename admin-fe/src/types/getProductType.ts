@@ -1,6 +1,7 @@
 import { Category } from "./categoryType";
 
 export type GetProductType = {
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -12,5 +13,5 @@ export type GetProductType = {
   subCategoryName: string;
   brandName: string;
   createdAt: string;
-  images: [];
+  images: string[];
 };

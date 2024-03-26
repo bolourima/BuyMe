@@ -16,6 +16,7 @@ export const MainProducts = ({
   const [isAddProductVisible, setIsAddProductVisible] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [editableProduct, setEditableProduct] = useState<GetProductType>({
+    _id: "",
     name: "",
     description: "",
     price: 0,

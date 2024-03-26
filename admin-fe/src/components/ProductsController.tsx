@@ -1,3 +1,4 @@
+import { instance } from "@/instance";
 import { Edit } from "@/svg/Edit";
 import { IconCategory } from "@/svg/IconCategory";
 import { IconDollar } from "@/svg/IconDollar";
@@ -18,6 +19,19 @@ export const ProductsController = ({
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>;
   setEditableProduct: React.Dispatch<React.SetStateAction<GetProductType>>;
 }) => {
+  const deleteProduct = async (id: any) => {
+    try {
+      const res = await instance.delete(`/deleteProduct/${id}`);
+
+      if (res.status === 200) {
+        console.log("Product successfully deleted");
+      } else {
+        console.warn("Unexpected status code:", res.status);
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
   return (
     <>
       <div className="flex gap-5 h-12 items-center p-4">
@@ -89,7 +103,7 @@ export const ProductsController = ({
                   />
                 </div>
               </div>
-              {/* <div className="flex flex-col bg-white p-4 mt-4 rounded-lg">
+              <div className="flex flex-col bg-white p-4 mt-4 rounded-lg">
                 <div className="flex border-b-[1px] justify-between">
                   <div></div>
                   <div>
@@ -124,7 +138,10 @@ export const ProductsController = ({
                         <p className="w-1/6">{product.quantity}</p>
                         <p className="w-1/6">{product.createdAt}</p>
                         <div className="flex gap-2">
-                          <button className="w-4 h-4">
+                          <button
+                            onClick={() => deleteProduct(product._id)}
+                            className="w-4 h-4"
+                          >
                             <Trash />
                           </button>
                           <button
@@ -142,7 +159,7 @@ export const ProductsController = ({
                     );
                   })}
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

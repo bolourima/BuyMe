@@ -1,7 +1,6 @@
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { GetProductType } from "@/types/getProductType";
-import { Edit } from "@/svg/Edit";
 
 const columns: GridColDef[] = [
   { field: "_id", headerName: "ID", type: "string", width: 200 },

@@ -1,23 +1,14 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { Hero } from "@/components/Hero";
-import { SubCategory } from "@/components/SubCategory";
-import { ProductCardOne } from "@/components/ProductCardOne";
-import { ProductCardTwo } from "@/components/ProductCardTwo";
-import { ProductCardThree } from "@/components/ProductCardThree";
-import Product from "@/components/Product";
-import RecommendedItems from "@/components/RecommendedItems";
-import { ProductFilterRecent } from "@/components/ProductFilterRecent";
+import Product from "../components/Product";
+import { instance } from "../instance";
+import { ProductType } from "../types/productType";
+import ProductDetail from "./productdetail";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+export default function Home({ productData }: { productData: ProductType[] }) {
   return (
-    <div>
-      {/* 
-      <Hero /> */}
-      <RecommendedItems />
-      <Product />
+    <div className="bg-white p-4 m-10 rounded-lg ">
+      <a href="/productList" className="">
+        test for productList
+      </a>
     </div>
   );
 }

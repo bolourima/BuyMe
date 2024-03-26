@@ -1,10 +1,11 @@
 import { instance } from "@/instance";
 import { Product } from "@/types/productType";
 export const createProduct = async (
+  _id: string,
   values: Product,
   touched: any,
   errors: any,
-  images: FileList | undefined,
+  images: File[],
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,
@@ -13,7 +14,7 @@ export const createProduct = async (
   onEdit: boolean,
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>,
   setEditableProduct: any,
-  oldImage: []
+  oldImage: string[]
 ) => {
   if (
     (!onEdit &&
@@ -47,8 +48,8 @@ export const createProduct = async (
       brandName: selectedBrand,
     };
     const formData = new FormData();
-    formData.append("product", JSON.stringify(newProduct));
     if (!onEdit) {
+      formData.append("product", JSON.stringify(newProduct));
       if (!images) {
         return;
       }
@@ -56,16 +57,37 @@ export const createProduct = async (
         formData.append("images", images[i]);
       }
       const res = await instance.post("/createProduct", formData);
-      console.log("created");
       return res.status;
     } else {
-      for (let i = 0; i < oldImage.length; i++) {
-        formData.append("images", oldImage[i]);
+      if (images?.length && oldImage.length) {
+        const product = { ...newProduct, _id: _id, images: oldImage };
+        formData.append("product", JSON.stringify(product));
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+        const res = await instance.put("/editProduct", formData);
+        return res.status;
       }
-      const res = await instance.put("/editProduct", formData);
-      setEditableProduct(null);
-      setOnEdit(false);
-      return res.status;
+      if (images?.length) {
+        const product = { ...newProduct, _id: _id };
+        formData.append("product", JSON.stringify(product));
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+        const res = await instance.put("/editProduct", formData);
+        console.log(res);
+        return res.status;
+      } else {
+        const editedProduct: any = {
+          ...newProduct,
+          images: oldImage,
+          _id: _id,
+        };
+        const res = await instance.put("/editProduct", editedProduct);
+        setEditableProduct(null);
+        setOnEdit(false);
+        return res.status;
+      }
     }
   } catch (error) {
     console.error(error);
