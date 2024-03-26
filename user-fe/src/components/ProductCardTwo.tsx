@@ -29,13 +29,13 @@ export const ProductCardTwo = ({
 
   const { isSale, salePercent } = disCount;
   const sale = (price * 100) / salePercent;
-  const imgFirstfix = 0;
+  const imgFirstFix = 0;
 
   return (
     <div className=" bg-[#2F306A] hover:bg-slate-500 border border-slate-700 hover:border-gray-300 text-white rounded w-11/12 hover:scale-105 duration-300 cursor-pointer">
       <div className="lg:px-9 lg:pt-4  text-center">
         <a href={`/productdetail?${_id}`}>
-          <img src={images[imgFirstfix]} className="h-80 w-10/12 m-auto" />
+          <img src={images[imgFirstFix]} className="h-80 w-10/12 m-auto" />
         </a>
       </div>
       <div className="lg:px-5  ">
