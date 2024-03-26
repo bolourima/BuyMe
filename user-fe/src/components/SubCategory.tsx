@@ -1,6 +1,13 @@
 import { Slider } from "@mui/material";
 import { stringify } from "querystring";
 import React, { useState } from "react";
+const MAX = 100000000;
+const MIN = 0;
+
+function valuetext(value: number) {
+  return `${value}MNT`;
+}
+const minDistance = 500000;
 type typeBrand = {
   _id: string;
   name: string;
@@ -19,6 +26,29 @@ type typeCategory = {
 };
 
 export const SubCategory = () => {
+  const [value2, setValue2] = React.useState<number[]>([MIN, MAX]);
+
+  const handleChange2 = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], MAX - minDistance);
+        setValue2([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setValue2([clamped - minDistance, clamped]);
+      }
+    } else {
+      setValue2(newValue as number[]);
+    }
+  };
   const SubCategory: typeCategory[] = [
     {
       _id: "SubCategory1",
@@ -60,6 +90,7 @@ export const SubCategory = () => {
   const [isOpenCategory, setOpenCategory] = useState(true);
   const [isOpenBrands, setOpenBrands] = useState(true);
   const [isOpenFeatures, setOpenFeatures] = useState(true);
+  const [isOpenColors, setOpenColors] = useState(true);
   const [subCategoryIndex, setCategoryIndex] = useState(1);
   const handlerSubCategory = (categoryindex: number) => {
     console.log(categoryindex);
@@ -68,6 +99,10 @@ export const SubCategory = () => {
   const handleOpenCategory = () => {
     console.log(isOpenCategory);
     setOpenCategory(!isOpenCategory);
+  };
+  const handleOpenColors = () => {
+    console.log(isOpenCategory);
+    setOpenColors(!isOpenColors);
   };
   const handleOpenBrands = () => {
     console.log(isOpenBrands);
@@ -123,6 +158,38 @@ export const SubCategory = () => {
           ))}
         </div>
       </div>
+      <Slider
+        getAriaLabel={() => "Minimum distance shift"}
+        value={value2}
+        onChange={handleChange2}
+        valueLabelDisplay="auto"
+        getAriaValueText={valuetext}
+        min={MIN}
+        max={MAX}
+        disableSwap
+      />
+
+      <input type="text" value={`${value2[0]} MNT`} />
+      <input type="text" value={`${value2[1]} MNT`} />
+      {/* Brands */}
+      <div className="">
+        <div className="flex justify-between" onClick={handleOpenColors}>
+          <button className="font-bold uppercase">filtered By colors</button>
+          <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
+        </div>
+        <div className="pl-1 ml-1 uppercase mt-3">
+          {SubCategory[subCategoryIndex].brands.map((brands) => (
+            <div
+              key={brands._id}
+              className={` p-2 hover:bg-slate-300 rounded-l-lg ${
+                isOpenBrands ? "block" : "hidden"
+              }`}
+            >
+              {brands.name}
+            </div>
+          ))}
+        </div>
+      </div>
       {/* Features
       <div className="mb-4">
         <div className="flex justify-between" onClick={handleOpenFeatures}>
@@ -144,14 +211,6 @@ export const SubCategory = () => {
           ))}
         </div>
       </div> */}
-      <Slider
-        getAriaLabel={() => "Minimum distance"}
-        value={[10, 50]}
-        onChange={() => {}}
-        valueLabelDisplay="auto"
-        getAriaValueText={(number) => `${number}`}
-        disableSwap
-      />
     </div>
   );
 };
