@@ -2,11 +2,13 @@ import Product from "../components/Product";
 import { instance } from "../instance";
 import { ProductType } from "../types/productType";
 
-import React from "react";
-
 export default function Home({ productData }: { productData: ProductType[] }) {
+  console.log(productData);
   return (
     <div>
+      {/* 
+      <Hero /> */}
+      {/* <RecommendedItems productData={productData} /> */}
       <Product productData={productData} />
     </div>
   );
