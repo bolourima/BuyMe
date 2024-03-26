@@ -6,11 +6,16 @@ export default function RecommendedItems({
 }: {
   ProductData: ProductType[];
 }) {
+  console.log(ProductData);
+
   return (
-    <div className="grid grid-cols-5 gap-4">
-      {ProductData.map((Data, i) => (
-        <ProductCardOne data={Data} key={i} />
-      ))}
+    <div className=" w-full flex flex-col items-center gap-16">
+      <h1 className=" font-extrabold text-6xl">Our Bestseller</h1>
+      <div className=" w-10/12 flex place-content-between gap-12 ">
+        {ProductData.map((Data, i) => (
+          <ProductCardOne data={Data} key={i} />
+        ))}
+      </div>
     </div>
   );
 }

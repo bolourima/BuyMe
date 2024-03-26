@@ -65,7 +65,7 @@ export default function Product({
         {productData.slice(renderedDataindex, maxDatasToShow).map((Data, i) => (
           <ProductCardTwo key={i} data={Data} setProductData={setProductData} />
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }

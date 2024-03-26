@@ -3,6 +3,8 @@ import Product from "../components/Product";
 import { instance } from "../instance";
 import { ProductType } from "../types/productType";
 import ProductDetail from "./productdetail";
+import Categories from "@/components/Categories";
+import RecommendedItems from "@/components/RecommendedItems";
 
 export default function Home({ productData }: { productData: ProductType[] }) {
   return (
@@ -12,6 +14,15 @@ export default function Home({ productData }: { productData: ProductType[] }) {
       <Product productData={productData} /> */}
       <Categories />
       {/* <RecommendedItems ProductData={productData} /> */}
+      <RecommendedItems ProductData={productData} />
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const productRes = await instance.get("/getProducts");
+  const productData = productRes.data;
+  return {
+    props: { productData },
+  };
+};
