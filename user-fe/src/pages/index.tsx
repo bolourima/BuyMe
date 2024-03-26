@@ -14,10 +14,10 @@ export default function Home({ productData }: { productData: ProductType[] }) {
   );
 }
 
-export const getServerSideProps = async () => {
-  const productRes = await instance.get("/getProducts");
-  const productData = productRes.data;
-  return {
-    props: { productData },
-  };
-};
+// export const getServerSideProps = async () => {
+//   const productRes = await instance.get("/getProducts");
+//   const productData = productRes.data;
+//   return {
+//     props: { productData },
+//   };
+// };

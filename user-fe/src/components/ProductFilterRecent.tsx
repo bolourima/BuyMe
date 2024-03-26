@@ -1,4 +1,4 @@
-import DelletIcon from "@/SVG/DelletIcon";
+import DelletIcon from "@/icon/DelletIcon";
 import React from "react";
 
 export const ProductFilterRecent = ({ data }: any) => {
