@@ -1,17 +1,13 @@
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { ProductType } from "@/types/productType";
-import { useContext, useState } from "react";
-export const putIntoBasket = async (
+
+export const changeProductQuantity = async (
   product: ProductType,
+  type: boolean,
   productsInBasket: ProductType[],
   setProductsInBasket: React.Dispatch<React.SetStateAction<ProductType[]>>
 ) => {
-  const coincidenceChecker: ProductType[] = productsInBasket.filter((el) => {
-    return el._id === product._id;
-  });
-  if (coincidenceChecker.length == 0) {
-    setProductsInBasket([...productsInBasket, { ...product, count: 1 }]);
-  } else {
+  try {
+    const action = type ? 1 : -1;
     let indexFinder: number = 0;
     for (let i = 0; i < productsInBasket.length; i++) {
       if (product._id === productsInBasket[i]._id) {
@@ -19,16 +15,18 @@ export const putIntoBasket = async (
         break;
       }
     }
-    const newProduct = {
-      ...product,
-      count: productsInBasket[indexFinder].count + 1,
-    };
     const previosProducts: ProductType[] = productsInBasket.filter((el, i) => {
       return i < indexFinder;
     });
     const nextProducts: ProductType[] = productsInBasket.filter((el, i) => {
       return i > indexFinder;
     });
+    const newProduct = {
+      ...product,
+      count: productsInBasket[indexFinder].count + action,
+    };
     setProductsInBasket([...previosProducts, newProduct, ...nextProducts]);
+  } catch (error) {
+    console.error("error in changeProduct count", error);
   }
 };

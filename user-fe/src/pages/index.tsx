@@ -2,11 +2,9 @@ import { Hero } from "@/components/Hero";
 import Product from "../components/Product";
 import { instance } from "../instance";
 import { ProductType } from "../types/productType";
-import Categories from "@/components/Categories";
-import RecommendedItems from "@/components/RecommendedItems";
+import ProductDetail from "./productdetail";
 
 export default function Home({ productData }: { productData: ProductType[] }) {
-  console.log(productData);
   return (
     <div className=" flex flex-col gap-20">
       <Hero />
@@ -17,11 +15,3 @@ export default function Home({ productData }: { productData: ProductType[] }) {
     </div>
   );
 }
-
-// export const getServerSideProps = async () => {
-//   const productRes = await instance.get("/getProducts");
-//   const productData = productRes.data;
-//   return {
-//     props: { productData },
-//   };
-// };
