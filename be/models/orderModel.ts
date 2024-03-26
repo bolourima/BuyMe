@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
-
 const OrderSchema = new Schema({
-  products: [{ type: Schema.ObjectId, ref: "Product", required: true }],
+  products: Array,
   orderNumber: Number,
   user: { type: Schema.ObjectId, ref: "User", required: true },
+  total: Number,
   createdAt: Date,
   updatedAt: Date,
 });
