@@ -34,9 +34,9 @@ export const ProductCardTwo = ({
   return (
     <div className=" bg-[#2F306A] hover:bg-slate-500 border border-slate-700 hover:border-gray-300 text-white rounded w-11/12 hover:scale-105 duration-300 cursor-pointer">
       <div className="lg:px-9 lg:pt-4  text-center">
-        <button>
+        <a href={`/productdetail?${_id}`}>
           <img src={images[imgFirstfix]} className="h-80 w-10/12 m-auto" />
-        </button>
+        </a>
       </div>
       <div className="lg:px-5  ">
         <div className=" flex flex-col gap-1 text-center">

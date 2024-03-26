@@ -31,7 +31,9 @@ export const ProductCardThree = ({
   return (
     <div className="flex bg-[#2F306A] mt-3 p-7 border w-fit gap-4 rounded-lg">
       <div className="">
-        <img className="lg:w-96" src={images[imgFirstfix]} alt="img" />
+        <a href={`/productList?${_id}`}>
+          <img className="lg:w-96" src={images[imgFirstfix]} alt="img" />
+        </a>
       </div>
       <div className="flex flex-col gap-4">
         <h1 className=" font-medium">
