@@ -30,7 +30,6 @@ app.use(userRouter);
 app.use("", signInRouter);
 app.use("", signUpRouter);
 app.use(orderRouter);
-// app.use(authRouter);
 
 connectToDB();
 

@@ -11,6 +11,7 @@ export const createOrder = async (
   total: number
 ) => {
   try {
+    console.log(products, total);
     const res = await instance.post(
       "/createOrder",
       {
