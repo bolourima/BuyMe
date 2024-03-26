@@ -7,7 +7,7 @@ import { SearchIcon } from "@/SVG/SearchIcon";
 
 import React from "react";
 
-export const Header = () => {
+export const Header2 = () => {
   return (
     <div className="lg:flex justify-around">
       <div className=" flex items-center">

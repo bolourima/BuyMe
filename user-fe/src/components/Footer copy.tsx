@@ -8,7 +8,7 @@ import { YoutubeIcon } from "@/SVG/YoutubeIcon";
 
 import React from "react";
 
-export const Footer = () => {
+export const Footer2 = () => {
   return (
     <div className=" lg:w-full bg-[#2F306A] border-t-2 lg:mt-10 flex flex-col  items-center  ">
       <div className=" lg:flex flex-col items-center py-10 gap-10 w-9/12">

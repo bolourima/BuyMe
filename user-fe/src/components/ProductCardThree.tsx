@@ -29,7 +29,7 @@ export const ProductCardThree = ({
   const imgFirstfix = 0;
 
   return (
-    <div className="flex bg-[#FFFFFF] mt-3 p-7 border w-fit gap-4 rounded-lg">
+    <div className="flex bg-[#2F306A] mt-3 p-7 border w-fit gap-4 rounded-lg">
       <div className="">
         <img className="lg:w-96" src={images[imgFirstfix]} alt="img" />
       </div>

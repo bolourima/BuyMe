@@ -37,7 +37,7 @@ export const Footer = () => {
         </div>
       </div>
 
-      <div className=" hidden lg:block lg:flex w-full bg-white flex-col items-center">
+      <div className=" hidden lg:flex w-full bg-white flex-col items-center">
         <div className="flex gap-2 w-10/12  py-10 place-content-between ">
           <div className="w-1/6 flex flex-col gap-4">
             <div>

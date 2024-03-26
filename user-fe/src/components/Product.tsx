@@ -33,7 +33,7 @@ export default function Product({
       putIntoBasket(product, productsInBasket, setProductsInBasket);
   };
   return (
-    <div className="">
+    <div className="bg-[#2F306A]">
       {isBasketVisible && <Basket />}
       <div className="flex py-4">
         <button
