@@ -1,5 +1,5 @@
-import { LoveIcon } from "@/SVG/LoveIcon";
-import { StarTestIcon } from "@/SVG/StarTestIcon";
+import { LoveIcon } from "@/icon/LoveIcon";
+import { StarTestIcon } from "@/icon/StarTestIcon";
 import { BasketVisiblityContext } from "@/context/BasketVisiblity";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { ProductType } from "@/types/productType";

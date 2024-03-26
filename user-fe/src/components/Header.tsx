@@ -1,61 +1,39 @@
-import { BrandIcon } from "@/SVG/BrandIcon";
-import { MsgIcon } from "@/SVG/MsgIcon";
-import { MyCartIcon } from "@/SVG/MyCartIcon";
-import { OrderIcon } from "@/SVG/OrderIcon";
-import { ProfileIcon } from "@/SVG/ProfileIcon";
-import { SearchIcon } from "@/SVG/SearchIcon";
+import { BrandIcon } from "@/icon/BrandIcon";
+import { DownIcon } from "@/icon/DownIcon";
+import { MsgIcon } from "@/icon/MsgIcon";
+import { MyCartIcon } from "@/icon/MyCartIcon";
+import { OrderIcon } from "@/icon/OrderIcon";
+import { ProfileIcon } from "@/icon/ProfileIcon";
+import { SearchIcon } from "@/icon/SearchIcon";
 
-import React from "react";
+import React, { useState } from "react";
 
 export const Header = () => {
+  const [openSearch, setOpenSearch] = useState(false);
+
+  const showModelInput = () => {
+    setOpenSearch(true);
+  };
   return (
-    <div className=" w-full lg:w-full flex justify-center py-4  bg-white absolute">
-      <div className="w-10/12 lg:flex place-content-between lg:w-10/12">
-        <div className=" flex items-center">
-          <BrandIcon />
-          <h1>Store</h1>
+    <div className=" w-full lg:w-full flex justify-center py-4  bg-white">
+      <div className=" flex items-center w-10/12 place-content-between">
+        <div className="flex">
+          <h1 className=" font-extrabold text-4xl">Buy</h1>
+          <h1 className=" content-center font-semibold text-2xl">me</h1>
         </div>
-
-        <div className=" flex w-10/12 lg:flex items-center border-2 border-cyan-500   rounded lg:w-9/12">
-          <div className=" block lg:hidden ">
+        <div className=" flex gap-6">
+          <h1 className=" font-semibold text-xl">Home</h1>
+          <h1 className=" content-center text-xl flex items-center gap-2 ">
+            Categories
+            <DownIcon />
+          </h1>
+        </div>
+        <div>
+          <div className=" flex gap-6">
             <SearchIcon />
-          </div>
-
-          <input
-            type="search"
-            placeholder="search"
-            className=" w-10/12 lg:input px-3 py-3 lg:w-10/12 "
-          />
-          <select className=" hidden lg:block select select-info px-2 max-w-xs w-48 border-l-2 border-cyan-500">
-            <option disabled selected>
-              All category
-            </option>
-            <option>Mobile accessory</option>
-            <option>Electronics</option>
-            <option>Smartphones </option>
-            <option>Modern tech </option>
-          </select>
-          <button className=" hidden lg:block p-3 bg-cyan-500 text-white">
-            Search
-          </button>
-        </div>
-
-        <div className="hidden lg:block lg:flex items-center gap-5 ">
-          <div className="flex flex-col items-center cursor-pointer hover:scale-105 duration-200 ease-out ">
-            <ProfileIcon />
-            <h1>Profile</h1>
-          </div>
-          <div className="flex flex-col items-center cursor-pointer hover:scale-105 duration-200 ease-out  ">
-            <MsgIcon />
-            <h1>Message</h1>
-          </div>
-          <div className="flex flex-col items-center  cursor-pointer hover:scale-105 duration-200 ease-out">
             <OrderIcon />
-            <h1>Orders</h1>
-          </div>
-          <div className="flex flex-col items-center cursor-pointer hover:scale-105 duration-200 ease-out ">
             <MyCartIcon />
-            <h1>My cart</h1>
+            <ProfileIcon />
           </div>
         </div>
       </div>
