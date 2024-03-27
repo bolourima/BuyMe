@@ -4,9 +4,7 @@ import { ProductCardThree } from "./ProductCardThree";
 import { ProductType } from "../types/productType";
 import AppIcon from "@/icon/AppIcon";
 import ListIcon from "@/icon/ListIcon";
-import { BasketVisiblityContext } from "@/context/BasketVisiblity";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
-import { Basket } from "./Basket";
 import { ClickHandler } from "@/types/handlerType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
 export default function Product({
@@ -21,20 +19,15 @@ export default function Product({
   const maxDatasToShow = 5;
   const [renderedDataindex, setDataIndex] = useState(0);
   const handleChangeBundling = () =>
-    setDataIndex(renderedDataindex + maxDatasToShow); //test frot changing product pages
-  const { isBasketVisible, setIsBasketVisible } = useContext(
-    BasketVisiblityContext
-  );
+    setDataIndex(renderedDataindex + maxDatasToShow);
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
   const setProductData: ClickHandler = (product: ProductType) => {
-    setIsBasketVisible(true),
-      putIntoBasket(product, productsInBasket, setProductsInBasket);
+    putIntoBasket(product, productsInBasket, setProductsInBasket);
   };
   return (
     <div className="bg-[#2F306A]">
-      {isBasketVisible && <Basket />}
       <div className="flex py-4">
         <button
           onClick={handleIsList}

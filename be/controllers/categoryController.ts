@@ -9,3 +9,14 @@ export const getCategories = async (req: Request, res: Response) => {
     return res.status(400).json({ msg: "Failed to getCategories" });
   }
 };
+export const createCategory = async (req: Request, res: Response) => {
+  try {
+    const newCategory = await Category.create({
+      name: req.body.name,
+    });
+    return res.status(201).json({ msg: "Category successfully created" });
+  } catch (error) {
+    console.error("error in createCategory", error);
+    return res.status(400).json({ msg: "Failed to create category" });
+  }
+};

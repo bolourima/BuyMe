@@ -10,7 +10,10 @@ export const putIntoBasket = async (
     return el._id === product._id;
   });
   if (coincidenceChecker.length == 0) {
-    setProductsInBasket([...productsInBasket, { ...product, count: 1 }]);
+    setProductsInBasket([
+      ...productsInBasket,
+      { ...product, selectedQuantity: 1 },
+    ]);
   } else {
     let indexFinder: number = 0;
     for (let i = 0; i < productsInBasket.length; i++) {
@@ -21,7 +24,7 @@ export const putIntoBasket = async (
     }
     const newProduct = {
       ...product,
-      count: productsInBasket[indexFinder].count + 1,
+      selectedQuantity: productsInBasket[indexFinder].selectedQuantity + 1,
     };
     const previosProducts: ProductType[] = productsInBasket.filter((el, i) => {
       return i < indexFinder;
