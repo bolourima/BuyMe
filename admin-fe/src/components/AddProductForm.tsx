@@ -13,6 +13,7 @@ import { instance } from "@/instance";
 import { productSchema } from "@/validations/productSchema";
 import { Category } from "@/types/categoryType";
 import { GetProductType } from "@/types/getProductType";
+import { editProduct } from "@/utilities/editProduct";
 
 export const AddProductForm = ({
   categoryData,
@@ -106,42 +107,57 @@ export const AddProductForm = ({
   }, [subName]);
   const creatingProduct = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const oldImages = [];
-    if (imageOnePreview && imageOnePreview.split("")[0] !== "b") {
-      oldImages.push(imageOnePreview);
+    if (
+      !touched.name ||
+      !touched.price ||
+      !touched.description ||
+      !touched.productCode ||
+      !touched.quantity ||
+      !touched.tag ||
+      errors.name ||
+      errors.price ||
+      errors.description ||
+      errors.productCode ||
+      errors.quantity ||
+      errors.tag
+    ) {
+      return alert("Not valid");
     }
-    if (imageTwoPreview && imageTwoPreview.split("")[0] !== "b") {
-      oldImages.push(imageTwoPreview);
+    if (onEdit) {
+      const oldImages = [];
+      if (imageOnePreview && imageOnePreview.split("")[0] !== "b") {
+        oldImages.push(imageOnePreview);
+      }
+      if (imageTwoPreview && imageTwoPreview.split("")[0] !== "b") {
+        oldImages.push(imageTwoPreview);
+      }
+      if (imageThreePreview && imageThreePreview.split("")[0] !== "b") {
+        oldImages.push(imageThreePreview);
+      }
+      editProduct(
+        editableProduct._id,
+        values,
+        images,
+        oldImages,
+        isSale,
+        salePercent,
+        selectedCategory,
+        subName,
+        selectedBrand,
+        setEditableProduct,
+        setOnEdit
+      );
+    } else {
+      createProduct(
+        values,
+        images,
+        isSale,
+        salePercent,
+        selectedCategory,
+        subName,
+        selectedBrand
+      );
     }
-    if (imageThreePreview && imageThreePreview.split("")[0] !== "b") {
-      oldImages.push(imageThreePreview);
-    }
-    const status = await createProduct(
-      editableProduct && editableProduct._id,
-      values,
-      touched,
-      errors,
-      images,
-      isSale,
-      salePercent,
-      selectedCategory,
-      subName,
-      selectedBrand,
-      onEdit,
-      setOnEdit,
-      setEditableProduct,
-      oldImages
-    );
-    if (status == 201) {
-      setIsAddProductVisible(false);
-      return alert("Successfully created");
-    }
-    if (status == 200) {
-      setIsAddProductVisible(false);
-      return alert("Successfully updated");
-    }
-    if (status == 400) return alert("Failed to update");
-    if (status == 403) return alert("ProductCode coincided");
   };
   return (
     <form
