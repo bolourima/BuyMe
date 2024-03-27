@@ -1,11 +1,28 @@
+import { Hero } from "@/components/Hero";
+import Product from "../components/Product";
+import { instance } from "../instance";
 import { ProductType } from "../types/productType";
+import ProductDetail from "./productdetail";
+import Categories from "@/components/Categories";
+import RecommendedItems from "@/components/RecommendedItems";
 
 export default function Home({ productData }: { productData: ProductType[] }) {
   return (
-    <div className="bg-white p-4 m-10 rounded-lg ">
-      <a href="/productList" className="">
-        test for productList
-      </a>
+    <div className=" flex flex-col gap-20">
+      {/* <Hero /> */}
+      {/* <RecommendedItems productData={productData} />
+      <Product productData={productData} /> */}
+      <Categories />
+      {/* <RecommendedItems ProductData={productData} /> */}
+      {/* <RecommendedItems ProductData={productData} /> */}
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const productRes = await instance.get("/getProducts");
+  const productData = productRes.data;
+  return {
+    props: { productData },
+  };
+};

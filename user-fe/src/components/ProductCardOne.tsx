@@ -3,17 +3,18 @@ import React from "react";
 
 export const ProductCardOne = ({ data }: { data: ProductType }) => {
   const { images, price, name, brandName } = data;
+  console.log(images[0]);
   return (
-    <div className=" p-4 border text-sm  border-gray-300 rounded w-20 drop-shadow hover:scale-105 duration-200 ease-out	cursor-pointer">
-      <div className=" p-6">
-        <img className={`w-auto`} src={images[0]} alt="t-shirt" />
+    <div className=" cart w-2/5 p-4 border border-gray-300 rounded  drop-shadow hover:scale-105 duration-200 ease-out	cursor-pointer flex flex-col gap-5">
+      <div className="w-full  flex justify-center">
+        <img className=" rounded-lg h-[400px]" src={images[0]} alt="t-shirt" />
       </div>
-      <div className="">
-        <h1>{price}</h1>
-        <p>
-          {brandName}
+      <div className="w-full">
+        <h1 className=" font-bold text-2xl">{price}</h1>
+        <div>
+          <p className=" text-2xl">{brandName}</p>
           {name}
-        </p>
+        </div>
       </div>
     </div>
   );
