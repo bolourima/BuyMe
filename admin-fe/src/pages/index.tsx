@@ -5,6 +5,7 @@ import { MainProducts } from "@/components/MainProducts";
 import { LeftBar } from "@/components/LeftBar";
 import { NavBar } from "@/components/NavBar";
 import { GetProductType } from "@/types/getProductType";
+import DataTable from "@/components/DataTable";
 import { string } from "yup";
 import { Orders } from "@/components/Orders";
 import { OrderType } from "@/types/orderType";
