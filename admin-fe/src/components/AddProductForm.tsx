@@ -116,7 +116,6 @@ export const AddProductForm = ({
     if (imageThreePreview && imageThreePreview.split("")[0] !== "b") {
       oldImages.push(imageThreePreview);
     }
-    console.log(editableProduct);
     const status = await createProduct(
       editableProduct && editableProduct._id,
       values,
