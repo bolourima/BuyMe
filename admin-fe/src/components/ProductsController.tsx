@@ -24,9 +24,9 @@ export const ProductsController = ({
       const res = await instance.delete(`/deleteProduct/${id}`);
 
       if (res.status === 200) {
-        console.log("Product successfully deleted");
+        alert("Product successfully deleted");
       } else {
-        console.warn("Unexpected status code:", res.status);
+        alert("Unexpected error");
       }
     } catch (error) {
       console.error("Error deleting product:", error);
