@@ -1,12 +1,5 @@
-import { LoveIcon } from "@/icon/LoveIcon";
-import { StarTestIcon } from "@/icon/StarTestIcon";
-import { BasketVisiblityContext } from "@/context/BasketVisiblity";
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { ProductType } from "@/types/productType";
-
-import React, { useContext } from "react";
-import { Basket } from "./Basket";
-import { putIntoBasket } from "@/utilities/putIntoBasket";
+import React from "react";
 import { ClickHandler } from "@/types/handlerType";
 
 export const ProductCardTwo = ({

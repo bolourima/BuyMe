@@ -14,42 +14,10 @@ export default function Product({
 }: {
   productData: ProductType[];
 }) {
-  const [isList, setIsList] = useState(true);
-  const handleIsList = () => {
-    setIsList(!isList);
-  };
-  const maxDatasToShow = 5;
-  const [renderedDataindex, setDataIndex] = useState(0);
-  const handleChangeBundling = () =>
-    setDataIndex(renderedDataindex + maxDatasToShow); //test frot changing product pages
-  const { isBasketVisible, setIsBasketVisible } = useContext(
-    BasketVisiblityContext
-  );
-  const { productsInBasket, setProductsInBasket } = useContext(
-    ProductsInBasketContext
-  );
-  const setProductData: ClickHandler = (product: ProductType) => {
-    setIsBasketVisible(true),
-      putIntoBasket(product, productsInBasket, setProductsInBasket);
-  };
+  const isList: boolean = true;
+
   return (
-    <div className="bg-[#2F306A]">
-      {isBasketVisible && <Basket />}
-      <div className="flex py-4">
-        <button
-          onClick={handleIsList}
-          className={`${isList ? "hidden" : "block"}`}
-        >
-          <AppIcon />
-        </button>
-        <button
-          onClick={handleIsList}
-          className={`${isList ? "block" : "hidden"}`}
-        >
-          <ListIcon />
-        </button>
-        <button onChange={handleChangeBundling}>next page</button>
-      </div>
+    <div className="">
       <div className={`${isList ? "hidden" : "block"}`}>
         {productData.map((Data, i) => (
           <ProductCardThree

@@ -1,5 +1,4 @@
 import { Slider } from "@mui/material";
-import { stringify } from "querystring";
 import React, { useState } from "react";
 const MAX = 100000000;
 const MIN = 0;

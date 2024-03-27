@@ -5,15 +5,12 @@ import { MyCartIcon } from "@/icon/MyCartIcon";
 import { OrderIcon } from "@/icon/OrderIcon";
 import { ProfileIcon } from "@/icon/ProfileIcon";
 import { SearchIcon } from "@/icon/SearchIcon";
+import { useRouter } from "next/router";
 
 import React, { useState } from "react";
 
 export const Header = () => {
-  const [openSearch, setOpenSearch] = useState(false);
-
-  const showModelInput = () => {
-    setOpenSearch(true);
-  };
+  const router = useRouter();
   return (
     <div className=" w-full lg:w-full flex justify-center py-4  bg-white">
       <div className=" flex items-center w-10/12 place-content-between">
@@ -32,7 +29,9 @@ export const Header = () => {
           <div className=" flex gap-6">
             <SearchIcon />
             <OrderIcon />
-            <MyCartIcon />
+            <button onClick={() => router.push("/basket")} className="w-4 h-4">
+              <MyCartIcon />
+            </button>
             <ProfileIcon />
           </div>
         </div>

@@ -1,5 +1,3 @@
-import Product from "../components/Product";
-import { instance } from "../instance";
 import { ProductType } from "../types/productType";
 import ProductDetail from "./productdetail";
 
