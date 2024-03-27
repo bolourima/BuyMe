@@ -29,7 +29,8 @@ export const Basket = () => {
       productsInBasket.reduce(
         (acc, cur) =>
           acc +
-          cur.count * (cur.price * ((100 - cur.disCount.salePercent) / 100)),
+          cur.selectedQuantity *
+            (cur.price * ((100 - cur.disCount.salePercent) / 100)),
         0
       )
     );
@@ -79,7 +80,7 @@ export const Basket = () => {
                 <div className="w-full h-fit justify-between flex my-4">
                   <button
                     onClick={() => {
-                      if (product.count == 1) {
+                      if (product.selectedQuantity == 1) {
                         removeFromBasket(
                           product._id,
                           productsInBasket,
@@ -99,7 +100,7 @@ export const Basket = () => {
                     -
                   </button>
                   <p className="h-15 w-fit flex justify-center items-center">
-                    {product.count}
+                    {product.selectedQuantity}
                   </p>
                   <button
                     onClick={() =>
