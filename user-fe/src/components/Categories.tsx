@@ -19,7 +19,7 @@ export default function Categories() {
           </div>
 
           <div
-            className="w-1/5 bg-center bg-cover p-5 flex items-end justify-center hero"
+            className="w-1/5 bg-center bg-cover p-5 flex items-end justify-center hero rounded"
             style={{
               backgroundImage: `url(https://images.pexels.com/photos/3538028/pexels-photo-3538028.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)`,
             }}

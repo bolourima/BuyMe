@@ -11,10 +11,10 @@ export const ProductCardOne = ({ data }: { data: ProductType }) => {
       </div>
       <div className="w-full">
         <h1 className=" font-bold text-2xl">{price}</h1>
-        <p>
-          {brandName}
+        <div>
+          <p className=" text-2xl">{brandName}</p>
           {name}
-        </p>
+        </div>
       </div>
     </div>
   );
