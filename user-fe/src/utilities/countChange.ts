@@ -23,7 +23,7 @@ export const changeProductQuantity = async (
     });
     const newProduct = {
       ...product,
-      count: productsInBasket[indexFinder].count + action,
+      selectedQuantity: productsInBasket[indexFinder].selectedQuantity + action,
     };
     setProductsInBasket([...previosProducts, newProduct, ...nextProducts]);
   } catch (error) {

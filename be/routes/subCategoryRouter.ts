@@ -1,6 +1,11 @@
 import { Router } from "express";
-import { getSubCategories } from "../controllers/subCategoryController";
+import {
+  createSubCategory,
+  editSubCategories,
+  getSubCategories,
+} from "../controllers/subCategoryController";
 
 export const subCategoryRouter = Router();
+subCategoryRouter.route("/createSubCategory").post(createSubCategory);
 subCategoryRouter.route("/getSubCategories").post(getSubCategories);
-subCategoryRouter.route("/getBrands");
+subCategoryRouter.route("/editSub").put(editSubCategories);
