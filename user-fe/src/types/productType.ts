@@ -13,6 +13,11 @@ export type ProductType = {
   images: string[];
   createdAt: string;
   updatedAt: string;
+  selectedQuantity: number;
+};
+type categoryIdType = {
+  _id: string;
+  name: string;
 };
 type categoryIdType = {
   _id: string;

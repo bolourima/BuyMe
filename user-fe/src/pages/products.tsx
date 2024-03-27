@@ -1,5 +1,3 @@
-import { Basket } from "@/components/Basket";
-import { BasketVisiblityContext } from "@/context/BasketVisiblity";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
@@ -7,15 +5,11 @@ import { putIntoBasket } from "@/utilities/putIntoBasket";
 import React, { useContext } from "react";
 
 const Products = ({ productData }: { productData: ProductType[] }) => {
-  const { isBasketVisible, setIsBasketVisible } = useContext(
-    BasketVisiblityContext
-  );
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center gap-16 text-black relative">
-      {isBasketVisible && <Basket />}
       {productData.map((product) => {
         return (
           <div className="flex flex-col justify-start w-fit h-fit border-2 border-black border-solid p-12 gap-4 rounded-lg">
@@ -39,8 +33,7 @@ const Products = ({ productData }: { productData: ProductType[] }) => {
             <p>Created at: {product.createdAt}</p>
             <button
               onClick={() => {
-                setIsBasketVisible(true),
-                  putIntoBasket(product, productsInBasket, setProductsInBasket);
+                putIntoBasket(product, productsInBasket, setProductsInBasket);
               }}
               className="w-full h-16 bg-black text-white rounded-lg"
             >

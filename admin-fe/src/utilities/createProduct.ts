@@ -14,7 +14,7 @@ export const createProduct = async (
   onEdit: boolean,
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>,
   setEditableProduct: any,
-  oldImage: string[]
+  oldImages: string[]
 ) => {
   if (
     (!onEdit &&
@@ -29,9 +29,10 @@ export const createProduct = async (
     errors.description ||
     errors.productCode ||
     errors.quantity ||
-    errors.tag
+    errors.tag ||
+    (!images.length && !oldImages.length)
   ) {
-    return;
+    return alert("Not valid");
   }
   try {
     const disCount = { isSale: isSale, salePercent: salePercent };
@@ -59,8 +60,8 @@ export const createProduct = async (
       const res = await instance.post("/createProduct", formData);
       return res.status;
     } else {
-      if (images?.length && oldImage.length) {
-        const product = { ...newProduct, _id: _id, images: oldImage };
+      if (images?.length && oldImages.length) {
+        const product = { ...newProduct, _id: _id, images: oldImages };
         formData.append("product", JSON.stringify(product));
         for (let i = 0; i < images.length; i++) {
           formData.append("images", images[i]);
@@ -75,12 +76,11 @@ export const createProduct = async (
           formData.append("images", images[i]);
         }
         const res = await instance.put("/editProduct", formData);
-        console.log(res);
         return res.status;
       } else {
         const editedProduct: any = {
           ...newProduct,
-          images: oldImage,
+          images: oldImages,
           _id: _id,
         };
         const res = await instance.put("/editProduct", editedProduct);
@@ -91,5 +91,6 @@ export const createProduct = async (
     }
   } catch (error) {
     console.error(error);
+    return alert("Product code coincided");
   }
 };

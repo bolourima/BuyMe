@@ -1,11 +1,6 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-// import { PDPart1 } from "../components/ProductDetail/PDPart1";
 import { PDPart2 } from "../components/ProductDetail/PDPart2";
 import { PDPart3 } from "../components/ProductDetail/PDPart3";
 import React from "react";
-import { instance } from "@/instance";
-import { ProductType } from "@/types/productType";
 
 export default function ProductDetail() {
   return (
