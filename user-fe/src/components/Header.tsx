@@ -32,21 +32,18 @@ export const Header = () => {
         <div className=" hidden lg:flex gap-6">
           <h1 className=" font-semibold text-xl">Home</h1>
           <h1 className=" content-center text-xl flex items-center gap-2 ">
-            Categories
+            Categoriess
             <DownIcon />
           </h1>
         </div>
         <div>
-          <div className="lg:flex gap-6">
-            <div className=" hidden lg:flex gap-6">
-              <SearchIcon />
-              <OrderIcon />
+          <div className=" flex gap-6">
+            <SearchIcon />
+            <OrderIcon />
+            <button onClick={() => router.push("/basket")} className="w-4 h-4">
               <MyCartIcon />
-            </div>
-
-            <div>
-              <ProfileIcon />
-            </div>
+            </button>
+            <ProfileIcon />
           </div>
         </div>
       </div>
