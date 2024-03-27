@@ -10,6 +10,19 @@ type SubCategoryType = {
   name: string;
   category: CategoryType;
 };
+export const createSubCategory = async (req: Request, res: Response) => {
+  try {
+    const newSubCateogory = await SubCategory.create({
+      name: req.body.name,
+      category: req.body.categoryId,
+      brands: req.body.brands,
+    });
+    return res.status(201).json({ msg: "Sub category created" });
+  } catch (error) {
+    console.error("error in createsubCategory", error);
+    return res.status(400).json({ msg: "failed to create sub category" });
+  }
+};
 export const getSubCategories = async (req: Request, res: Response) => {
   const name = req.body.name;
   try {
