@@ -21,7 +21,7 @@ export const Header = () => {
         <div className=" flex gap-6">
           <h1 className=" font-semibold text-xl">Home</h1>
           <h1 className=" content-center text-xl flex items-center gap-2 ">
-            Categories
+            Categoriess
             <DownIcon />
           </h1>
         </div>
