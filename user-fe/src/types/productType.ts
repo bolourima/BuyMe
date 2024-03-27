@@ -7,13 +7,17 @@ export type ProductType = {
   quantity: number;
   tag: string;
   disCount: DiscountType;
-  categoryId: { _id: string; name: string };
+  categoryId: categoryIdType;
   subCategoryName: string;
   brandName: string;
   images: string[];
   createdAt: string;
   updatedAt: string;
   selectedQuantity: number;
+};
+type categoryIdType = {
+  _id: string;
+  name: string;
 };
 type DiscountType = {
   isSale: boolean;

@@ -8,7 +8,7 @@ export const getProducts = async (req: Request, res: Response) => {
     const products = await Product.find().populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
-    console.error("error in getProducts", error);
+    console.error("error in getProducts", "PRODUCT ERRER", error);
     return res.status(400).send("Failed to getProducts");
   }
 };
