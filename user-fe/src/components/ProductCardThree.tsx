@@ -2,6 +2,7 @@ import { LoveIcon } from "@/icon/LoveIcon";
 import { StarTestIcon } from "@/icon/StarTestIcon";
 import { ClickHandler } from "@/types/handlerType";
 import { ProductType } from "@/types/productType";
+import { Router } from "next/router";
 import { title } from "process";
 
 import React from "react";
@@ -31,7 +32,7 @@ export const ProductCardThree = ({
   return (
     <div className="flex bg-[#2F306A] mt-3 p-7 border w-fit gap-4 rounded-lg">
       <div className="">
-        <a href={`/productList?${_id}`}>
+        <a href={`/productId?${_id}`} key={_id}>
           <img className="lg:w-96" src={images[imgFirstfix]} alt="img" />
         </a>
       </div>
