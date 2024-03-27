@@ -189,3 +189,13 @@ export const deleteProduct = async (req: Request, res: Response) => {
     return res.status(400).json({ msg: "Failed to delete" });
   }
 };
+// export const getProductDetail = async (req: Request, res: Response) => {
+//   try {
+//     const productId = req.params._id;
+//     const product = await Product.findById(productId).populate("categoryId");
+//     return res.status(200).send(product);
+//   } catch (error) {
+//     console.error("error in getProducts", "PRODUCT ERRER", error);
+//     return res.status(400).send("Failed to getProducts");
+//   }
+// };
