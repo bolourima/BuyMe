@@ -25,7 +25,9 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
 };
 export const getOrdersInAdmin = async (req: Request, res: Response) => {
   try {
-    const orders = await Order.find({}).populate("user");
+    const orders = await Order.find({})
+      .populate("user")
+      .populate("products.product");
     return res.status(200).send(orders);
   } catch (error) {
     console.error("error in getOrdersInAdmin", error);
