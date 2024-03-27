@@ -19,6 +19,10 @@ type categoryIdType = {
   _id: string;
   name: string;
 };
+type categoryIdType = {
+  _id: string;
+  name: string;
+};
 type DiscountType = {
   isSale: boolean;
   salePercent: number;
