@@ -20,7 +20,7 @@ export const Footer = () => {
           <InstIcon />
           <FaceIcon />
           <TwiterIcon />
-          <LinkitIcon />
+
           <YoutubeIcon />
         </div>
         <div>
