@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginUser } from "../utilities/userRelatedUtils";
+import Link from "next/link";
 
 export default function SignIn() {
   const router = useRouter();
@@ -73,6 +74,16 @@ export default function SignIn() {
                 Signin
               </button>
             </form>
+            <div className="flex gap-2">
+              <p className="text-slate-900 text-base font-normal dark:text-slate-300">
+                Don’t have account?
+              </p>
+              <Link href={"./signup"}>
+                <p className=" text-base font-normal cursor-pointer hover:text-blue-400">
+                  Sign up
+                </p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

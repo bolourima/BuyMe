@@ -2,7 +2,7 @@ import { Hero } from "@/components/Hero";
 import Product from "../components/Product";
 import { instance } from "../instance";
 import { ProductType } from "../types/productType";
-import ProductDetail from "./productdetail";
+
 import Categories from "@/components/Categories";
 import RecommendedItems from "@/components/RecommendedItems";
 
@@ -12,7 +12,7 @@ export default function Home({ productData }: { productData: ProductType[] }) {
       {/* <Hero /> */}
       {/* <RecommendedItems productData={productData} />
       <Product productData={productData} /> */}
-      <Categories />
+      {/* <Categories /> */}
       {/* <RecommendedItems ProductData={productData} /> */}
       {/* <RecommendedItems ProductData={productData} /> */}
     </div>
