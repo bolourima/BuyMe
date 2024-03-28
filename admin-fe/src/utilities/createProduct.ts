@@ -1,8 +1,8 @@
 import { instance } from "@/instance";
 import { Product } from "@/types/productType";
 export const createProduct = async (
+  images: string[],
   values: Product,
-  images: File[],
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,
@@ -22,17 +22,10 @@ export const createProduct = async (
       categoryName: selectedCategory,
       subCategoryName: subName,
       brandName: selectedBrand,
+      images: images,
     };
-    const formData = new FormData();
-    formData.append("product", JSON.stringify(newProduct));
-    if (!images) {
-      return alert("No images");
-    }
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
-    }
-    const res = await instance.post("/createProduct", formData);
-    return res.status;
+    const res = await instance.post("/createProduct", newProduct);
+    res.status === 201 ? alert("Created") : alert("Failed");
   } catch (error) {
     console.error(error);
     return alert("Product code coincided");

@@ -3,9 +3,8 @@ import { Product } from "@/types/productType";
 
 export const editProduct = async (
   _id: string,
+  images: string[],
   values: Product,
-  images: File[],
-  oldImages: string[],
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,
@@ -14,46 +13,27 @@ export const editProduct = async (
   setEditableProduct: any,
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const disCount = { isSale: isSale, salePercent: salePercent };
-  const newProduct = {
-    name: values.name,
-    description: values.description,
-    price: values.price,
-    productCode: values.productCode,
-    quantity: values.quantity,
-    tag: values.tag,
-    disCount: disCount,
-    categoryName: selectedCategory,
-    subCategoryName: subName,
-    brandName: selectedBrand,
-  };
-  const formData = new FormData();
-  if (images?.length && oldImages.length) {
-    const product = { ...newProduct, _id: _id, images: oldImages };
-    formData.append("product", JSON.stringify(product));
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
-    }
-    const res = await instance.put("/editProduct", formData);
-    return res.status;
-  }
-  if (images?.length) {
-    const product = { ...newProduct, _id: _id };
-    formData.append("product", JSON.stringify(product));
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
-    }
-    const res = await instance.put("/editProduct", formData);
-    return res.status;
-  } else {
-    const editedProduct: any = {
-      ...newProduct,
-      images: oldImages,
+  try {
+    const disCount = { isSale: isSale, salePercent: salePercent };
+    const newProduct = {
       _id: _id,
+      name: values.name,
+      description: values.description,
+      price: values.price,
+      productCode: values.productCode,
+      quantity: values.quantity,
+      tag: values.tag,
+      disCount: disCount,
+      categoryName: selectedCategory,
+      subCategoryName: subName,
+      brandName: selectedBrand,
+      images: images,
     };
-    const res = await instance.put("/editProduct", editedProduct);
+    const res = await instance.put("/editProduct", newProduct);
     setEditableProduct(null);
     setOnEdit(false);
-    return res.status;
+    res.status === 200 ? alert("Updated") : alert("Failed");
+  } catch (error) {
+    console.error("error in edit product", error);
   }
 };

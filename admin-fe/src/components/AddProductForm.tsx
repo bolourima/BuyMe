@@ -45,12 +45,7 @@ export const AddProductForm = ({
       _id: "",
       name: "",
       category: { _id: "", name: "" },
-      brands: [
-        {
-          name: "",
-          _id: "",
-        },
-      ],
+      brands: [],
     },
   ]);
   const [subName, setSubName] = useState(
@@ -63,7 +58,6 @@ export const AddProductForm = ({
   const [salePercent, setSalePercent] = useState<any>(
     onEdit ? editableProduct.disCount.salePercent : 0
   );
-  const [images, setImages] = useState<File[]>([]);
   const [imageOnePreview, setImageOnePreview] = useState<string>(
     onEdit ? editableProduct.images[0] : ""
   );
@@ -73,12 +67,6 @@ export const AddProductForm = ({
   const [imageThreePreview, setImageThreePreview] = useState<string>(
     onEdit ? editableProduct.images[2] : ""
   );
-  const [oldImages, setOldImages] = useState<string[]>([]);
-  const { values, errors, handleChange, handleBlur, touched } = useFormik({
-    initialValues: getInital(onEdit, editableProduct),
-    validationSchema: productSchema,
-    onSubmit: () => {},
-  });
   const getSubCategoryByCategory = useMemo(async () => {
     const res = await instance.post("/getSubCategories", {
       name: selectedCategory,
@@ -90,9 +78,7 @@ export const AddProductForm = ({
       return sub.name === subName;
     });
     setSelectedBrand(
-      selectedSubCategory.length > 0
-        ? selectedSubCategory[0].brands[0].name
-        : ""
+      selectedSubCategory.length > 0 ? selectedSubCategory[0].brands[0] : ""
     );
     setSubName(
       selectedSubCategory.length > 0 ? selectedSubCategory[0].name : ""
@@ -105,64 +91,51 @@ export const AddProductForm = ({
       })
     );
   }, [subName]);
-  const creatingProduct = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (
-      !touched.name ||
-      !touched.price ||
-      !touched.description ||
-      !touched.productCode ||
-      !touched.quantity ||
-      !touched.tag ||
-      errors.name ||
-      errors.price ||
-      errors.description ||
-      errors.productCode ||
-      errors.quantity ||
-      errors.tag
-    ) {
-      return alert("Not valid");
-    }
-    if (onEdit) {
-      const oldImages = [];
-      if (imageOnePreview && imageOnePreview.split("")[0] !== "b") {
-        oldImages.push(imageOnePreview);
-      }
-      if (imageTwoPreview && imageTwoPreview.split("")[0] !== "b") {
-        oldImages.push(imageTwoPreview);
-      }
-      if (imageThreePreview && imageThreePreview.split("")[0] !== "b") {
-        oldImages.push(imageThreePreview);
-      }
-      editProduct(
-        editableProduct._id,
-        values,
-        images,
-        oldImages,
-        isSale,
-        salePercent,
-        selectedCategory,
-        subName,
-        selectedBrand,
-        setEditableProduct,
-        setOnEdit
-      );
-    } else {
-      createProduct(
-        values,
-        images,
-        isSale,
-        salePercent,
-        selectedCategory,
-        subName,
-        selectedBrand
-      );
-    }
-  };
+  const { values, errors, handleChange, handleBlur, touched, handleSubmit } =
+    useFormik({
+      initialValues: getInital(onEdit, editableProduct),
+      validationSchema: productSchema,
+      onSubmit: () => {
+        const images: string[] = [];
+        if (imageOnePreview && imageOnePreview !== "../waiting.png") {
+          images.push(imageOnePreview);
+        }
+        if (imageTwoPreview && imageTwoPreview !== "../waiting.png") {
+          images.push(imageTwoPreview);
+        }
+        if (imageThreePreview && imageThreePreview !== "../waiting.png") {
+          images.push(imageThreePreview);
+        }
+        if (onEdit) {
+          editProduct(
+            editableProduct._id,
+            images,
+            values,
+            isSale,
+            salePercent,
+            selectedCategory,
+            subName,
+            selectedBrand,
+            setEditableProduct,
+            setOnEdit
+          );
+        } else {
+          createProduct(
+            images,
+            values,
+            isSale,
+            salePercent,
+            selectedCategory,
+            subName,
+            selectedBrand
+          );
+        }
+      },
+    });
   return (
     <form
       onSubmit={(e) => {
-        creatingProduct(e);
+        handleSubmit(e);
       }}
       className="flex flex-col bg-[#F7F7F8] p-6 gap-6"
     >
@@ -176,8 +149,6 @@ export const AddProductForm = ({
             touched={touched}
           />
           <AddProductImageSection
-            images={images}
-            setImages={setImages}
             imageOnePreview={imageOnePreview}
             imageTwoPreview={imageTwoPreview}
             imageThreePreview={imageThreePreview}
@@ -203,6 +174,7 @@ export const AddProductForm = ({
             subCategoryData={subCategoryData}
           />
           <AddProductBrand
+            selectedBrand={selectedBrand}
             setSelectedBrand={setSelectedBrand}
             editableProduct={editableProduct}
             domSub={domSub}

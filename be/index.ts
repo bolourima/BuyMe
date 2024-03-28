@@ -8,6 +8,8 @@ import { userRouter } from "./routes/userRouter";
 import { signInRouter } from "./routes/signInRouter";
 import { signUpRouter } from "./routes/signUpRouter";
 import { orderRouter } from "./routes/orderRouter";
+import { Request, Response } from "express";
+import upload from "./middlewares/multer";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
