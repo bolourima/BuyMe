@@ -1,11 +1,9 @@
 import { IconPic } from "@/svg/IconPic";
 import { Trash } from "@/svg/Trash";
-import { GetProductType } from "@/types/getProductType";
-import React, { useState } from "react";
+import { uploadSingleImage } from "@/utilities/uploadSingleImage";
+import React from "react";
 
 export const AddProductImageSection = ({
-  images,
-  setImages,
   imageOnePreview,
   imageTwoPreview,
   imageThreePreview,
@@ -13,8 +11,6 @@ export const AddProductImageSection = ({
   setImageTwoPreview,
   setImageThreePreview,
 }: {
-  images: File[];
-  setImages: React.Dispatch<React.SetStateAction<File[]>>;
   imageOnePreview: string;
   imageTwoPreview: string;
   imageThreePreview: string;
@@ -22,10 +18,6 @@ export const AddProductImageSection = ({
   setImageTwoPreview: React.Dispatch<React.SetStateAction<string>>;
   setImageThreePreview: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const [firstFile, setFirstFile] = useState<File>();
-  const [secondFile, setSecondFile] = useState<File>();
-
-  const [thirdFile, setThirdFile] = useState<File>();
   return (
     <div className="flex flex-col bg-white w-[563px] rounded-lg p-6 gap-4">
       <div>
@@ -39,14 +31,7 @@ export const AddProductImageSection = ({
               <img className="w-full h-full" src={imageOnePreview} />
               <button
                 type="button"
-                onClick={(e) => {
-                  setImageOnePreview(""),
-                    setImages(
-                      images.filter((el) => {
-                        return el.name !== firstFile?.name;
-                      })
-                    );
-                }}
+                onClick={(e) => setImageOnePreview("")}
                 className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
               >
                 <Trash />
@@ -62,9 +47,7 @@ export const AddProductImageSection = ({
                 if (!e.target.files || e.target.files.length === 0) {
                   return;
                 }
-                setFirstFile(e.target.files[0]);
-                setImageOnePreview(URL.createObjectURL(e.target.files[0]));
-                setImages([...images, e.target.files[0]]);
+                uploadSingleImage(e.target.files[0], "One", setImageOnePreview);
               }}
             />
           )}
@@ -77,14 +60,7 @@ export const AddProductImageSection = ({
               <img className="w-full h-full" src={imageTwoPreview} />
               <button
                 type="button"
-                onClick={(e) => {
-                  setImageTwoPreview(""),
-                    setImages(
-                      images.filter((el) => {
-                        return el.name !== secondFile?.name;
-                      })
-                    );
-                }}
+                onClick={(e) => setImageTwoPreview("")}
                 className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
               >
                 <Trash />
@@ -100,9 +76,7 @@ export const AddProductImageSection = ({
                 if (!e.target.files || e.target.files.length === 0) {
                   return;
                 }
-                setSecondFile(e.target.files[0]);
-                setImageTwoPreview(URL.createObjectURL(e.target.files[0]));
-                setImages([...images, e.target.files[0]]);
+                uploadSingleImage(e.target.files[0], "Two", setImageTwoPreview);
               }}
             />
           )}
@@ -113,14 +87,7 @@ export const AddProductImageSection = ({
             <div className="absolute w-full h-full z-30 flex justify-end">
               <img className="w-full h-full" src={imageThreePreview} />
               <button
-                onClick={(e) => {
-                  setImageThreePreview(""),
-                    setImages(
-                      images.filter((el) => {
-                        return el.name !== thirdFile?.name;
-                      })
-                    );
-                }}
+                onClick={(e) => setImageThreePreview("")}
                 className="w-6 h-6 absolute z-50 mt-2 mr-2 bg-white flex justify-center items-center rounded-xl p-1"
               >
                 <Trash />
@@ -136,9 +103,11 @@ export const AddProductImageSection = ({
                 if (!e.target.files || e.target.files.length === 0) {
                   return;
                 }
-                setThirdFile(e.target.files[0]);
-                setImageThreePreview(URL.createObjectURL(e.target.files[0]));
-                setImages([...images, e.target.files[0]]);
+                uploadSingleImage(
+                  e.target.files[0],
+                  "Three",
+                  setImageThreePreview
+                );
               }}
             />
           )}

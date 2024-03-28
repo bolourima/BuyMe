@@ -1,17 +1,22 @@
 import { instance } from "@/instance";
 import { Product } from "@/types/productType";
-export const createProduct = async (
+
+export const editProduct = async (
+  _id: string,
   images: string[],
   values: Product,
   isSale: boolean,
   salePercent: any,
   selectedCategory: string,
   subName: string,
-  selectedBrand: string
+  selectedBrand: string,
+  setEditableProduct: any,
+  setOnEdit: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   try {
     const disCount = { isSale: isSale, salePercent: salePercent };
     const newProduct = {
+      _id: _id,
       name: values.name,
       description: values.description,
       price: values.price,
@@ -24,10 +29,11 @@ export const createProduct = async (
       brandName: selectedBrand,
       images: images,
     };
-    const res = await instance.post("/createProduct", newProduct);
-    res.status === 201 ? alert("Created") : alert("Failed");
+    const res = await instance.put("/editProduct", newProduct);
+    setEditableProduct(null);
+    setOnEdit(false);
+    res.status === 200 ? alert("Updated") : alert("Failed");
   } catch (error) {
-    console.error(error);
-    return alert("Product code coincided");
+    console.error("error in edit product", error);
   }
 };
