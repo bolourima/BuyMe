@@ -1,16 +1,10 @@
-import DelletIcon from "@/SVG/DelletIcon";
-import { BasketVisiblityContext } from "@/context/BasketVisiblity";
+import DelletIcon from "@/icon/DelletIcon";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
-import { ProductType } from "@/types/productType";
 import { changeProductQuantity } from "@/utilities/countChange";
 import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-
-export const Basket = () => {
-  const { isBasketVisible, setIsBasketVisible } = useContext(
-    BasketVisiblityContext
-  );
+const Basket = () => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
@@ -21,27 +15,19 @@ export const Basket = () => {
     if (!accessToken) return;
     setToken(accessToken);
   }, []);
-  const hideBasket = useMemo(async () => {
-    if (productsInBasket.length == 0) {
-      setIsBasketVisible(false);
-    }
+  const countTotal = useMemo(async () => {
     setTotal(
       productsInBasket.reduce(
         (acc, cur) =>
           acc +
-          cur.count * (cur.price * ((100 - cur.disCount.salePercent) / 100)),
+          cur.selectedQuantity *
+            (cur.price * ((100 - cur.disCount.salePercent) / 100)),
         0
       )
     );
   }, [productsInBasket]);
   return (
-    <div className="absolute z-30 flex flex-col w-1/2 h-fit bg-gray-300 items-end rounded-lg">
-      <button
-        onClick={() => setIsBasketVisible(false)}
-        className="w-8 h-8 mt-4 mr-4"
-      >
-        <DelletIcon />
-      </button>
+    <div className="flex flex-col w-full min-h-screen bg-gray-300 items-end rounded-lg">
       <div className="w-full h-full px-4 flex flex-col gap-8 text-black">
         {productsInBasket.map((product) => {
           return (
@@ -79,7 +65,7 @@ export const Basket = () => {
                 <div className="w-full h-fit justify-between flex my-4">
                   <button
                     onClick={() => {
-                      if (product.count == 1) {
+                      if (product.selectedQuantity == 1) {
                         removeFromBasket(
                           product._id,
                           productsInBasket,
@@ -99,7 +85,7 @@ export const Basket = () => {
                     -
                   </button>
                   <p className="h-15 w-fit flex justify-center items-center">
-                    {product.count}
+                    {product.selectedQuantity}
                   </p>
                   <button
                     onClick={() =>
@@ -141,3 +127,5 @@ export const Basket = () => {
     </div>
   );
 };
+
+export default Basket;

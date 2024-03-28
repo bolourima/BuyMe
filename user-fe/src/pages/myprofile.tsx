@@ -16,7 +16,7 @@ export default function MyProfile() {
         <div>
           <p className="text-2xl">My Profile</p>
         </div>
-        <div className="flex md:flex flex-col">
+        <div className="flex flex-col md:flex  ">
           <div className="flex w-1/4">
             <div className="border-gray-200 border-[1px] w-full">
               <div className="flex gap-5 items-center p-5">

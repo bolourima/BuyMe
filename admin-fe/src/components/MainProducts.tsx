@@ -4,6 +4,7 @@ import { AddProductBar } from "./AddProductBar";
 import { Category } from "@/types/categoryType";
 import { Product } from "@/types/productType";
 import { GetProductType } from "@/types/getProductType";
+import DataTable from "./DataTable";
 
 export const MainProducts = ({
   categoryData,
@@ -30,7 +31,7 @@ export const MainProducts = ({
     images: [],
   });
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-5/6">
       {!isAddProductVisible && (
         <ProductsController
           setIsAddProductVisible={setIsAddProductVisible}
@@ -39,6 +40,15 @@ export const MainProducts = ({
           setEditableProduct={setEditableProduct}
         />
       )}
+      {!isAddProductVisible && (
+        <DataTable
+          setIsAddProductVisible={setIsAddProductVisible}
+          productData={productData}
+          setOnEdit={setOnEdit}
+          setEditableProduct={setEditableProduct}
+        />
+      )}
+
       {isAddProductVisible && (
         <AddProductBar
           categoryData={categoryData}
