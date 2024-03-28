@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { ProductsController } from "./ProductsController";
-import { AddProductBar } from "./AddProductBar";
+import { AddProductBar } from "./AddProduct/AddProductBar";
 import { Category } from "@/types/categoryType";
-import { Product } from "@/types/productType";
 import { GetProductType } from "@/types/getProductType";
 import DataTable from "./DataTable";
 
