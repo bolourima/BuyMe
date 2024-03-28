@@ -3,6 +3,7 @@ import { SubCategory } from "@/types/subCategoryType";
 import React from "react";
 
 export const AddProductBrand = ({
+  selectedBrand,
   setSelectedBrand,
   editableProduct,
   domSub,
@@ -11,6 +12,7 @@ export const AddProductBrand = ({
   isSale,
   setSalePercent,
 }: {
+  selectedBrand: string;
   setSelectedBrand: React.Dispatch<React.SetStateAction<string>>;
   editableProduct: GetProductType;
   domSub: SubCategory[];
@@ -25,17 +27,14 @@ export const AddProductBrand = ({
         onChange={(e) => setSelectedBrand(e.target.value)}
         className="w-full h-8 rounded-lg bg-[#F7F7F8]"
         id="brandName"
-        value={editableProduct ? editableProduct.brandName : ""}
+        value={selectedBrand}
       >
         {domSub.map((sub) =>
-          sub.brands.map((brand) => (
-            <option key={brand._id} value={brand.name}>
-              {brand.name}
-            </option>
-          ))
+          sub.brands.map((brand) => {
+            return <option>{brand}</option>;
+          })
         )}
       </select>
-
       <div className="flex items-center px-4 gap-4">
         {onEdit ? (
           <input
