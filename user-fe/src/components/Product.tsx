@@ -1,22 +1,18 @@
-import React, { use, useContext, useState } from "react";
-import { ProductCardTwo } from "./ProductCardTwo";
-import { ProductCardThree } from "./ProductCardThree";
+import React, { useContext, useState } from "react";
 import { ProductType } from "../types/productType";
-import AppIcon from "@/icon/AppIcon";
-import ListIcon from "@/icon/ListIcon";
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { ClickHandler } from "@/types/handlerType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import Masonry from "./Masonry";
+import Box from "@mui/material/Box";
 export default function Product({
   productData,
 }: {
   productData: ProductType[];
 }) {
-  const [isList, setIsList] = useState(true);
-  const handleIsList = () => {
-    setIsList(!isList);
-  };
-  const maxDatasToShow = 5;
+  const maxDatasToShow = 50;
   const [renderedDataindex, setDataIndex] = useState(0);
   const handleChangeBundling = () =>
     setDataIndex(renderedDataindex + maxDatasToShow);
@@ -27,38 +23,17 @@ export default function Product({
     putIntoBasket(product, productsInBasket, setProductsInBasket);
   };
   return (
-    <div className="bg-[#2F306A]">
-      <div className="flex py-4">
-        <button
-          onClick={handleIsList}
-          className={`${isList ? "hidden" : "block"}`}
-        >
-          <AppIcon />
-        </button>
-        <button
-          onClick={handleIsList}
-          className={`${isList ? "block" : "hidden"}`}
-        >
-          <ListIcon />
-        </button>
-        <button onChange={handleChangeBundling}>next page</button>
+    <div>
+      <div>
+        <Box sx={{ width: 1000, height: 1000, overflowY: "scroll" }}>
+          <ImageList variant="masonry" cols={3} gap={24}>
+            {productData.map((Data, i) => (
+              <Masonry key={i} data={Data} setProductData={setProductData} />
+            ))}
+          </ImageList>
+        </Box>
       </div>
-      <div className={`${isList ? "hidden" : "block"}`}>
-        {productData.map((Data, i) => (
-          <ProductCardThree
-            key={i}
-            data={Data}
-            setProductData={setProductData}
-          />
-        ))}
-      </div>
-      <div
-        className={`${isList ? "block" : "hidden"} grid grid-cols-3 lg:gap-y-5`}
-      >
-        {productData.slice(renderedDataindex, maxDatasToShow).map((Data, i) => (
-          <ProductCardTwo key={i} data={Data} setProductData={setProductData} />
-        ))}
-      </div>
+      {/* <button onChange={handleChangeBundling}>next page</button> */}
     </div>
   );
 }
