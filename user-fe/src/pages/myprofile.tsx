@@ -1,12 +1,7 @@
-import BlackProfile from "@/icon/BlackProfile";
 import React, { useState } from "react";
-import { UserIcon } from "@/icon/UserIcon";
-import CartIcon from "@/icon/CartIcon";
-import LocationIcon from "@/icon/LocationIcon";
-import NotificationIcon from "@/icon/NotificationIcon";
 import { MyProfilePicEdit } from "@/components/MyProfilePicEdit";
 import { EditIconWhite } from "@/icon/EditIconWhite";
-import { HandIcon } from "@/icon/HandIcon";
+import { ProfileSideBar } from "@/components/ProfileSideBar";
 
 export default function MyProfile() {
   const [hoveredItem, setHoverItems] = useState("");
@@ -16,9 +11,13 @@ export default function MyProfile() {
         <div>
           <p className="text-2xl">My Profile</p>
         </div>
-        <div className="flex flex-col md:flex  ">
-          <div className="flex w-1/4">
-            <div className="border-gray-200 border-[1px] w-full">
+        <div className=" flex flex-col lg:flex lg:flex-row ">
+          <div className=" hidden lg:flex">
+            <ProfileSideBar />
+          </div>
+
+          {/* <div className="w-[300px] lg:flex">
+            <div className=" border-gray-200 lg:border-gray-200 border-[1px]">
               <div className="flex gap-5 items-center p-5">
                 <div className="flex w-12 h-12">
                   <img
@@ -69,14 +68,14 @@ export default function MyProfile() {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="flex flex-col gap-6 w-3/4">
             <div className="flex justify-between w-full px-5">
               <div>
                 <MyProfilePicEdit />
               </div>
               <div>
-                <button className="bttn flex bg-black text-white w-[200px] h-[70px] justify-center items-center rounded-lg ">
+                <button className="bttn flex bg-black text-white w-[200px] h-[50px] justify-center items-center rounded-lg ">
                   <div className="w-5 h-5 mx-4">
                     <EditIconWhite />
                   </div>
@@ -85,8 +84,8 @@ export default function MyProfile() {
                 </button>
               </div>
             </div>
-            <div className="flex gap-6 px-5">
-              <div className="w-1/2">
+            <div className="w-full lg:flex gap-6 px-5">
+              <div className="w-full lg:w-full">
                 <form className="flex flex-col gap-2">
                   <label className="text-xs">First Name</label>
                   <input
@@ -96,7 +95,7 @@ export default function MyProfile() {
                   />
                 </form>
               </div>
-              <div className="w-1/2">
+              <div className="w-full lg:w-full">
                 <form className="flex flex-col gap-2 ">
                   <label className="text-xs">Last Name</label>
                   <input
@@ -107,8 +106,8 @@ export default function MyProfile() {
                 </form>
               </div>
             </div>
-            <div className="flex gap-6 px-5">
-              <div className="w-1/2">
+            <div className="w-full lg:flex gap-6 px-5">
+              <div className="w-full lg:w-full">
                 <form className="flex flex-col gap-2">
                   <label className="text-xs">Phone Number</label>
                   <input
@@ -118,7 +117,7 @@ export default function MyProfile() {
                   />
                 </form>
               </div>
-              <div className="w-1/2">
+              <div className="w-full lg:w-full">
                 <form className="flex flex-col gap-2">
                   <label className="text-xs">Email Address</label>
                   <input
@@ -129,7 +128,7 @@ export default function MyProfile() {
                 </form>
               </div>
             </div>
-            <div className="flex gap-6 px-5">
+            <div className="lg:flex gap-6 px-5">
               <div className="w-full">
                 <form className="flex flex-col gap-2">
                   <label className="text-xs">Home Adress</label>
