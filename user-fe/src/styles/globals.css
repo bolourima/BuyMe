@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-
+.bttn:hover .usericon {
+ fill: white
+}
+.bttn:hover .carticon {
+    fill: white
+}
+.bttn:hover .locationicon {
+    fill: white
+}
+.bttn:hover .notificationicon {
+    fill: white
+}
 
 

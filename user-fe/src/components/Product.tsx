@@ -11,7 +11,6 @@ export default function Product({
   productData: ProductType[];
 }) {
   const isList: boolean = true;
-
   return (
     <div className="">
       <div className={`${isList ? "hidden" : "block"}`}>
