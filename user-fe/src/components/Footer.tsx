@@ -10,7 +10,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <div className=" w-ful bg-black text-white flex  justify-center py-20">
+    <div className=" w-ful bg-black text-white flex  justify-center py-20 mt-9">
       <div className=" flex w-10/12 flex-col items-center gap-6">
         <div className=" border-l-2 pl-2">
           <h1 className=" font-extrabold text-6xl ">Buy</h1>

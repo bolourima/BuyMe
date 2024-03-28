@@ -51,10 +51,11 @@ export const SubCategory = () => {
   const SubCategory: typeCategory[] = [
     {
       _id: "SubCategory1",
-      categoryName: "electronic1",
+      categoryName: "Clothes",
       brands: [
-        { _id: "brand1", name: "Samsung" },
-        { _id: "brand2", name: "Apple" },
+        { _id: "brand1", name: "Top" },
+        { _id: "brand2", name: "Dress" },
+        { _id: "brand3", name: "Shirt" },
       ],
       features: [
         { _id: "feature1", name: "Bluetooth" },
@@ -63,10 +64,11 @@ export const SubCategory = () => {
     },
     {
       _id: "SubCategory2",
-      categoryName: "electronic2",
+      categoryName: "Electronics",
       brands: [
-        { _id: "brand1", name: "shit" },
-        { _id: "brand2", name: "Apple" },
+        { _id: "brand1", name: "Phone" },
+        { _id: "brand2", name: "Laptop" },
+        { _id: "brand3", name: "PC" },
       ],
       features: [
         { _id: "features", name: "fuck" },
@@ -75,10 +77,10 @@ export const SubCategory = () => {
     },
     {
       _id: "SubCategory3",
-      categoryName: "electronic3",
+      categoryName: "Books",
       brands: [
-        { _id: "brand1", name: "bumaa" },
-        { _id: "brand2", name: "Apple" },
+        { _id: "brand1", name: "Thriller" },
+        { _id: "brand2", name: "Fiction" },
       ],
       features: [
         { _id: "feature1", name: "Bluetooth" },
@@ -113,7 +115,7 @@ export const SubCategory = () => {
   };
 
   return (
-    <div className="bg-[#2F306A] text-white w-2/12 p-4 flex flex-col gap-5">
+    <div className="text-black w-[300px] rounded-lg p-4 flex flex-col gap-5 border-2">
       {/* Category */}
       <div className="">
         <div className="flex justify-between " onClick={handleOpenCategory}>
@@ -140,7 +142,7 @@ export const SubCategory = () => {
       {/* Brands */}
       <div className="">
         <div className="flex justify-between" onClick={handleOpenBrands}>
-          <button className="font-bold uppercase">Brands</button>
+          <button className="font-bold uppercase">Subcategory</button>
           <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
         </div>
         <div className="pl-1 ml-1 uppercase mt-3">
@@ -151,8 +153,10 @@ export const SubCategory = () => {
                 isOpenBrands ? "block" : "hidden"
               }`}
             >
-              <input type="checkbox" className="" />
-              {brands.name}
+              <div className="flex gap-4">
+                <input type="checkbox" className="" />
+                {brands.name}
+              </div>
             </div>
           ))}
         </div>
