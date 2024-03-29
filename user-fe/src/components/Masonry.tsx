@@ -39,7 +39,7 @@ export default function Masonry({
           onClick={() => {
             setProductData(data);
           }}
-          className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm "
+          className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm font-semibold "
         >
           ADD TO CART
         </button>
