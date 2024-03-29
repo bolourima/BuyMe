@@ -10,7 +10,6 @@ import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { XIcon } from "@/icon/XIcon";
-
 const Basket = () => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext

@@ -6,6 +6,7 @@ import { ProductType } from "@/types/productType";
 import { ClickHandler } from "@/types/handlerType";
 import { LoveIcon } from "@/icon/LoveIcon";
 import { OrderIcon } from "@/icon/OrderIcon";
+import { useRouter } from "next/router";
 
 export default function Masonry({
   data,
@@ -14,16 +15,18 @@ export default function Masonry({
   data: ProductType;
   setProductData: ClickHandler;
 }) {
-  const { _id, images, name, price, disCount } = data;
-  const { isSale, salePercent } = disCount;
+  const router = useRouter();
+  const { _id, images = "", name, price = 0, disCount } = data || {};
+  const { isSale = 0, salePercent = 0 } = disCount || {};
   const sale = (price * 100) / salePercent;
   const imgFirstFix = 0;
   return (
     <ImageListItem className="rounded-lg border-2 border-gray-300">
-      <a href={`/productId/${_id}`}>
-        <img src={images[imgFirstFix]} className="rounded-t-lg" />
-      </a>
-
+      <img
+        onClick={() => router.push(`productId/${_id}`)}
+        src={images[imgFirstFix]}
+        className="rounded-t-lg"
+      />
       <div className="p-5 gap-1">
         <p className="text-xl">{name}</p>
         <p className="text-lg font-bold">{price.toLocaleString()}</p>
