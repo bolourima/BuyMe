@@ -14,15 +14,15 @@ export type ProductType = {
   createdAt: string;
   updatedAt: string;
   selectedQuantity: number;
-};
-type categoryIdType = {
-  _id: string;
-  name: string;
-};
-type categoryIdType = {
-  _id: string;
-  name: string;
-};
+} | null;
+
+type categoryIdType =
+  | {
+      _id: string;
+      name: string;
+    }
+  | undefined
+  | null;
 type DiscountType = {
   isSale: boolean;
   salePercent: number;
