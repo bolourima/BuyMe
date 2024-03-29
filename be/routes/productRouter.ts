@@ -3,6 +3,7 @@ import {
   createProduct,
   deleteProduct,
   editProduct,
+  getProductDetail,
   getProducts,
   uploadSingleImage,
 } from "../controllers/productController";
@@ -15,3 +16,4 @@ productRouter
   .post(upload.single("img"), uploadSingleImage);
 productRouter.route("/getProducts").get(getProducts);
 productRouter.route("/deleteProduct/:id").delete(deleteProduct);
+productRouter.route("/getProducts/:id").post(getProductDetail);
