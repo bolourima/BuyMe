@@ -4,6 +4,7 @@ import { changeProductQuantity } from "@/utilities/countChange";
 import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
 import React, { useContext, useEffect, useMemo, useState } from "react";
+import { ProductType } from "@/types/productType";
 const Basket = () => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext

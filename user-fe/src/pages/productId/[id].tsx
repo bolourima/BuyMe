@@ -7,7 +7,7 @@ import { idType } from "@/types/idType";
 export default function ProductId() {
   const router = useRouter();
   const ID = router.query.id;
-  const [productData, setProductData] = useState<ProductType>(null);
+  const [productData, setProductData] = useState<ProductType | null>(null);
   const {
     _id,
     name,
