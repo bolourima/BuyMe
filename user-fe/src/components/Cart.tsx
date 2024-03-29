@@ -5,59 +5,150 @@ import { MasterCardIcon } from "@/icon/MasterCardIcon";
 import { PayPallIcon } from "@/icon/PayPallIcon";
 import { VisaIcon } from "@/icon/VisaIcon";
 import { ApplePayIcon } from "@/icon/ApplePayIcon";
+import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { changeProductQuantity } from "@/utilities/countChange";
+import { createOrder } from "@/utilities/createOrder";
+import { removeFromBasket } from "@/utilities/removeFromBasket";
+import { useContext, useEffect, useMemo, useState } from "react";
 
-export const Cart = () => {
+const Basket = () => {
+  const { productsInBasket, setProductsInBasket } = useContext(
+    ProductsInBasketContext
+  );
+  const [total, setTotal] = useState(0);
+  const [token, setToken] = useState<string>("");
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    setToken(accessToken);
+  }, []);
+  const countTotal = useMemo(async () => {
+    setTotal(
+      productsInBasket.reduce(
+        (acc, cur) =>
+          acc +
+          cur.selectedQuantity *
+            (cur.price * ((100 - cur.disCount.salePercent) / 100)),
+        0
+      )
+    );
+  }, [productsInBasket]);
   return (
     <div className="w-full flex flex-col items-center pt-16 min-h-screen">
       <div className="flex gap-6">
-        <div className="flex flex-col bg-white w-[800px] border-[#DEE2E7] border-[1px] rounded-md  p-5 ">
-          <div className="flex justify-between w-full py-5 border-b-2">
-            <div className="flex gap-2">
-              <div className="flex w-20 h-20 bg-[#F7F7F7] rounded-md justify-center items-center">
-                <img
-                  className="flex  w-[53px] h-[60px]"
-                  src="./ShirtPic.png"
-                  alt=""
-                />
+        {productsInBasket.map((product) => {
+          return (
+            <div className="flex flex-col bg-white w-[800px] border-[#DEE2E7] border-[1px] rounded-md  p-5 ">
+              <div className="flex justify-between w-full py-5 border-b-2">
+                <div className="flex gap-2">
+                  <div className="flex w-20 h-20 bg-[#F7F7F7] rounded-md justify-center items-center">
+                    <img
+                      className="flex  w-[53px] h-[60px]"
+                      src={product.images[0]}
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div>
+                      <p className="text-[#1C1C1C]">{product.name}</p>
+                    </div>
+                    <div className="text-[#8B96A5]">
+                      <p>Brand: {product.brandName}</p>
+                    </div>
+                    <div className="flex gap-2.5 text-[13px]">
+                      <button className="flex w-[70px] h-[30px] px-[10px] text-black border-[#DEE2E7] border-[1px] rounded-md justify-center items-center">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-end text-lg">
+                    Price:{" "}
+                    {product.disCount.isSale ? (
+                      <p>
+                        <span className="line-through">
+                          {product.price.toLocaleString()}
+                        </span>{" "}
+                        {(
+                          product.price *
+                          ((100 - product.disCount.salePercent) / 100)
+                        ).toLocaleString()}
+                        ₮
+                      </p>
+                    ) : (
+                      product.price.toLocaleString()
+                    )}
+                    <p>
+                      Discount:
+                      {product.disCount.isSale
+                        ? "   " + product.disCount.salePercent + "%"
+                        : "   Хямдралгүй"}
+                    </p>
+                  </div>
+                  <div className="flex w-[123px] h-10 border-black border-[1px] justify-center rounded-md gap-5 items-center p-1">
+                    <button
+                      onClick={() => {
+                        if (product.selectedQuantity == 1) {
+                          removeFromBasket(
+                            product._id,
+                            productsInBasket,
+                            setProductsInBasket
+                          );
+                        } else {
+                          changeProductQuantity(
+                            product,
+                            false,
+                            productsInBasket,
+                            setProductsInBasket
+                          );
+                        }
+                      }}
+                      className="text-2xl"
+                    >
+                      -
+                    </button>
+                    <p className="text-lg">{product.selectedQuantity}</p>
+                    <button
+                      onClick={() =>
+                        changeProductQuantity(
+                          product,
+                          true,
+                          productsInBasket,
+                          setProductsInBasket
+                        )
+                      }
+                      className="text-2xl"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    removeFromBasket(
+                      product._id,
+                      productsInBasket,
+                      setProductsInBasket
+                    )
+                  }
+                  className="w-full bg-black h-12 rounded-lg text-white flex justify-center items-center"
+                >
+                  Delete from basket
+                </button>
               </div>
-              <div className="flex flex-col gap-2">
-                <div>
-                  <p className="text-[#1C1C1C]">
-                    T-shirts with multiple colors, for men and lady
-                  </p>
-                </div>
-                <div className="text-[#8B96A5]">
-                  <p>Size: medium, Color: blue, Material: Plastic Market</p>
-                  <p>Seller: Artel Market</p>
-                </div>
-                <div className="flex gap-2.5 text-[13px]">
-                  <button className="flex w-[70px] h-[30px] px-[10px] text-black border-[#DEE2E7] border-[1px] rounded-md justify-center items-center">
-                    Remove
+
+              <div className="flex pt-5">
+                <div className="flex items-center justify-end w-full">
+                  <button className="flex w-[115px] h-[40px] px-[16px] text-white bg-black border-[1px] rounded-md justify-center items-center">
+                    Remove all
                   </button>
                 </div>
               </div>
-              <div></div>
             </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-end text-lg">
-                <p>78,990,000</p>
-              </div>
-              <div className="flex w-[123px] h-10 border-black border-[1px] justify-center rounded-md gap-5 items-center p-1">
-                <button className="text-2xl">-</button>
-                <p className="text-lg">1</p>
-                <button className="text-2xl">+</button>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex pt-5">
-            <div className="flex items-center justify-end w-full">
-              <button className="flex w-[115px] h-[40px] px-[16px] text-white bg-black border-[1px] rounded-md justify-center items-center">
-                Remove all
-              </button>
-            </div>
-          </div>
-        </div>
+          );
+        })}
         <div className="w-[400px]">
           <div className="flex flex-col border-[#DEE2E7] border-[1px] rounded-md p-5 gap-2 bg-white">
             <div className="flex justify-between border-b-[1px] pb-4">
@@ -81,8 +172,11 @@ export const Cart = () => {
               </div>
             </div>
             <div className="mt-4">
-              <button className="bg-black text-white w-full h-[54px] rounded-lg">
-                Checkout
+              <button
+                onClick={() => createOrder(productsInBasket, token, total)}
+                className="bg-black text-white w-full h-[54px] rounded-lg"
+              >
+                Create Order
               </button>
             </div>
             <div className="flex justify-around mt-5">
@@ -98,3 +192,4 @@ export const Cart = () => {
     </div>
   );
 };
+export default Basket;
