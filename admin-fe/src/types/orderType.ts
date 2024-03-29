@@ -19,7 +19,7 @@ type ProductsFromOrder = {
 
 export type OrderType = {
   _id: string;
-  products: ProductsFromOrder[];
+  products: { product: ProductsFromOrder; selectedProductQuantity: number }[];
   orderNumber: number;
   user: {
     _id: string;
