@@ -14,13 +14,16 @@ export default function Masonry({
   data: ProductType;
   setProductData: ClickHandler;
 }) {
-  const { images, name, price, disCount } = data;
+  const { _id, images, name, price, disCount } = data;
   const { isSale, salePercent } = disCount;
   const sale = (price * 100) / salePercent;
   const imgFirstFix = 0;
   return (
     <ImageListItem className="rounded-lg border-2 border-gray-300">
-      <img src={images[imgFirstFix]} className="rounded-t-lg" />
+      <a href={`/productId/${_id}`}>
+        <img src={images[imgFirstFix]} className="rounded-t-lg" />
+      </a>
+
       <div className="p-5 gap-1">
         <p className="text-xl">{name}</p>
         <p className="text-lg font-bold">{price.toLocaleString()}</p>
@@ -33,7 +36,7 @@ export default function Masonry({
           onClick={() => {
             setProductData(data);
           }}
-          className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm "
+          className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm font-semibold "
         >
           ADD TO CART
         </button>
