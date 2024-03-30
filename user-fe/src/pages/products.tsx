@@ -2,12 +2,18 @@ import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const Products = ({ productData }: { productData: ProductType[] }) => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    setToken(accessToken);
+  }, []);
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center gap-16 text-black relative">
       {productData.map((product) => {
@@ -33,7 +39,12 @@ const Products = ({ productData }: { productData: ProductType[] }) => {
             <p>Created at: {product.createdAt}</p>
             <button
               onClick={() => {
-                putIntoBasket(product, productsInBasket, setProductsInBasket);
+                putIntoBasket(
+                  product,
+                  productsInBasket,
+                  setProductsInBasket,
+                  token
+                );
               }}
               className="w-full h-16 bg-black text-white rounded-lg"
             >

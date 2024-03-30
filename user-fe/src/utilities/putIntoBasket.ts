@@ -1,11 +1,17 @@
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
+import { headers } from "next/headers";
 import { useContext, useState } from "react";
 export const putIntoBasket = async (
   product: ProductType,
   productsInBasket: ProductType[],
-  setProductsInBasket: React.Dispatch<React.SetStateAction<ProductType[]>>
+  setProductsInBasket: React.Dispatch<React.SetStateAction<ProductType[]>>,
+  token: string
 ) => {
+  const res = await instance.put(`/basket/${product._id}`, null, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   const coincidenceChecker: ProductType[] = productsInBasket.filter((el) => {
     return el._id === product._id;
   });

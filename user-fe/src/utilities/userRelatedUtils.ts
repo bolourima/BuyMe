@@ -15,9 +15,6 @@ export const loginUser = async (data: {}, router: Function) => {
 export const createUser = async (data: {}, router: Function) => {
   try {
     const response = await instance.post("signup", data);
-    console.log("response", response);
-    console.log("response.data", response.data);
-    console.log("response.status", response.status);
     if (response.status == 201) {
       router("/");
     }
