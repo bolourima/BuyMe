@@ -10,6 +10,7 @@ import { signUpRouter } from "./routes/signUpRouter";
 import { orderRouter } from "./routes/orderRouter";
 import { Request, Response } from "express";
 import upload from "./middlewares/multer";
+import { basketRouter } from "./routes/basketRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,13 +21,14 @@ app.use(
   })
 );
 
-app.use("", categoryRouter);
-app.use("", productRouter);
-app.use("", subCategoryRouter);
+app.use(categoryRouter);
+app.use(productRouter);
+app.use(subCategoryRouter);
 app.use(userRouter);
-app.use("", signInRouter);
-app.use("", signUpRouter);
+app.use(signInRouter);
+app.use(signUpRouter);
 app.use(orderRouter);
+app.use(basketRouter);
 
 connectToDB();
 const PORT = 8000;

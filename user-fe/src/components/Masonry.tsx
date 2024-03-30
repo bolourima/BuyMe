@@ -8,13 +8,13 @@ import { LoveIcon } from "@/icon/LoveIcon";
 import { OrderIcon } from "@/icon/OrderIcon";
 import { useRouter } from "next/router";
 
-export default function Masonry({
+export const Masonry = ({
   data,
   setProductData,
 }: {
   data: ProductType;
   setProductData: ClickHandler;
-}) {
+}) => {
   const router = useRouter();
   const { _id, images = "", name, price = 0, disCount } = data || {};
   const { isSale = 0, salePercent = 0 } = disCount || {};
@@ -46,4 +46,4 @@ export default function Masonry({
       </div>
     </ImageListItem>
   );
-}
+};

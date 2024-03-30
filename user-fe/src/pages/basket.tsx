@@ -1,4 +1,3 @@
-import React from "react";
 import { AExpressIcon } from "@/icon/AExpressIcon";
 import { MasterCardIcon } from "@/icon/MasterCardIcon";
 import { PayPallIcon } from "@/icon/PayPallIcon";
@@ -8,17 +7,22 @@ import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { changeProductQuantity } from "@/utilities/countChange";
 import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { XIcon } from "@/icon/XIcon";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { ProductType } from "@/types/productType";
 const Basket = () => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
   const [total, setTotal] = useState(0);
   const [token, setToken] = useState<string>("");
+  const setBasket = async (token: string) => {
+    const basketData: ProductTypeWithQuantity[] = await getBasketById(token);
+    setProductsInBasket(basketData);
+  };
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) return;
+    setBasket(accessToken);
     setToken(accessToken);
   }, []);
   const countTotal = useMemo(async () => {
@@ -26,8 +30,9 @@ const Basket = () => {
       productsInBasket.reduce(
         (acc, cur) =>
           acc +
-          cur.selectedQuantity *
-            (cur.price * ((100 - cur.disCount.salePercent) / 100)),
+          cur.selectedProductQuantity *
+            (cur.product.price *
+              ((100 - cur.product.disCount?.salePercent) / 100)),
         0
       )
     );
@@ -37,91 +42,88 @@ const Basket = () => {
       <div className="flex flex-col gap-6 w-[900px]">
         {productsInBasket.map((product) => {
           return (
-            <div className="flex flex-col shadow-md w-[800px] border-gray-300 border-[1px] rounded-xl p-5 ">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-5">
-                  <div className="flex rounded-md justify-center items-center w-[100px] h-[150px]">
-                    <img className="flex " src={product.images[0]} alt="" />
-                  </div>
-                  <div className="name">
-                    <p className="text-lg font-semibold">{product.name}</p>
-                  </div>
+            <div className="flex gap-2 w-full h-[300px] items-center px-4 my-4">
+              <img src={product.images[0]} className="w-1/2 h-full" />
+              <div className="flex flex-col w-1/2 pl-4 h-full">
+                <p>Name: {product.name}</p>
+                <p>Category: {product.categoryId.name}</p>
+                <p>SubCategory: {product.subCategoryName}</p>
+                <p>Brand: {product.brandName}</p>
+                <div>
+                  Price:{" "}
+                  {product.disCount.isSale ? (
+                    <p>
+                      <span className="line-through">
+                        {product.price.toLocaleString()}
+                      </span>{" "}
+                      {(
+                        product.price *
+                        ((100 - product.disCount.salePercent) / 100)
+                      ).toLocaleString()}
+                      ₮
+                    </p>
+                  ) : (
+                    product.price.toLocaleString()
+                  )}
                 </div>
-                <div className="flex items-center gap-8">
-                  <div className="flex flex-col justify-end text-lg">
-                    {product.disCount.isSale ? (
-                      <div>
-                        <p className="line-through text-red-500">
-                          {(
-                            product.price * product.selectedQuantity
-                          ).toLocaleString()}
-                        </p>{" "}
-                        <p className="text-green-500">
-                          {(
-                            product.price *
-                            ((100 - product.disCount.salePercent) / 100) *
-                            product.selectedQuantity
-                          ).toLocaleString()}
-                        </p>
-                      </div>
-                    ) : (
-                      (
-                        product.price * product.selectedQuantity
-                      ).toLocaleString()
-                    )}
-                  </div>
-                  <div className="flex w-[123px] h-10 border-slate-500 border-[1px] justify-center rounded-md gap-5 items-center p-1">
-                    <button
-                      onClick={() => {
-                        if (product.selectedQuantity == 1) {
-                          removeFromBasket(
-                            product._id,
-                            productsInBasket,
-                            setProductsInBasket
-                          );
-                        } else {
-                          changeProductQuantity(
-                            product,
-                            false,
-                            productsInBasket,
-                            setProductsInBasket
-                          );
-                        }
-                      }}
-                      className="text-2xl"
-                    >
-                      -
-                    </button>
-                    <p className="text-lg">{product.selectedQuantity}</p>
-                    <button
-                      onClick={() =>
-                        changeProductQuantity(
-                          product,
-                          true,
-                          productsInBasket,
-                          setProductsInBasket
-                        )
-                      }
-                      className="text-2xl"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div className="flex gap-2.5 text-[13px]">
-                    <button
-                      onClick={() =>
+                <p>
+                  Discount:
+                  {product.disCount.isSale
+                    ? "   " + product.disCount.salePercent + "%"
+                    : "   Хямдралгүй"}
+                </p>
+                <p>Tags: {product.tag}</p>
+                <div className="w-full h-fit justify-between flex my-4">
+                  <button
+                    onClick={() => {
+                      if (product.selectedQuantity == 1) {
                         removeFromBasket(
                           product._id,
                           productsInBasket,
                           setProductsInBasket
-                        )
+                        );
+                      } else {
+                        changeProductQuantity(
+                          product,
+                          false,
+                          productsInBasket,
+                          setProductsInBasket
+                        );
                       }
-                      className="flex text-base h-9 w-9 bg-black border-2 justify-center rounded-full gap-5 items-center"
-                    >
-                      <XIcon />
-                    </button>
-                  </div>
+                    }}
+                    className="w-1/6 h-12 rounded-lg bg-black text-white flex justify-center items-center"
+                  >
+                    -
+                  </button>
+                  <p className="h-15 w-fit flex justify-center items-center">
+                    {product.selectedQuantity}
+                  </p>
+                  <button
+                    onClick={() =>
+                      changeProductQuantity(
+                        product,
+                        true,
+                        productsInBasket,
+                        setProductsInBasket
+                      )
+                    }
+                    className="w-1/6 h-12 rounded-lg bg-black text-white flex justify-center items-center"
+                  >
+                    +
+                  </button>
                 </div>
+                <button
+                  onClick={() =>
+                    removeFromBasket(
+                      product._id,
+                      productsInBasket,
+                      setProductsInBasket
+                    )
+                  }
+                  className="w-full bg-black h-12 rounded-lg text-white flex justify-center items-center"
+                >
+                  Delete from basket
+                </button>
               </div>
             </div>
           );
