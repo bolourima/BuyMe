@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-const SelectedProductSchema = new Schema({
+export const SelectedProductSchema = new Schema({
   product: { type: Schema.ObjectId, ref: "Product", required: true },
   selectedProductQuantity: Number,
 });
