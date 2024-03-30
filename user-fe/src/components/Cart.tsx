@@ -27,8 +27,9 @@ const Basket = () => {
       productsInBasket.reduce(
         (acc, cur) =>
           acc +
-          cur.selectedQuantity *
-            (cur.price * ((100 - cur.disCount.salePercent) / 100)),
+          cur.selectedProductQuantity *
+            (cur.product.price *
+              ((100 - cur.product.disCount.salePercent) / 100)),
         0
       )
     );
@@ -44,16 +45,16 @@ const Basket = () => {
                   <div className="flex w-20 h-20 bg-[#F7F7F7] rounded-md justify-center items-center">
                     <img
                       className="flex  w-[53px] h-[60px]"
-                      src={product.images[0]}
+                      src={product.product.images[0]}
                       alt=""
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <div>
-                      <p className="text-[#1C1C1C]">{product.name}</p>
+                      <p className="text-[#1C1C1C]">{product.product.name}</p>
                     </div>
                     <div className="text-[#8B96A5]">
-                      <p>Brand: {product.brandName}</p>
+                      <p>Brand: {product.product.brandName}</p>
                     </div>
                     <div className="flex gap-2.5 text-[13px]">
                       <button className="flex w-[70px] h-[30px] px-[10px] text-black border-[#DEE2E7] border-[1px] rounded-md justify-center items-center">
@@ -66,42 +67,44 @@ const Basket = () => {
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-end text-lg">
                     Price:{" "}
-                    {product.disCount.isSale ? (
+                    {product.product.disCount.isSale ? (
                       <p>
                         <span className="line-through">
-                          {product.price.toLocaleString()}
+                          {product.product.price.toLocaleString()}
                         </span>{" "}
                         {(
-                          product.price *
-                          ((100 - product.disCount.salePercent) / 100)
+                          product.product.price *
+                          ((100 - product.product.disCount.salePercent) / 100)
                         ).toLocaleString()}
                         ₮
                       </p>
                     ) : (
-                      product.price.toLocaleString()
+                      product.product.price.toLocaleString()
                     )}
                     <p>
                       Discount:
-                      {product.disCount.isSale
-                        ? "   " + product.disCount.salePercent + "%"
+                      {product.product.disCount.isSale
+                        ? "   " + product.product.disCount.salePercent + "%"
                         : "   Хямдралгүй"}
                     </p>
                   </div>
                   <div className="flex w-[123px] h-10 border-black border-[1px] justify-center rounded-md gap-5 items-center p-1">
                     <button
                       onClick={() => {
-                        if (product.selectedQuantity == 1) {
+                        if (product.selectedProductQuantity == 1) {
                           removeFromBasket(
-                            product._id,
+                            product.product._id,
                             productsInBasket,
-                            setProductsInBasket
+                            setProductsInBasket,
+                            token
                           );
                         } else {
                           changeProductQuantity(
                             product,
                             false,
                             productsInBasket,
-                            setProductsInBasket
+                            setProductsInBasket,
+                            token
                           );
                         }
                       }}
@@ -109,14 +112,15 @@ const Basket = () => {
                     >
                       -
                     </button>
-                    <p className="text-lg">{product.selectedQuantity}</p>
+                    <p className="text-lg">{product.selectedProductQuantity}</p>
                     <button
                       onClick={() =>
                         changeProductQuantity(
                           product,
                           true,
                           productsInBasket,
-                          setProductsInBasket
+                          setProductsInBasket,
+                          token
                         )
                       }
                       className="text-2xl"
@@ -128,9 +132,10 @@ const Basket = () => {
                 <button
                   onClick={() =>
                     removeFromBasket(
-                      product._id,
+                      product.product._id,
                       productsInBasket,
-                      setProductsInBasket
+                      setProductsInBasket,
+                      token
                     )
                   }
                   className="w-full bg-black h-12 rounded-lg text-white flex justify-center items-center"

@@ -1,10 +1,15 @@
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
+import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
 import React, { useContext, useEffect, useState } from "react";
 
-const Products = ({ productData }: { productData: ProductType[] }) => {
+const Products = ({
+  productData,
+}: {
+  productData: ProductTypeWithQuantity[];
+}) => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
@@ -20,23 +25,23 @@ const Products = ({ productData }: { productData: ProductType[] }) => {
         return (
           <div className="flex flex-col justify-start w-fit h-fit border-2 border-black border-solid p-12 gap-4 rounded-lg">
             <div className="flex gap-4">
-              {product.images.map((img) => {
+              {product.product.images.map((img) => {
                 return <img className="w-[100px] h-[150px]" src={img} />;
               })}
             </div>
-            <p>Name: {product.name}</p>
-            <p>Category: {product.categoryId.name}</p>
-            <p>SubCategory: {product.subCategoryName}</p>
-            <p>Brand: {product.brandName}</p>
-            <p>Price: {product.price.toLocaleString()}</p>
+            <p>Name: {product.product.name}</p>
+            <p>Category: {product.product.categoryId.name}</p>
+            <p>SubCategory: {product.product.subCategoryName}</p>
+            <p>Brand: {product.product.brandName}</p>
+            <p>Price: {product.product.price.toLocaleString()}</p>
             <p>
               Discount:
-              {product.disCount.isSale
-                ? "   " + product.disCount.salePercent + "%"
+              {product.product.disCount.isSale
+                ? "   " + product.product.disCount.salePercent + "%"
                 : "   Хямдралгүй байна"}
             </p>
-            <p>Tags: {product.tag}</p>
-            <p>Created at: {product.createdAt}</p>
+            <p>Tags: {product.product.tag}</p>
+            <p>Created at: {product.product.createdAt}</p>
             <button
               onClick={() => {
                 putIntoBasket(

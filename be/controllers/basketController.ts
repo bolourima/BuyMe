@@ -24,7 +24,7 @@ export const editBasket = async (req: AuthenticatedRequest, res: Response) => {
         { $push: { products: newProduct } },
         { new: true }
       );
-      return res.status(200);
+      return res.status(200).json({ msg: "updated" });
     } else {
       const index = selectedBasket?.products.findIndex((el) => {
         return el.product.toString() === newProduct._id.toString();

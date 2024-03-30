@@ -7,6 +7,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { Masonry } from "./Masonry";
 import Box from "@mui/material/Box";
+import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 export const Product = ({ productData }: { productData: ProductType[] }) => {
   const [token, setToken] = useState("");
   const maxDatasToShow = 50;
@@ -21,7 +22,7 @@ export const Product = ({ productData }: { productData: ProductType[] }) => {
     if (!token) return;
     setToken(token);
   }, []);
-  const setProductData: ClickHandler = (product: ProductType) => {
+  const setProductData: ClickHandler = (product: ProductTypeWithQuantity) => {
     putIntoBasket(product, productsInBasket, setProductsInBasket, token);
   };
   return (
