@@ -7,6 +7,7 @@ import { ClickHandler } from "@/types/handlerType";
 import { LoveIcon } from "@/icon/LoveIcon";
 import { OrderIcon } from "@/icon/OrderIcon";
 import { useRouter } from "next/router";
+import { putIntoBasket } from "@/utilities/putIntoBasket";
 
 export const Masonry = ({
   data,
@@ -37,8 +38,9 @@ export const Masonry = ({
         </div>
         <button
           onClick={() => {
-            setProductData(data);
+            setProductData(data, false);
           }}
+          onDoubleClick={() => setProductData(data, true)}
           className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm font-semibold "
         >
           ADD TO CART

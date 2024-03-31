@@ -1,16 +1,13 @@
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { instance } from "@/instance";
-import { ProductType } from "@/types/productType";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
-import { headers } from "next/headers";
-import { useContext, useState } from "react";
 export const putIntoBasket = async (
   product: ProductTypeWithQuantity,
   productsInBasket: ProductTypeWithQuantity[],
   setProductsInBasket: React.Dispatch<
     React.SetStateAction<ProductTypeWithQuantity[]>
   >,
-  token: string
+  token: string,
+  onDouble: boolean
 ) => {
   const res = await instance.put(`/basket/${product._id}`, null, {
     headers: { Authorization: `Bearer ${token}` },

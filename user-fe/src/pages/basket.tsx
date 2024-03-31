@@ -43,7 +43,6 @@ const Basket = () => {
       <div className="flex flex-col gap-6 w-[900px]">
         {productsInBasket.length &&
           productsInBasket.map((product) => {
-            console.log(product);
             return (
               <div className="flex gap-2 w-full h-[300px] items-center px-4 my-4">
                 <img

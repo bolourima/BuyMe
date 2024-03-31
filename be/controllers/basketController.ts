@@ -17,7 +17,7 @@ export const editBasket = async (req: AuthenticatedRequest, res: Response) => {
     if (checkCoincidence?.length == 0) {
       const newProduct = {
         product: req.params.id,
-        selectedProductQuantity: 1,
+        selectedProductQuantity: req.body.onDouble ? 2 : 1,
       };
       const result = await Basket.findOneAndUpdate(
         { user: req.user.id },
@@ -30,8 +30,8 @@ export const editBasket = async (req: AuthenticatedRequest, res: Response) => {
         return el.product.toString() === newProduct._id.toString();
       });
       const number = selectedBasket.products[index].selectedProductQuantity;
-      if (!number) return;
-      if (req.body?.type || !req.body) {
+      if (number === null || number === undefined) return;
+      if (req.body?.type !== false || !req.body) {
         selectedBasket.products[index].selectedProductQuantity = number + 1;
       } else {
         selectedBasket.products[index].selectedProductQuantity = number - 1;
