@@ -10,6 +10,7 @@ export const removeFromBasket = async (
   >,
   token: string
 ) => {
+  console.log(id);
   try {
     const newBasket = productsInBasket.filter((product) => {
       return product.product._id !== id;
