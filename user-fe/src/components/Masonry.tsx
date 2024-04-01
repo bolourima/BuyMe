@@ -24,7 +24,7 @@ export const Masonry = ({
   return (
     <ImageListItem className="rounded-lg border-2 border-gray-300">
       <img
-        onClick={() => router.push(`productId/${_id}`)}
+        onClick={() => router.push(`${_id}`)}
         src={images[imgFirstFix]}
         className="rounded-t-lg"
       />
