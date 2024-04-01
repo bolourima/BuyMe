@@ -70,7 +70,7 @@ export default function MyProfile() {
             </div>
           </div> */}
           <div className="flex flex-col gap-6 w-3/4">
-            <div className="flex justify-between w-full px-5">
+            <div className="flex flex-col justify-between w-full px-5 md:flex-row">
               <div>
                 <MyProfilePicEdit />
               </div>
