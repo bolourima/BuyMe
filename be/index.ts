@@ -11,6 +11,7 @@ import { orderRouter } from "./routes/orderRouter";
 import { Request, Response } from "express";
 import upload from "./middlewares/multer";
 import { basketRouter } from "./routes/basketRouter";
+import { adminRouter } from "./routes/adminRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,7 +21,6 @@ app.use(
     credentials: true,
   })
 );
-
 app.use(categoryRouter);
 app.use(productRouter);
 app.use(subCategoryRouter);
@@ -29,7 +29,7 @@ app.use(signInRouter);
 app.use(signUpRouter);
 app.use(orderRouter);
 app.use(basketRouter);
-
+app.use(adminRouter);
 connectToDB();
 const PORT = 8000;
 app.listen(PORT, () => {
