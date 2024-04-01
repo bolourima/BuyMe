@@ -13,6 +13,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { tree } from "next/dist/build/templates/app-page";
 import CloseIcon from "@/icon/CloseIcon";
+import SideBar from "./SideBar";
 
 export const Header = () => {
   const router = useRouter();
@@ -50,18 +51,7 @@ export const Header = () => {
   return (
     <div className="  text-black dark:w-full lg:w-full flex justify-center py-4  bg-white lg:sticky top-0 z-50 shadow-sm">
       <div className=" SideBar  flex lg:flex items-center w-10/12 place-content-between  ">
-        {showBar && (
-          <div className=" absolute top-0 w-full right-0 h-full z-10  bg-zinc-950/50">
-            <div className=" flex place-content-between p-5 bg-white w-10/12 h-full">
-              <div>
-                <h1 className=" text-black"> hello</h1>
-              </div>
-              <div className=" w-5" onClick={openBar}>
-                <CloseIcon />
-              </div>
-            </div>{" "}
-          </div>
-        )}
+        {showBar && <SideBar OpenBar={openBar} />}
         <div className=" block w-5 lg:hidden  " onClick={openBar}>
           <Bar />
         </div>
