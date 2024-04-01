@@ -16,7 +16,7 @@ exports.signIn = exports.signUp = exports.getUsers = void 0;
 const userModel_1 = __importDefault(require("../models/userModel"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const jwtPrivateKey = process.env.JWT_SECRET_KEY;
+const jwtPrivateKey = process.env.SECRET_KEY;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield userModel_1.default.find();
@@ -54,8 +54,7 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.signUp = signUp;
 const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const [email, password] = req.body;
-    console.log("req.body", req.body);
+    const { email, password } = req.body;
     try {
         if (!email || !password) {
             return res.status(400).json({ message: "Missing required fields" });
@@ -78,7 +77,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             .status(200)
             .cookie("refreshToken", refreshToken)
             .header({ Authorization: accessToken })
-            .send(foundUser);
+            .json({ user: foundUser, accessToken: accessToken });
     }
     catch (error) {
         console.error("Error during signin user. Message is:", error);

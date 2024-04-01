@@ -14,12 +14,12 @@
     
 
 }
-.hero:hover span{
+.hero:hover .Hero-text{
     opacity: 1;
 
 
 }
-span {
+.Hero-text {
     opacity: 0;
     color: white;
     font-family: sans-serif;
@@ -34,9 +34,11 @@ span {
     align-items: center;
   }
 
-.cart{
+.Pcart{
     transition: all 0.4s ease-in-out;
 }
+
+
 
 
 

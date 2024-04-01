@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "axois": "^0.0.1-security",
     "formik": "^2.4.5",
+    "framer-motion": "^11.0.23",
     "install": "^0.13.0",
     "instance": "^0.0.1",
     "next": "14.1.3",
