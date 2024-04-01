@@ -8,4 +8,4 @@ const userController_1 = require("../controllers/userController");
 const express_1 = __importDefault(require("express"));
 const signInRouter = (0, express_1.default)();
 exports.signInRouter = signInRouter;
-signInRouter.post("signin", userController_1.signIn);
+signInRouter.post("/signin", userController_1.signIn);

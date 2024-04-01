@@ -8,7 +8,7 @@ import RecommendedItems from "@/components/RecommendedItems";
 
 export default function Home({ productData }: { productData: ProductType[] }) {
   return (
-    <div className=" flex flex-col gap-20">
+    <div className=" static flex flex-col gap-20">
       <Hero />
       {/* <RecommendedItems productData={productData} />
       <Product productData={productData} /> */}
