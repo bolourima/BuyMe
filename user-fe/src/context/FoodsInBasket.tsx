@@ -1,9 +1,12 @@
 import { ProductType } from "@/types/productType";
+import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import React, { ReactNode, useState } from "react";
 import { createContext } from "react";
 type ThemContextType = {
-  productsInBasket: ProductType[];
-  setProductsInBasket: React.Dispatch<React.SetStateAction<ProductType[]>>;
+  productsInBasket: ProductTypeWithQuantity[];
+  setProductsInBasket: React.Dispatch<
+    React.SetStateAction<ProductTypeWithQuantity[]>
+  >;
 };
 const iContextState = {
   productsInBasket: [],
@@ -15,7 +18,9 @@ type ChildrenType = {
 export const ProductsInBasketContext =
   createContext<ThemContextType>(iContextState);
 export const ProductsInBasket = ({ children }: ChildrenType) => {
-  const [productsInBasket, setProductsInBasket] = useState<ProductType[]>([]);
+  const [productsInBasket, setProductsInBasket] = useState<
+    ProductTypeWithQuantity[]
+  >([]);
   return (
     <ProductsInBasketContext.Provider
       value={{ productsInBasket, setProductsInBasket }}

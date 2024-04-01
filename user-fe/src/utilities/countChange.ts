@@ -1,10 +1,15 @@
+import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
+import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 
 export const changeProductQuantity = async (
-  product: ProductType,
+  product: ProductTypeWithQuantity,
   type: boolean,
-  productsInBasket: ProductType[],
-  setProductsInBasket: React.Dispatch<React.SetStateAction<ProductType[]>>
+  productsInBasket: ProductTypeWithQuantity[],
+  setProductsInBasket: React.Dispatch<
+    React.SetStateAction<ProductTypeWithQuantity[]>
+  >,
+  token: string
 ) => {
   try {
     const action = type ? 1 : -1;
@@ -15,17 +20,27 @@ export const changeProductQuantity = async (
         break;
       }
     }
-    const previosProducts: ProductType[] = productsInBasket.filter((el, i) => {
-      return i < indexFinder;
-    });
-    const nextProducts: ProductType[] = productsInBasket.filter((el, i) => {
-      return i > indexFinder;
-    });
+    const previosProducts: ProductTypeWithQuantity[] = productsInBasket.filter(
+      (el, i) => {
+        return i < indexFinder;
+      }
+    );
+    const nextProducts: ProductTypeWithQuantity[] = productsInBasket.filter(
+      (el, i) => {
+        return i > indexFinder;
+      }
+    );
     const newProduct = {
       ...product,
-      selectedQuantity: productsInBasket[indexFinder].selectedQuantity + action,
     };
     setProductsInBasket([...previosProducts, newProduct, ...nextProducts]);
+    const res = await instance.put(
+      `/basket/${product.product._id}`,
+      {
+        type: type,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
   } catch (error) {
     console.error("error in changeProduct count", error);
   }

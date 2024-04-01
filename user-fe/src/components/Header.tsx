@@ -12,9 +12,12 @@ import Link from "next/link";
 
 import React, { useState } from "react";
 import { tree } from "next/dist/build/templates/app-page";
+import CloseIcon from "@/icon/CloseIcon";
+import SideBar from "./SideBar";
 
 export const Header = () => {
   const router = useRouter();
+
   // ----------------------------------------------------
 
   //           SHOW INPUT
@@ -30,8 +33,23 @@ export const Header = () => {
   };
 
   //---------------------------------------------
+
+  //----------------------------------------------
+
+  //           MOBILE BURGER SHOW MENU
+
+  const [showBar, setShowBar] = useState(false);
+
+  const openBar = () => {
+    if (showBar === true) {
+      setShowBar(false);
+    } else {
+      setShowBar(true);
+    }
+  };
+
   return (
-    <div className=" w-full lg:w-full flex justify-center py-4  bg-white sticky top-0 z-50 drop-shadow">
+    <div className=" w-full lg:w-full flex justify-center py-4  bg-white sticky top-0 z-50">
       <div className=" flex lg:flex items-center w-10/12 place-content-between  ">
         <div className=" block w-5 lg:hidden  ">
           <Bar />
@@ -48,7 +66,7 @@ export const Header = () => {
         <div className=" hidden lg:flex gap-6 items-center">
           <h1 className=" font-semibold text-xl">Home</h1>
           <Link href={"./productList"}>
-            <h1 className=" content-center text-xl flex items-center gap-2 hover:border p-2 rounded-sm ">
+            <h1 className=" content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">
               Categories
               <DownIcon />
             </h1>

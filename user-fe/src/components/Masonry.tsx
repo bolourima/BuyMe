@@ -7,14 +7,15 @@ import { ClickHandler } from "@/types/handlerType";
 import { LoveIcon } from "@/icon/LoveIcon";
 import { OrderIcon } from "@/icon/OrderIcon";
 import { useRouter } from "next/router";
+import { putIntoBasket } from "@/utilities/putIntoBasket";
 
-export default function Masonry({
+export const Masonry = ({
   data,
   setProductData,
 }: {
   data: ProductType;
   setProductData: ClickHandler;
-}) {
+}) => {
   const router = useRouter();
   const { _id, images = "", name, price = 0, disCount } = data || {};
   const { isSale = 0, salePercent = 0 } = disCount || {};
@@ -37,8 +38,9 @@ export default function Masonry({
         </div>
         <button
           onClick={() => {
-            setProductData(data);
+            setProductData(data, false);
           }}
+          onDoubleClick={() => setProductData(data, true)}
           className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm font-semibold "
         >
           ADD TO CART
@@ -46,4 +48,4 @@ export default function Masonry({
       </div>
     </ImageListItem>
   );
-}
+};

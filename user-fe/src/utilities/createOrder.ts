@@ -1,12 +1,13 @@
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
+import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 type Order = {
   product: string;
   selectedProductQuantity: number;
 };
 
 export const createOrder = async (
-  products: ProductType[],
+  products: ProductTypeWithQuantity[],
   token: string,
   total: number
 ) => {
@@ -15,7 +16,7 @@ export const createOrder = async (
     for (let i = 0; i < products.length; i++) {
       selectedProductContainer.push({
         product: products[i]._id,
-        selectedProductQuantity: products[i].selectedQuantity,
+        selectedProductQuantity: products[i].selectedProductQuantity,
       });
     }
     const res = await instance.post(

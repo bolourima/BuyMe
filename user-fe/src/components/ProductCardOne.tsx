@@ -4,7 +4,7 @@ import React from "react";
 export const ProductCardOne = ({ data }: { data: ProductType }) => {
   const { images = "", price, name, brandName } = data || {};
   return (
-    <div className=" cart w-2/5 p-4 border border-gray-300 rounded  drop-shadow hover:scale-105 duration-200 ease-out	cursor-pointer flex flex-col gap-5">
+    <div className=" Pcart w-2/5 p-4 border border-gray-300 rounded  drop-shadow hover:scale-105 duration-200 ease-out	cursor-pointer flex flex-col gap-5">
       <div className="w-full  flex justify-center">
         <img className=" rounded-lg h-[400px]" src={images[0]} alt="t-shirt" />
       </div>

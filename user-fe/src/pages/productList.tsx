@@ -1,6 +1,6 @@
-import Product from "@/components/Product";
+import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
-import Masonry from "@/components/Masonry";
+import { Masonry } from "@/components/Masonry";
 import ProductCardDtl from "@/components/productPopupDTL";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";

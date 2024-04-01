@@ -1,1 +1,1 @@
-export type ClickHandler = (data: any) => void;
+export type ClickHandler = (data: any, onDouble: boolean) => void;
