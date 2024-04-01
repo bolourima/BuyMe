@@ -55,6 +55,7 @@ export const Header = () => {
         <div className=" block w-5 lg:hidden  " onClick={openBar}>
           <Bar />
         </div>
+
         <div>
           <Link href={"./"}>
             <div className="flex hover:shadow-sm">
@@ -64,7 +65,7 @@ export const Header = () => {
           </Link>
         </div>
 
-        <div className=" hidden lg:flex gap-6 items-center">
+        <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center">
           <h1 className=" font-semibold text-xl">Home</h1>
           <Link href={"./productList"}>
             <h1 className=" lg:content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">

@@ -30,59 +30,64 @@ export default function SignIn() {
     },
   });
   return (
-    <div className="flex w-full">
-      <div className="w-3/5">
-        <img className="rounded-l-xl w-full" src="./SignUpPic.png" alt="" />
+    <div className=" flex justify-center  lg:flex w-full items-center">
+      <div className=" hidden lg:block w-3/5">
+        <img className="lg:rounded-l-xl w-full" src="./SignUpPic.png" alt="" />
       </div>
-      <div className="flex flex-col bg-white w-2/5 gap-2 rounded-r-xl p-[120px]">
+      <div className=" flex items-center  text-white lg:flex flex-col bg-white w-2/5 gap-2 rounded-r-xl p-[120px]">
         <div className="flex flex-col items-center  font-bold text-2xl">
           <h2 className="text-gray-600 font-bold">Create New Account</h2>
           <p className="text-sm ">Please enter details</p>
         </div>
         <div>
           <div className="flex flex-col items-center gap-4">
-            <form
-              className="flex flex-col gap-2"
-              onSubmit={formik.handleSubmit}
-            >
-              <label className="font-bold">Email</label>
-              <input
-                className="input input-bordered max-w-xs w-[300px]"
-                type="email"
-                placeholder="Please enter your email"
-                {...formik.getFieldProps("email")}
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div>{formik.errors.email}</div>
-              ) : null}
-            </form>
-            <form
-              className="flex flex-col gap-2"
-              onSubmit={formik.handleSubmit}
-            >
-              <label className="font-bold">Password </label>
-              <input
-                className="input input-bordered max-w-xs w-[300px]"
-                type="password"
-                placeholder="Please enter your password"
-                {...formik.getFieldProps("password")}
-              />
-              {formik.touched.password && formik.errors.password ? (
-                <div>{formik.errors.password}</div>
-              ) : null}
-              <button className="btn btn-neutral mt-5" type="submit">
-                Signin
-              </button>
-            </form>
+            <div className="flex flex-col">
+              {" "}
+              <form
+                className="flex flex-col gap-2"
+                onSubmit={formik.handleSubmit}
+              >
+                <label className=" text-black font-bold">Email</label>
+                <input
+                  className="input input-bordered max-w-xs w-[300px]"
+                  type="email"
+                  placeholder="Please enter your email"
+                  {...formik.getFieldProps("email")}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div>{formik.errors.email}</div>
+                ) : null}
+              </form>
+              <form
+                className="flex flex-col gap-2"
+                onSubmit={formik.handleSubmit}
+              >
+                <label className=" text-black font-bold">Password </label>
+                <input
+                  className="input input-bordered max-w-xs w-[300px]"
+                  type="password"
+                  placeholder="Please enter your password"
+                  {...formik.getFieldProps("password")}
+                />
+                {formik.touched.password && formik.errors.password ? (
+                  <div>{formik.errors.password}</div>
+                ) : null}
+                <button className="btn btn-neutral mt-5" type="submit">
+                  Signin
+                </button>
+              </form>
+            </div>
+
             <div className="flex gap-2">
               <p className="text-slate-900 text-base font-normal dark:text-slate-300">
                 Don’t have account?
               </p>
-              <Link href={"./signup"}>
-                <p className=" text-base font-normal cursor-pointer hover:text-blue-400">
-                  Sign up
-                </p>
-              </Link>
+              <button
+                onClick={() => router.push("/signup")}
+                className=" text-black text-base font-normal cursor-pointer hover:text-blue-400"
+              >
+                Sign up
+              </button>
             </div>
           </div>
         </div>

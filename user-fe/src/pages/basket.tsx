@@ -27,8 +27,8 @@ const Basket = () => {
     );
   }, [productsInBasket]);
   return (
-    <div className="flex flex-col w-full min-h-screen bg-gray-300 items-end rounded-lg">
-      <div className="w-full h-full px-4 flex flex-col gap-8 text-black">
+    <div className="flex flex-col w-full min-h-screen items-center bg-gray-300  rounded-lg">
+      <div className="w-5/12 h-full px-4 flex flex-col  gap-8 text-black">
         {productsInBasket.map((product) => {
           return (
             <div className="flex gap-2 w-full h-[300px] items-center px-4 my-4">
