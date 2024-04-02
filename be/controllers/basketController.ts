@@ -12,22 +12,29 @@ export const editBasket = async (req: AuthenticatedRequest, res: Response) => {
       return res.status(404).json({ msg: "Product not found" });
     }
     const checkCoincidence = selectedBasket?.products.filter((product) => {
-      return product.product._id?.toString() === req.params.id;
+      return product.product?.productCode === newProduct.productCode;
     });
     if (checkCoincidence?.length == 0) {
-      const newProduct = {
-        product: req.params.id,
+      const product = {
+        product: newProduct,
         selectedProductQuantity: req.body.onDouble ? 2 : 1,
       };
       const result = await Basket.findOneAndUpdate(
         { user: req.user.id },
-        { $push: { products: newProduct } },
+        { $push: { products: product } },
         { new: true }
       );
       return res.status(200).json({ msg: "updated" });
     } else {
       const index = selectedBasket?.products.findIndex((el) => {
-        return el.product.toString() === newProduct._id.toString();
+        console.log(
+          "el.product",
+          el.product,
+          "newProduct",
+          newProduct,
+          el.product === newProduct
+        );
+        return el.product?.productCode === newProduct.productCode;
       });
       const number = selectedBasket.products[index].selectedProductQuantity;
       if (number === null || number === undefined) return;
@@ -51,7 +58,7 @@ export const getBasketById = async (
 ) => {
   try {
     const basket = await Basket.findOne({ user: req.user.id }).populate(
-      "products.product"
+      "products"
     );
     return res.status(200).send(basket);
   } catch (error) {
@@ -64,10 +71,11 @@ export const deleteProductFromBasket = async (
   res: Response
 ) => {
   try {
+    const product = await Product.findById(req.params.id);
     await Basket.findOneAndUpdate(
       { user: req.user.id },
       {
-        $pull: { products: { product: req.params.id } },
+        $pull: { products: { product: product } },
       }
     );
     return res.status(200).json({ msg: "Deleted" });

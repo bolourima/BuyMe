@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export const Hero = () => {
@@ -10,10 +11,14 @@ export const Hero = () => {
             backgroundImage: `url(https://images.pexels.com/photos/3002552/pexels-photo-3002552.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
           }}
         >
-          <span className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold">
-            Clothing
-          </span>
+          <Link
+            href={"./basket"}
+            className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
+          >
+            <span>Clothing</span>
+          </Link>
         </div>
+
         <div className=" flex  lg:flex flex-col gap-7 lg:w-6/12 lg:gap-0  ">
           <div
             className=" rounded h-52 md:h-72 lg:h-2/4 lg:rounded-none bg-center bg-cover hero   "
@@ -21,9 +26,12 @@ export const Hero = () => {
               backgroundImage: `url(https://images.pexels.com/photos/17518760/pexels-photo-17518760/free-photo-of-close-up-of-an-iphone.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
             }}
           >
-            <span className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold">
-              Electronics
-            </span>
+            <Link
+              href={"./productList"}
+              className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
+            >
+              <span>Electronics</span>
+            </Link>
           </div>
           <div
             className=" rounded h-52 md:h-72 lg:h-2/4 bg-center lg:rounded-none bg-cover hero "

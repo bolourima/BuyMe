@@ -2,7 +2,7 @@ import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 type Order = {
-  product: string;
+  product: ProductType;
   selectedProductQuantity: number;
 };
 
@@ -15,7 +15,7 @@ export const createOrder = async (
     const selectedProductContainer: Order[] = [];
     for (let i = 0; i < products.length; i++) {
       selectedProductContainer.push({
-        product: products[i]._id,
+        product: products[i].product,
         selectedProductQuantity: products[i].selectedProductQuantity,
       });
     }

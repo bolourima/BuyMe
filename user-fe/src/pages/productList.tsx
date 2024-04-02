@@ -7,13 +7,9 @@ import { ProductType } from "@/types/productType";
 import React from "react";
 import { LoveIcon } from "@/icon/LoveIcon";
 
-export default function productList({
-  productData,
-}: {
-  productData: ProductType[];
-}) {
+function productList({ productData }: { productData: ProductType[] }) {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
         <SubCategory />
         <Product productData={productData} />
@@ -23,6 +19,7 @@ export default function productList({
     </div>
   );
 }
+export default productList;
 export const getServerSideProps = async () => {
   const productRes = await instance.get("/getProducts");
   const productData = productRes.data;

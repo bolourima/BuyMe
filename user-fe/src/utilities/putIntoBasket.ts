@@ -1,8 +1,10 @@
 import { instance } from "@/instance";
+import { ProductType } from "@/types/productType";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { toastifyError, toastifySuccess } from "./toastify";
+import { jwtDecode } from "jwt-decode";
 export const putIntoBasket = async (
-  product: ProductTypeWithQuantity,
+  product: ProductType,
   productsInBasket: ProductTypeWithQuantity[],
   setProductsInBasket: React.Dispatch<
     React.SetStateAction<ProductTypeWithQuantity[]>

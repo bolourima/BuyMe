@@ -1,7 +1,8 @@
 import { IconPic } from "@/svg/IconPic";
 import { Trash } from "@/svg/Trash";
 import { uploadSingleImage } from "@/utilities/uploadSingleImage";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
 export const AddProductImageSection = ({
   imageOnePreview,
@@ -10,6 +11,7 @@ export const AddProductImageSection = ({
   setImageOnePreview,
   setImageTwoPreview,
   setImageThreePreview,
+  token,
 }: {
   imageOnePreview: string;
   imageTwoPreview: string;
@@ -17,6 +19,7 @@ export const AddProductImageSection = ({
   setImageOnePreview: React.Dispatch<React.SetStateAction<string>>;
   setImageTwoPreview: React.Dispatch<React.SetStateAction<string>>;
   setImageThreePreview: React.Dispatch<React.SetStateAction<string>>;
+  token: string;
 }) => {
   return (
     <div className="flex flex-col bg-white w-[563px] rounded-lg p-6 gap-4">
@@ -47,7 +50,12 @@ export const AddProductImageSection = ({
                 if (!e.target.files || e.target.files.length === 0) {
                   return;
                 }
-                uploadSingleImage(e.target.files[0], "One", setImageOnePreview);
+                uploadSingleImage(
+                  token,
+                  e.target.files[0],
+                  "One",
+                  setImageOnePreview
+                );
               }}
             />
           )}
@@ -76,7 +84,12 @@ export const AddProductImageSection = ({
                 if (!e.target.files || e.target.files.length === 0) {
                   return;
                 }
-                uploadSingleImage(e.target.files[0], "Two", setImageTwoPreview);
+                uploadSingleImage(
+                  token,
+                  e.target.files[0],
+                  "Two",
+                  setImageTwoPreview
+                );
               }}
             />
           )}
@@ -104,6 +117,7 @@ export const AddProductImageSection = ({
                   return;
                 }
                 uploadSingleImage(
+                  token,
                   e.target.files[0],
                   "Three",
                   setImageThreePreview
