@@ -27,13 +27,6 @@ export const editBasket = async (req: AuthenticatedRequest, res: Response) => {
       return res.status(200).json({ msg: "updated" });
     } else {
       const index = selectedBasket?.products.findIndex((el) => {
-        console.log(
-          "el.product",
-          el.product,
-          "newProduct",
-          newProduct,
-          el.product === newProduct
-        );
         return el.product?.productCode === newProduct.productCode;
       });
       const number = selectedBasket.products[index].selectedProductQuantity;

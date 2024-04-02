@@ -20,8 +20,10 @@ const Basket = () => {
   );
   const [total, setTotal] = useState(0);
   const { token, setToken } = useContext(TokenContext);
-  const setBasket = async () => {
-    const basketData: ProductTypeWithQuantity[] = await getBasketById(token);
+  const setBasket = async (accessToken: string) => {
+    const basketData: ProductTypeWithQuantity[] = await getBasketById(
+      accessToken
+    );
     setProductsInBasket(basketData);
   };
   useEffect(() => {
@@ -31,7 +33,7 @@ const Basket = () => {
       return toastifyWarning("Please sign in");
     }
     setToken(accessToken);
-    setBasket();
+    setBasket(accessToken);
   }, []);
   const countTotal = useMemo(async () => {
     setTotal(
