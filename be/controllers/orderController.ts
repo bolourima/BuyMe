@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 import Order from "../models/orderModel";
+import Basket from "../models/basketModel";
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
@@ -8,6 +9,10 @@ const orderNumberGenerator = () => {
 };
 export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
   try {
+    await Basket.findOneAndUpdate(
+      { user: req.user.id },
+      { $set: { products: [] } }
+    );
     const orderNumber = orderNumberGenerator();
     const order = await Order.create({
       products: req.body.products,
