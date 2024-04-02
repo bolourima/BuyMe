@@ -10,7 +10,6 @@ export const getProducts = async (req: Request, res: Response) => {
     const name = req.params.name;
     const filteredCategory = await Category.find({ name });
     const categoryId = filteredCategory[0]._id;
-
     const products = await Product.find({ categoryId }).populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
