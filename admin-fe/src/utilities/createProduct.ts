@@ -7,7 +7,8 @@ export const createProduct = async (
   salePercent: any,
   selectedCategory: string,
   subName: string,
-  selectedBrand: string
+  selectedBrand: string,
+  token: string
 ) => {
   try {
     const disCount = { isSale: isSale, salePercent: salePercent };
@@ -24,7 +25,9 @@ export const createProduct = async (
       brandName: selectedBrand,
       images: images,
     };
-    const res = await instance.post("/createProduct", newProduct);
+    const res = await instance.post("/createProduct", newProduct, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     res.status === 201 ? alert("Created") : alert("Failed");
   } catch (error) {
     console.error(error);

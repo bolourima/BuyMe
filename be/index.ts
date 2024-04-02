@@ -12,6 +12,7 @@ import { Request, Response } from "express";
 import upload from "./middlewares/multer";
 import { basketRouter } from "./routes/basketRouter";
 import { adminRouter } from "./routes/adminRouter";
+import { addressRouter } from "./routes/addressRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +31,7 @@ app.use(signUpRouter);
 app.use(orderRouter);
 app.use(basketRouter);
 app.use(adminRouter);
+app.use(addressRouter);
 connectToDB();
 const PORT = 8000;
 app.listen(PORT, () => {

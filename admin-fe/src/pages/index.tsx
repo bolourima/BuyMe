@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { instance } from "@/instance";
 import { Category } from "@/types/categoryType";
 import { MainProducts } from "@/components/MainProducts";
@@ -9,17 +9,34 @@ import DataTable from "@/components/DataTable";
 import { string } from "yup";
 import { Orders } from "@/components/Orders";
 import { OrderType } from "@/types/orderType";
+import { getOrders } from "@/utilities/getOrders";
+import { getProducts } from "@/utilities/getProducts";
+import { Product } from "@/types/productType";
 
 export default function Home({
   categoryData,
-  productData,
-  orderData,
-}: {
+}: // productData,
+// orderData,
+{
   categoryData: Category[];
-  productData: GetProductType[];
-  orderData: OrderType[];
+  // productData: GetProductType[];
+  // orderData: OrderType[];
 }) {
   const [visibleComponent, setVisibleComponent] = useState("");
+  const [orderData, setOrderData] = useState<OrderType[]>([]);
+  const [productData, setProductData] = useState<GetProductType[]>([]);
+  const setProduct = (data: GetProductType[]) => {
+    setProductData(data);
+  };
+  const setOrder = (data: OrderType[]) => {
+    setOrderData(data);
+  };
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+    getProducts(token, setProduct);
+    getOrders(token, setOrder);
+  }, []);
   return (
     <>
       <NavBar />
@@ -38,13 +55,13 @@ export default function Home({
 export const getServerSideProps = async () => {
   try {
     const categoryRes = await instance.get("/getCategories");
-    const productRes = await instance.get("/getProducts");
-    const orderRes = await instance.get("/getOrdersInAdmin");
-    const productData = productRes.data;
+    // const productRes = await instance.get("/getProducts");
+    // const orderRes = await instance.get("/getOrdersInAdmin");
+    // const productData = productRes.data;
     const categoryData = categoryRes.data;
-    const orderData = orderRes.data;
+    // const orderData = orderRes.data;
     return {
-      props: { categoryData, productData, orderData },
+      props: { categoryData },
     };
   } catch (error) {
     console.error("error in getSSP in index", error);

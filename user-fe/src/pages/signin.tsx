@@ -26,7 +26,6 @@ export default function SignIn() {
         password: formik.values.password,
       };
       loginUser(accountInfo, router.push);
-      alert(JSON.stringify(values, null, 2));
     },
   });
   return (

@@ -2,9 +2,15 @@ import { Request, Response } from "express";
 import cloudinary from "../utilities/Cloudinary";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find().populate("categoryId");
+    const name = req.params.name;
+    const filteredCategory = await Category.find({ name });
+    const categoryId = filteredCategory[0]._id;
+    const products = await Product.find({ categoryId }).populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);
@@ -19,7 +25,10 @@ export const uploadSingleImage = async (req: Request, res: Response) => {
     console.error("error in upload single image", error);
   }
 };
-export const createProduct = async (req: Request, res: Response) => {
+export const createProduct = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   try {
     const checkCoindence = await Product.findOne({
       productCode: req.body.productCode,
@@ -41,6 +50,7 @@ export const createProduct = async (req: Request, res: Response) => {
       subCategoryName: req.body.subCategoryName,
       brandName: req.body.brandName,
       images: req.body.images,
+      shopId: req.user.id,
       createdAt: getDateByString(),
       updatedAt: getDateByString(),
     });
@@ -50,7 +60,7 @@ export const createProduct = async (req: Request, res: Response) => {
     return res.status(400).json({ msg: "Failed to create" });
   }
 };
-export const editProduct = async (req: Request, res: Response) => {
+export const editProduct = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const selectedCategory = await Category.findOne({
       name: req.body.categoryName,
@@ -68,6 +78,7 @@ export const editProduct = async (req: Request, res: Response) => {
       subCategoryName: req.body.subCategoryName,
       brandName: req.body.brandName,
       images: req.body.images,
+      shopId: req.user.id,
       createdAt: getDateByString(),
       updatedAt: getDateByString(),
     });
@@ -116,12 +127,25 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 export const getProductDetail = async (req: Request, res: Response) => {
   try {
-    console.log(req.params);
     const productId = req.params.id;
     const product = await Product.findById(productId).populate("categoryId");
     return res.status(200).send(product);
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);
     return res.status(400).send("Failed to getProducts");
+  }
+};
+export const getSelectedProductsInAdmin = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const products = await Product.find({ shopId: req.user.id });
+    return res.status(200).send(products);
+  } catch (error) {
+    console.error("error in getSelectedProductsInAdmin", error);
+    return res
+      .status(400)
+      .json({ msg: "Failed to get selected products in admin", error });
   }
 };

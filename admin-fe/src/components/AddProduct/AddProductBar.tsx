@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Category } from "@/types/categoryType";
 import { GetProductType } from "@/types/getProductType";
 import { AddProductForm } from "./AddProductForm";
 import { LeftArrow } from "@/svg/LeftArrow";
+import { jwtDecode } from "jwt-decode";
 
 export const AddProductBar = ({
   categoryData,
@@ -19,6 +20,12 @@ export const AddProductBar = ({
   editableProduct: GetProductType;
   setEditableProduct: any;
 }) => {
+  const [token, setToken] = useState<string>("");
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    setToken(accessToken);
+  }, []);
   return (
     <>
       <div className="flex flex-col">
@@ -41,6 +48,7 @@ export const AddProductBar = ({
           setOnEdit={setOnEdit}
           setEditableProduct={setEditableProduct}
           setIsAddProductVisible={setIsAddProductVisible}
+          token={token}
         />
       </div>
     </>

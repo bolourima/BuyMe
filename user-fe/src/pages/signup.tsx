@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createUser } from "../utilities/userRelatedUtils";
+import Link from "next/link";
 
 export default function SignUp() {
   const router = useRouter();
@@ -38,9 +39,7 @@ export default function SignUp() {
         .oneOf([Yup.ref("password")], "Өмнөх нууц үгтэй ижилхэн байх ёстой")
         .required("Нууц үгээ оруулна уу"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: (values) => {},
   });
   return (
     <div className="lg:flex md:flex  sm:flex">
@@ -137,6 +136,16 @@ export default function SignUp() {
                 Signup
               </button>
             </form>
+            <div className="flex gap-2">
+              <p className="text-slate-900 text-base font-normal dark:text-slate-300">
+                Already have an account?
+              </p>
+              <Link href={"./signin"}>
+                <p className=" text-base font-normal cursor-pointer hover:text-blue-400">
+                  Log in
+                </p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

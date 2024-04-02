@@ -6,25 +6,35 @@ import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import React from "react";
 import { LoveIcon } from "@/icon/LoveIcon";
-
-export default function productList({
-  productData,
-}: {
+import { GetServerSideProps } from "next";
+type Params = {
+  category: string;
+};
+type Props = {
   productData: ProductType[];
-}) {
+};
+
+function productList({ productData }: { productData: ProductType[] }) {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
         <SubCategory />
         <Product productData={productData} />
-        {/* <ProductCardDtl /> */}
       </div>
-      {/* <Masonry /> */}
     </div>
   );
 }
-export const getServerSideProps = async () => {
-  const productRes = await instance.get("/getProducts");
+export default productList;
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  params
+) => {
+  if (!params) {
+    return {
+      notFound: true,
+    };
+  }
+  const { name } = params.query;
+  const productRes = await instance.get(`/getProducts/${name}`);
   const productData = productRes.data;
   return {
     props: { productData },

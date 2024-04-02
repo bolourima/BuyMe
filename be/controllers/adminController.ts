@@ -5,15 +5,41 @@ import jwt from "jsonwebtoken";
 const jwtPrivateKey = process.env.SECRET_KEY;
 export const adminSignup = async (req: Request, res: Response) => {
   try {
-    const encryptedPassword = await bcrypt.hash(req.body.password, 10);
-    const newAdmin = await Admin.create({
-      shopName: req.body.shopName,
-      email: req.body.email,
-      password: encryptedPassword,
-      subAdmin: req.body.subAdmin,
-      categories: req.body.categories,
+    const bankAccountCoincidence = await Admin.findOne({
       bankAccount: req.body.bankAccount,
     });
+    if (bankAccountCoincidence) {
+      return res.status(405).json({ msg: "bank coincidence" });
+    }
+    const nameCoincidence = await Admin.findOne({
+      shopName: req.body.shopName,
+    });
+    if (nameCoincidence) {
+      return res.status(405).json({ msg: "name coincidence" });
+    }
+    const emailCoincidence = await Admin.findOne({
+      email: req.body.email,
+    });
+    if (emailCoincidence) {
+      return res.status(405).json({ msg: "email coincidence" });
+    }
+    const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+    if (req.body.subAdmin === true) {
+      const newAdmin = await Admin.create({
+        shopName: req.body.shopName,
+        email: req.body.email,
+        password: encryptedPassword,
+        subAdmin: true,
+        categories: req.body.categories,
+        bankAccount: req.body.bankAccount,
+      });
+    } else {
+      const newAdmin = await Admin.create({
+        shopName: req.body.shopName,
+        password: encryptedPassword,
+        subAdmin: false,
+      });
+    }
     return res.status(201).json({ msg: "admin signed up" });
   } catch (error) {
     console.error("error in adminSignup", error);
