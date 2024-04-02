@@ -34,6 +34,7 @@ export const Product = ({ productData }: { productData: ProductType[] }) => {
       onDouble
     );
   };
+
   return (
     <div>
       <div>

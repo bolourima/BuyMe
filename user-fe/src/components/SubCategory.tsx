@@ -115,7 +115,7 @@ export const SubCategory = () => {
   };
 
   return (
-    <div className="text-black w-[300px] rounded-lg p-4 flex flex-col gap-5 border-2">
+    <div className=" hidden lg:text-black w-[300px] rounded-lg p-4 lg:flex flex-col gap-5 border-2">
       {/* Category */}
       <div className="">
         <div className="flex justify-between " onClick={handleOpenCategory}>

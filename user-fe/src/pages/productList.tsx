@@ -9,7 +9,7 @@ import { LoveIcon } from "@/icon/LoveIcon";
 
 function productList({ productData }: { productData: ProductType[] }) {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
         <SubCategory />
         <Product productData={productData} />
