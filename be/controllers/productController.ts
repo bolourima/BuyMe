@@ -127,7 +127,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 export const getProductDetail = async (req: Request, res: Response) => {
   try {
-    console.log(req.params);
     const productId = req.params.id;
     const product = await Product.findById(productId).populate("categoryId");
     return res.status(200).send(product);
