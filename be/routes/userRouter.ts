@@ -1,9 +1,16 @@
 import Router from "express";
-import { getUsers, refreshToken, signUp } from "../controllers/userController";
+import {
+  getUserInfo,
+  getUsers,
+  refreshToken,
+  signUp,
+} from "../controllers/userController";
+import { accessTokenAuth } from "../middlewares/accessTokenAuth";
 
 const userRouter = Router();
 userRouter.get("/users", getUsers);
 userRouter.get("/refreshToken", refreshToken);
+userRouter.get("/getUserInfo", accessTokenAuth, getUserInfo);
 export { userRouter };
 
 // const authRouter = Router();

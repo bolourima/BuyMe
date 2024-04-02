@@ -5,6 +5,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import Basket from "../models/basketModel";
 
 const jwtPrivateKey = process.env.SECRET_KEY;
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -13,6 +16,15 @@ export const getUsers = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("error in getUsers", error);
     return res.status(400).send("Failed to getUser");
+  }
+};
+export const getUserInfo = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.status(200).json({ user: user });
+  } catch (error) {
+    console.error("error in getUserInfo", error);
+    return res.status(400).json({ msg: "Failed to getUserInfo" });
   }
 };
 export const refreshToken = async (req: Request, res: Response) => {
