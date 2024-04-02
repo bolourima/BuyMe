@@ -5,6 +5,7 @@ import { ProductType } from "../types/productType";
 
 import Categories from "@/components/Categories";
 import RecommendedItems from "@/components/RecommendedItems";
+import { ToastContainer, Bounce, ToastTransition } from "react-toastify";
 
 export default function Home({ productData }: { productData: ProductType[] }) {
   return (

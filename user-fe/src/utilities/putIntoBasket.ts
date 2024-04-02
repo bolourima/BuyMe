@@ -1,5 +1,6 @@
 import { instance } from "@/instance";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
+import { toastifyError, toastifySuccess } from "./toastify";
 export const putIntoBasket = async (
   product: ProductTypeWithQuantity,
   productsInBasket: ProductTypeWithQuantity[],
@@ -12,6 +13,11 @@ export const putIntoBasket = async (
   const res = await instance.put(`/basket/${product._id}`, null, {
     headers: { Authorization: `Bearer ${token}` },
   });
+  if (res.status == 200) {
+    toastifySuccess("Added to Cart");
+  } else {
+    toastifyError("Can't add to cart");
+  }
   const coincidenceChecker: ProductTypeWithQuantity[] = productsInBasket.filter(
     (el) => {
       return el._id === product._id;
