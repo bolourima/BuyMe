@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createUser } from "../utilities/userRelatedUtils";
+import Link from "next/link";
 
 export default function SignUp() {
   const router = useRouter();
@@ -38,29 +39,27 @@ export default function SignUp() {
         .oneOf([Yup.ref("password")], "Өмнөх нууц үгтэй ижилхэн байх ёстой")
         .required("Нууц үгээ оруулна уу"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: (values) => {},
   });
   return (
-    <div className="flex w-full">
-      <div className="w-3/5">
-        <img className="rounded-l-xl w-full" src="./SignUpPic.png" alt="" />
+    <div className="lg:flex md:flex  sm:flex">
+      <div className="lg:flex md:flex md:w-3/5 sm:w-full hidden">
+        <img className="rounded-bl-xl w-full" src="./SignUpPic.png" alt="" />
       </div>
-      <div className="flex flex-col bg-white w-2/5 gap-2 rounded-r-xl p-[120px]">
-        <div className="flex flex-col items-center  font-bold text-2xl">
-          <h2 className="text-gray-600 font-bold">Create New Account</h2>
+      <div className="lg:flex flex p-10 flex-col md:flex md:w-2/5  sm:w-full items-center">
+        <div className="lg:flex-col items-center sm:flex-col  sm:flex">
+          <h2 className="text-gray-100 font-bold">Create New Account</h2>
           <p className="text-sm ">Please enter details</p>
         </div>
         <div>
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex gap-4 md:flex sm:flex flex-col items-center">
             <form
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
               <label className="font-bold">Name </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="text"
                 placeholder="Please enter your name"
                 {...formik.getFieldProps("name")}
@@ -75,7 +74,7 @@ export default function SignUp() {
             >
               <label className="font-bold">Email</label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="email"
                 placeholder="Please enter your email"
                 {...formik.getFieldProps("email")}
@@ -90,7 +89,7 @@ export default function SignUp() {
             >
               <label className="font-bold">Phone Number </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type=""
                 placeholder="Please enter your phone number"
                 {...formik.getFieldProps("phoneNumber")}
@@ -105,7 +104,7 @@ export default function SignUp() {
             >
               <label className="font-bold">Password </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
                 placeholder="Please enter your password"
                 {...formik.getFieldProps("password")}
@@ -120,7 +119,7 @@ export default function SignUp() {
             >
               <label className="font-bold">RePassword </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
                 placeholder="Please enter your password again"
                 {...formik.getFieldProps("confirmPassword")}
@@ -137,6 +136,16 @@ export default function SignUp() {
                 Signup
               </button>
             </form>
+            <div className="flex gap-2">
+              <p className="text-slate-900 text-base font-normal dark:text-slate-300">
+                Already have an account?
+              </p>
+              <Link href={"./signin"}>
+                <p className=" text-base font-normal cursor-pointer hover:text-blue-400">
+                  Log in
+                </p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

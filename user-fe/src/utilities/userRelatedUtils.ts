@@ -1,14 +1,16 @@
 import { instance } from "@/instance";
+import { toastifyError, toastifySuccess } from "./toastify";
 
 export const loginUser = async (data: {}, router: Function) => {
   try {
     const response = await instance.post("signin", data);
     if (response.status == 200) {
       localStorage.setItem("accessToken", response.data.accessToken);
-      return router("/");
+      toastifySuccess("Signin succesfully");
+      router("/");
     }
   } catch (error) {
-    return alert("Эмайл хаяг эсвэл нууц үг буруу байна");
+    return toastifyError("The email or password is incorrect.");
   }
 };
 
@@ -16,10 +18,10 @@ export const createUser = async (data: {}, router: Function) => {
   try {
     const response = await instance.post("signup", data);
     if (response.status == 201) {
-      router("/");
+      toastifySuccess("User created successfully");
+      router("/signin");
     }
   } catch (error) {
-    console.error("Failed to Create User");
-    return alert("Хэрэглэгч үүсгэхэд алдаа гарлаа");
+    return toastifyError("The email is registered already");
   }
 };
