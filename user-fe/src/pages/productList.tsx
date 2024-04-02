@@ -1,6 +1,6 @@
-import Product from "@/components/Product";
+import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
-import Masonry from "@/components/Masonry";
+import { Masonry } from "@/components/Masonry";
 import ProductCardDtl from "@/components/productPopupDTL";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
@@ -13,7 +13,7 @@ export default function productList({
   productData: ProductType[];
 }) {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
         <SubCategory />
         <Product productData={productData} />

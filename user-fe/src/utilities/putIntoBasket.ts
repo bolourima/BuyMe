@@ -1,18 +1,26 @@
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
-import { ProductType } from "@/types/productType";
-import { useContext, useState } from "react";
+import { instance } from "@/instance";
+import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 export const putIntoBasket = async (
-  product: ProductType,
-  productsInBasket: ProductType[],
-  setProductsInBasket: React.Dispatch<React.SetStateAction<ProductType[]>>
+  product: ProductTypeWithQuantity,
+  productsInBasket: ProductTypeWithQuantity[],
+  setProductsInBasket: React.Dispatch<
+    React.SetStateAction<ProductTypeWithQuantity[]>
+  >,
+  token: string,
+  onDouble: boolean
 ) => {
-  const coincidenceChecker: ProductType[] = productsInBasket.filter((el) => {
-    return el._id === product._id;
+  const res = await instance.put(`/basket/${product._id}`, null, {
+    headers: { Authorization: `Bearer ${token}` },
   });
+  const coincidenceChecker: ProductTypeWithQuantity[] = productsInBasket.filter(
+    (el) => {
+      return el._id === product._id;
+    }
+  );
   if (coincidenceChecker.length == 0) {
     setProductsInBasket([
       ...productsInBasket,
-      { ...product, selectedQuantity: 1 },
+      { ...product, selectedProductQuantity: 1 },
     ]);
   } else {
     let indexFinder: number = 0;
@@ -24,14 +32,19 @@ export const putIntoBasket = async (
     }
     const newProduct = {
       ...product,
-      selectedQuantity: productsInBasket[indexFinder].selectedQuantity + 1,
+      selectedQuantity:
+        productsInBasket[indexFinder].selectedProductQuantity + 1,
     };
-    const previosProducts: ProductType[] = productsInBasket.filter((el, i) => {
-      return i < indexFinder;
-    });
-    const nextProducts: ProductType[] = productsInBasket.filter((el, i) => {
-      return i > indexFinder;
-    });
+    const previosProducts: ProductTypeWithQuantity[] = productsInBasket.filter(
+      (el, i) => {
+        return i < indexFinder;
+      }
+    );
+    const nextProducts: ProductTypeWithQuantity[] = productsInBasket.filter(
+      (el, i) => {
+        return i > indexFinder;
+      }
+    );
     setProductsInBasket([...previosProducts, newProduct, ...nextProducts]);
   }
 };

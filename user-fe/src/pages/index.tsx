@@ -1,5 +1,5 @@
 import { Hero } from "@/components/Hero";
-import Product from "../components/Product";
+import { Product } from "../components/Product";
 import { instance } from "../instance";
 import { ProductType } from "../types/productType";
 

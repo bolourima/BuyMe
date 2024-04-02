@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Basket from "../models/basketModel";
 
 const jwtPrivateKey = process.env.SECRET_KEY;
 
@@ -16,7 +17,6 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 export const signUp = async (req: Request, res: Response) => {
   const { name, email, phoneNumber, password } = req.body;
-  console.log("user req.body", req.body);
   try {
     if (!name || !email || !phoneNumber || !password) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -29,7 +29,10 @@ export const signUp = async (req: Request, res: Response) => {
       phoneNumber,
       password: hashedPassport,
     });
-    console.log("created new user", newUser);
+    const newBasket = await Basket.create({
+      user: newUser._id,
+      products: [],
+    });
     return res
       .status(201)
       .json({ message: `${newUser.email} user created successfully` });
@@ -59,7 +62,7 @@ export const signIn = async (req: Request, res: Response) => {
       { id: foundUser._id },
       jwtPrivateKey as string,
       {
-        expiresIn: "1h",
+        expiresIn: "1d",
       }
     );
 

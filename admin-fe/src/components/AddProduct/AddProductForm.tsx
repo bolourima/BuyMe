@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { AddProductFirstSection } from "./AddProductFirstSection";
-import { AddProductImageSection } from "../AddProductImageSection";
-import { AddProductPriceSection } from "../AddProductPriceSection";
+import { AddProductImageSection } from "./AddProductImageSection";
+import { AddProductPriceSection } from "./AddProductPriceSection";
 import { AddProductCategory } from "./AddProductCategory";
 import { AddProductBrand } from "./AddProductBrand";
-import { AddProductTag } from "../AddProductTag";
+import { AddProductTag } from "./AddProductTag";
 import { createProduct } from "@/utilities/createProduct";
 import { SubCategory } from "@/types/subCategoryType";
 import { getInital } from "@/validations/productInitial";

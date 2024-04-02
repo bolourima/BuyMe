@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ProductsInBasket } from "@/context/FoodsInBasket";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -8,13 +8,18 @@ import { Router, useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const [isVisibleHF, setIsVisibleHF] = useState(true);
+  useEffect(() => {
+    if (router.asPath === "/signin" || router.asPath === "/signup") {
+      setIsVisibleHF(false);
+    } else setIsVisibleHF(true);
+  }, [router.asPath]);
   return (
     <div className=" m-0">
       <ProductsInBasket>
-        {router.asPath !== "/signin" && <Header />}
-
+        {isVisibleHF && <Header />}
         <Component {...pageProps} />
-        {router.asPath !== "/signin" && <Footer />}
+        {isVisibleHF && <Footer />}
       </ProductsInBasket>
     </div>
   );

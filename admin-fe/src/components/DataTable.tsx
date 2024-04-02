@@ -10,10 +10,9 @@ const columns: GridColDef[] = [
     headerName: "Ангилал",
     width: 130,
     valueGetter: (params) => {
-      const { value, row } = params;
-      const categoryName = value ? value.name : "";
-      const brandName = row ? row.brandName : "";
-      return `${categoryName} ${brandName}`;
+      const { _id, name } = params;
+      const categoryName = name ? name : "";
+      return `${categoryName}`;
     },
   },
   {
@@ -52,7 +51,6 @@ export default function DataTable({
   return (
     <div>
       <button>Edit/Засах</button>
-
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           getRowId={(row) => row._id}
@@ -66,9 +64,7 @@ export default function DataTable({
           pageSizeOptions={[5, 10]}
           checkboxSelection
           disableRowSelectionOnClick
-          onRowSelectionModelChange={(_id) => {
-            console.log(_id);
-          }}
+          onRowSelectionModelChange={(_id) => {}}
         />
       </div>
     </div>
