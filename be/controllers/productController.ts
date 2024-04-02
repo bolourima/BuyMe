@@ -7,7 +7,10 @@ interface AuthenticatedRequest extends Request {
 }
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find({}).populate("categoryId");
+    const name = req.params.name;
+    const filteredCategory = await Category.find({ name });
+    const categoryId = filteredCategory[0]._id;
+    const products = await Product.find({ categoryId }).populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);
@@ -124,7 +127,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 export const getProductDetail = async (req: Request, res: Response) => {
   try {
-    console.log(req.params);
     const productId = req.params.id;
     const product = await Product.findById(productId).populate("categoryId");
     return res.status(200).send(product);

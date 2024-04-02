@@ -12,7 +12,7 @@ export const Hero = () => {
           }}
         >
           <Link
-            href={"./basket"}
+            href={"/productList/Clothing"}
             className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
           >
             <span>Clothing</span>
@@ -27,7 +27,7 @@ export const Hero = () => {
             }}
           >
             <Link
-              href={"./productList"}
+              href={"/productList/Electronics"}
               className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
             >
               <span>Electronics</span>
@@ -39,9 +39,12 @@ export const Hero = () => {
               backgroundImage: `url(https://images.pexels.com/photos/694740/pexels-photo-694740.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)`,
             }}
           >
-            <span className=" Hero-text text-6xl text-white font-extrabold">
-              Books
-            </span>
+            <Link
+              href={"/productList/Books"}
+              className=" Hero-text text-6xl text-white font-extrabold"
+            >
+              <span>Books</span>
+            </Link>
           </div>
         </div>
       </div>

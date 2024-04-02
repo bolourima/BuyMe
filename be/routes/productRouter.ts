@@ -16,7 +16,7 @@ productRouter.route("/editProduct").put(accessTokenAuth, editProduct);
 productRouter
   .route("/selectImage")
   .post(upload.single("img"), accessTokenAuth, uploadSingleImage);
-productRouter.route("/getProducts").get(getProducts);
+productRouter.route("/getProducts/:name").get(getProducts);
 productRouter
   .route("/deleteProduct/:id")
   .delete(accessTokenAuth, deleteProduct);
