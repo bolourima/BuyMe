@@ -57,7 +57,7 @@ export const Header = () => {
         </div>
 
         <div>
-          <Link href={"./"}>
+          <Link href={"/"}>
             <div className="flex hover:shadow-sm">
               <h1 className=" font-extrabold text-4xl">Buy</h1>
               <h1 className=" content-center font-semibold text-2xl">me</h1>
@@ -67,7 +67,7 @@ export const Header = () => {
 
         <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center">
           <h1 className=" font-semibold text-xl">Home</h1>
-          <Link href={"./productList"}>
+          <Link href={"/productList"}>
             <h1 className=" lg:content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">
               Categories
               <DownIcon />
@@ -89,13 +89,13 @@ export const Header = () => {
               </div>
 
               <OrderIcon />
-              <Link href={"./basket"}>
+              <Link href={"/basket"}>
                 <MyCartIcon />
               </Link>
             </div>
 
             <div>
-              <Link href={"./signin"}>
+              <Link href={"/signin"}>
                 <ProfileIcon />
               </Link>
             </div>
