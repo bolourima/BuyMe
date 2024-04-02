@@ -14,6 +14,8 @@ export type ProductType = {
   createdAt: string;
   updatedAt: string;
   selectedQuantity: number;
+  userId: string;
+  shopId: string;
 };
 
 type categoryIdType = {

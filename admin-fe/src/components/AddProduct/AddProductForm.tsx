@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AddProductFirstSection } from "./AddProductFirstSection";
 import { AddProductImageSection } from "./AddProductImageSection";
 import { AddProductPriceSection } from "./AddProductPriceSection";
@@ -22,6 +22,7 @@ export const AddProductForm = ({
   setOnEdit,
   setEditableProduct,
   setIsAddProductVisible,
+  token,
 }: {
   categoryData: Category[];
   onEdit: boolean;
@@ -29,6 +30,7 @@ export const AddProductForm = ({
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>;
   setEditableProduct: any;
   setIsAddProductVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  token: string;
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     onEdit
@@ -117,7 +119,8 @@ export const AddProductForm = ({
             subName,
             selectedBrand,
             setEditableProduct,
-            setOnEdit
+            setOnEdit,
+            token
           );
         } else {
           createProduct(
@@ -127,11 +130,17 @@ export const AddProductForm = ({
             salePercent,
             selectedCategory,
             subName,
-            selectedBrand
+            selectedBrand,
+            token
           );
         }
       },
     });
+  // const [token, setToken] = useState<string>("");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("accessToken");
+  //   if (!token) return;
+  // }, []);
   return (
     <form
       onSubmit={(e) => {
@@ -155,6 +164,7 @@ export const AddProductForm = ({
             setImageOnePreview={setImageOnePreview}
             setImageTwoPreview={setImageTwoPreview}
             setImageThreePreview={setImageThreePreview}
+            token={token}
           />
           <AddProductPriceSection
             values={values}

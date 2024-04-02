@@ -11,7 +11,8 @@ export const editProduct = async (
   subName: string,
   selectedBrand: string,
   setEditableProduct: any,
-  setOnEdit: React.Dispatch<React.SetStateAction<boolean>>
+  setOnEdit: React.Dispatch<React.SetStateAction<boolean>>,
+  token: string
 ) => {
   try {
     const disCount = { isSale: isSale, salePercent: salePercent };
@@ -29,7 +30,9 @@ export const editProduct = async (
       brandName: selectedBrand,
       images: images,
     };
-    const res = await instance.put("/editProduct", newProduct);
+    const res = await instance.put("/editProduct", newProduct, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     setEditableProduct(null);
     setOnEdit(false);
     res.status === 200 ? alert("Updated") : alert("Failed");
