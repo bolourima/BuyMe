@@ -23,7 +23,7 @@ export const Product = ({ productData }: { productData: ProductType[] }) => {
     setToken(token);
   }, []);
   const setProductData: ClickHandler = (
-    product: ProductTypeWithQuantity,
+    product: ProductType,
     onDouble: boolean
   ) => {
     putIntoBasket(

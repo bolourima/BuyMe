@@ -6,7 +6,7 @@ const adminSchema = new Schema({
   password: String,
   bankAccount: Number,
   subAdmin: Boolean,
-  categories: [{ type: Schema.ObjectId, ref: "Category", required: true }],
+  categories: [{ type: Schema.ObjectId, ref: "Category" }],
 });
 const Admin = model("Admin", adminSchema);
 export default Admin;

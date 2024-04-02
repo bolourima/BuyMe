@@ -22,9 +22,9 @@ export const Masonry = ({
   const sale = (price * 100) / salePercent;
   const imgFirstFix = 0;
   return (
-    <ImageListItem className="lg:rounded-lg border-2 border-gray-300">
+    <ImageListItem className="rounded-lg border-2 border-gray-300">
       <img
-        onClick={() => router.push(`productId/${_id}`)}
+        onClick={() => router.push(`${_id}`)}
         src={images[imgFirstFix]}
         className="rounded-t-lg"
       />
