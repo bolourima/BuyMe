@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MyProfilePicEdit } from "@/components/MyProfilePicEdit";
 import { EditIconWhite } from "@/icon/EditIconWhite";
 import { ProfileSideBar } from "@/components/ProfileSideBar";
+import { TokenContext } from "@/context/TokenContext";
+import { useRouter } from "next/router";
+import { toastifySuccess, toastifyWarning } from "@/utilities/toastify";
+import { jwtDecode } from "jwt-decode";
+import { refresh } from "@/utilities/refreshToken";
 
 export default function MyProfile() {
+  const router = useRouter();
   const [hoveredItem, setHoverItems] = useState("");
+  const { token, setToken } = useContext(TokenContext);
+  const accessToken = localStorage.getItem("accessToken");
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      router.push("/signin");
+      return toastifyWarning("Please sign in");
+    }
+    const exp = jwtDecode(accessToken).exp;
+    if (!exp) return;
+    if (exp < Date.now() / 1000) {
+      refresh();
+    }
+    setToken(accessToken);
+  }, []);
   return (
     <>
       <div className="flex flex-col bg-white text-black p-5 gap-14 w-full ">
@@ -74,13 +95,24 @@ export default function MyProfile() {
               <div>
                 <MyProfilePicEdit />
               </div>
-              <div>
+              <div className="w-fit h-fit flex flex-col gap-8">
                 <button className="bttn flex bg-black text-white w-[200px] h-[50px] justify-center items-center rounded-lg ">
                   <div className="w-5 h-5 mx-4">
                     <EditIconWhite />
                   </div>
 
                   <p>Edit Profile</p>
+                </button>
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("accessToken");
+                    setToken("");
+                    router.push("/signin");
+                    toastifySuccess("Successfully signed out");
+                  }}
+                  className="bttn flex bg-black text-white w-[200px] h-[50px] justify-center items-center rounded-lg "
+                >
+                  <p>Sign out</p>
                 </button>
               </div>
             </div>

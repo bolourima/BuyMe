@@ -21,13 +21,8 @@ export const createOrder = async (
     }
     const res = await instance.post(
       "/createOrder",
-      {
-        products: selectedProductContainer,
-        total: total,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      { products: selectedProductContainer, total: total },
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     if (res.status == 201) return alert("Created");
     if (res.status == 403) return alert("User invalid");

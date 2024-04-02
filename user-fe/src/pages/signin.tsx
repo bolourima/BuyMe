@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginUser } from "../utilities/userRelatedUtils";
 import Link from "next/link";
-
+import { TokenContext } from "@/context/TokenContext";
+import { toastifyWarning } from "@/utilities/toastify";
 export default function SignIn() {
   const router = useRouter();
-
+  const { token, setToken } = useContext(TokenContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,9 +26,16 @@ export default function SignIn() {
         email: formik.values.email,
         password: formik.values.password,
       };
-      loginUser(accountInfo, router.push);
+      loginUser(accountInfo, router.push, setToken);
     },
   });
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    setToken(accessToken);
+    toastifyWarning("You are already signed in");
+    router.push("/");
+  }, []);
   return (
     <div className=" flex justify-center  lg:flex w-full items-center">
       <div className=" hidden lg:block w-3/5">

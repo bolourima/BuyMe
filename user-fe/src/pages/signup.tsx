@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createUser } from "../utilities/userRelatedUtils";
 import Link from "next/link";
-
+import { TokenContext } from "@/context/TokenContext";
+import { toastifyWarning } from "@/utilities/toastify";
 export default function SignUp() {
   const router = useRouter();
+  const { token, setToken } = useContext(TokenContext);
   const CreateUserBtn = () => {
     const accountInfo = {
       name: formik.values.name,
@@ -41,6 +43,15 @@ export default function SignUp() {
     }),
     onSubmit: (values) => {},
   });
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    setToken(accessToken);
+    if (accessToken) {
+      toastifyWarning("You are already signed in");
+      router.push("/");
+    }
+  }, []);
   return (
     <div className="flex w-full">
       <div className="w-3/5">

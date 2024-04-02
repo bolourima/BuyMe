@@ -1,9 +1,9 @@
 import Router from "express";
-import { getUsers, signUp } from "../controllers/userController";
+import { getUsers, refreshToken, signUp } from "../controllers/userController";
 
 const userRouter = Router();
 userRouter.get("/users", getUsers);
-
+userRouter.get("/refreshToken", refreshToken);
 export { userRouter };
 
 // const authRouter = Router();
