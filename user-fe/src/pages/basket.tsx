@@ -1,8 +1,11 @@
-import { AExpressIcon } from "@/icon/AExpressIcon";
-import { MasterCardIcon } from "@/icon/MasterCardIcon";
-import { PayPallIcon } from "@/icon/PayPallIcon";
-import { VisaIcon } from "@/icon/VisaIcon";
-import { ApplePayIcon } from "@/icon/ApplePayIcon";
+import {
+  AExpressIcon,
+  MasterCardIcon,
+  PayPallIcon,
+  VisaIcon,
+  ApplePayIcon,
+} from "@/icon";
+
 import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { changeProductQuantity } from "@/utilities/countChange";
 import { createOrder } from "@/utilities/createOrder";
@@ -39,17 +42,17 @@ const Basket = () => {
     );
   }, [productsInBasket]);
   return (
-    <div className="w-full flex justify-center pt-16 min-h-screen">
-      <div className="flex flex-col gap-6 w-[900px]">
+    <div className=" flex flex-col  lg:w-full lg:flex lg:flex-row justify-center pt-16 min-h-screen">
+      <div className=" flex flex-col w-full lg:flex lg:flex-col gap-6 lg:w-[900px]">
         {productsInBasket &&
           productsInBasket.map((product) => {
             return (
-              <div className="flex gap-2 w-full h-[300px] items-center px-4 my-4">
+              <div className=" flex flex-col lg:flex lg:flex-row gap-2 w-full h-[300px] items-center px-4 my-4">
                 <img
                   src={product.product?.images[0]}
                   className="w-1/2 h-full"
                 />
-                <div className="flex flex-col w-1/2 pl-4 h-full">
+                <div className="lg:flex flex-col w-1/2 pl-4 h-full">
                   <p>Name: {product.product?.name}</p>
                   <p>Category: {product.product?.categoryId.name}</p>
                   <p>SubCategory: {product.product?.subCategoryName}</p>
