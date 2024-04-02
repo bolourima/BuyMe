@@ -26,7 +26,6 @@ export default function SignIn() {
         password: formik.values.password,
       };
       loginUser(accountInfo, router.push);
-      alert(JSON.stringify(values, null, 2));
     },
   });
   return (
@@ -36,7 +35,7 @@ export default function SignIn() {
       </div>
       <div className=" flex items-center  text-white lg:flex flex-col bg-white w-2/5 gap-2 rounded-r-xl p-[120px]">
         <div className="flex flex-col items-center  font-bold text-2xl">
-          <h2 className="text-gray-600 font-bold">Create New Account</h2>
+          <h2 className="text-gray-600 font-bold">Sign in</h2>
           <p className="text-sm ">Please enter details</p>
         </div>
         <div>
@@ -77,7 +76,6 @@ export default function SignIn() {
                 </button>
               </form>
             </div>
-
             <div className="flex gap-2">
               <p className="text-slate-900 text-base font-normal dark:text-slate-300">
                 Don’t have account?
