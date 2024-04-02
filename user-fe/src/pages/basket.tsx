@@ -41,7 +41,7 @@ const Basket = () => {
   return (
     <div className="w-full flex justify-center pt-16 min-h-screen">
       <div className="flex flex-col gap-6 w-[900px]">
-        {productsInBasket.length &&
+        {productsInBasket &&
           productsInBasket.map((product) => {
             return (
               <div className="flex gap-2 w-full h-[300px] items-center px-4 my-4">
@@ -138,7 +138,7 @@ const Basket = () => {
             );
           })}
       </div>
-      {productsInBasket.length > 0 && (
+      {productsInBasket && (
         <div className="w-[400px] ">
           <div className="flex flex-col border-[#DEE2E7] border-[1px] rounded-md p-5 gap-2 bg-white shadow-md">
             <div className="flex justify-center border-b-[1px] pb-4 text-xl font-sans font-semibold">

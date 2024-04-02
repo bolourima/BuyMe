@@ -10,11 +10,11 @@ export default function SignIn() {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      shopName: "",
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
+      shopName: Yup.string().required("Required"),
       password: Yup.string()
         .max(14, "Нууц үг 14 тэмдэгтээс бага байх ёстой")
         .min(4, "Нууц үг 4-ё дээш тэмдэгттэй байх ёстой")
@@ -22,11 +22,10 @@ export default function SignIn() {
     }),
     onSubmit: (values) => {
       const accountInfo = {
-        email: formik.values.email,
+        shopName: formik.values.shopName,
         password: formik.values.password,
       };
       loginUser(accountInfo, router.push);
-      alert(JSON.stringify(values, null, 2));
     },
   });
   return (
@@ -45,15 +44,15 @@ export default function SignIn() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Email</label>
+              <label className="font-bold">shopName</label>
               <input
                 className="input input-bordered max-w-xs w-[300px]"
-                type="email"
-                placeholder="Please enter your email"
-                {...formik.getFieldProps("email")}
+                type="shopName"
+                placeholder="Please enter your shopName"
+                {...formik.getFieldProps("shopName")}
               />
-              {formik.touched.email && formik.errors.email ? (
-                <div>{formik.errors.email}</div>
+              {formik.touched.shopName && formik.errors.shopName ? (
+                <div>{formik.errors.shopName}</div>
               ) : null}
             </form>
             <form
