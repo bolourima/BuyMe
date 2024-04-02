@@ -32,8 +32,6 @@ export default function ProductId({
     if (!ID) return;
     getProduct(ID);
   }, [ID]);
-  console.log(selectedImg);
-
   const ChangeBtn = (event: React.MouseEvent<HTMLButtonElement>) => {
     const buttonText = (event.target as HTMLButtonElement).innerText;
 
