@@ -7,7 +7,7 @@ import Categories from "@/components/Categories";
 import RecommendedItems from "@/components/RecommendedItems";
 import { ToastContainer, Bounce, ToastTransition } from "react-toastify";
 
-export default function Home({ productData }: { productData: ProductType[] }) {
+export default function Home() {
   return (
     <div className=" static flex flex-col gap-20">
       <Hero />
@@ -19,11 +19,3 @@ export default function Home({ productData }: { productData: ProductType[] }) {
     </div>
   );
 }
-
-export const getServerSideProps = async () => {
-  const productRes = await instance.get("/getProducts");
-  const productData = productRes.data;
-  return {
-    props: { productData },
-  };
-};
