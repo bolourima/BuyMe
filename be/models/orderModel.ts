@@ -11,6 +11,7 @@ const OrderSchema = new Schema({
   total: Number,
   createdAt: Date,
   updatedAt: Date,
+  invoiceId: String,
 });
 const Order = model("Order", OrderSchema);
 export default Order;
