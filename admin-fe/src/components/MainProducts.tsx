@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductsController } from "./ProductsController";
 import { AddProductBar } from "./AddProduct/AddProductBar";
 import { Category } from "@/types/categoryType";
 import { GetProductType } from "@/types/getProductType";
 import DataTable from "./DataTable";
+import { TokenContext } from "@/contexts/TokenContext";
 
 export const MainProducts = ({
   categoryData,
@@ -14,6 +15,7 @@ export const MainProducts = ({
 }) => {
   const [isAddProductVisible, setIsAddProductVisible] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
+  const { token, setToken } = useContext(TokenContext);
   const [editableProduct, setEditableProduct] = useState<GetProductType>({
     _id: "",
     name: "",
@@ -29,6 +31,11 @@ export const MainProducts = ({
     createdAt: "",
     images: [],
   });
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+    setToken(token);
+  }, []);
   return (
     <div className="flex flex-col w-5/6">
       {!isAddProductVisible && (

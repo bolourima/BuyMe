@@ -34,9 +34,7 @@ export const AddProductForm = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     onEdit
-      ? editableProduct
-        ? editableProduct.categoryId.name
-        : ""
+      ? editableProduct && editableProduct.categoryId.name
       : categoryData[0].name
   );
   const [selectedBrand, setSelectedBrand] = useState<string>(
@@ -136,11 +134,6 @@ export const AddProductForm = ({
         }
       },
     });
-  // const [token, setToken] = useState<string>("");
-  // useEffect(() => {
-  //   const token = localStorage.getItem("accessToken");
-  //   if (!token) return;
-  // }, []);
   return (
     <form
       onSubmit={(e) => {
