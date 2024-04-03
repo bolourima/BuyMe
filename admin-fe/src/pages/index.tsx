@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { instance } from "@/instance";
 import { Category } from "@/types/categoryType";
 import { MainProducts } from "@/components/MainProducts";
@@ -12,6 +12,7 @@ import { OrderType } from "@/types/orderType";
 import { getOrders } from "@/utilities/getOrders";
 import { getProducts } from "@/utilities/getProducts";
 import { Product } from "@/types/productType";
+import { TokenContext } from "@/contexts/TokenContext";
 
 export default function Home({
   categoryData,
@@ -24,6 +25,7 @@ export default function Home({
 }) {
   const [visibleComponent, setVisibleComponent] = useState("");
   const [orderData, setOrderData] = useState<OrderType[]>([]);
+  const { token, setToken } = useContext(TokenContext);
   const [productData, setProductData] = useState<GetProductType[]>([]);
   const setProduct = (data: GetProductType[]) => {
     setProductData(data);
@@ -34,6 +36,7 @@ export default function Home({
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) return;
+    setToken(token);
     getProducts(token, setProduct);
     getOrders(token, setOrder);
   }, []);
