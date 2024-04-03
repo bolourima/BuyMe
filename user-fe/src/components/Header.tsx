@@ -15,11 +15,11 @@ import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { tree } from "next/dist/build/templates/app-page";
 import CloseIcon from "@/icon/CloseIcon";
-import SideBar from "./SideBar";
 import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "@/utilities/refreshToken";
+import MobileBareTest from "./MobileBareTest";
 
 export const Header = () => {
   const router = useRouter();
@@ -45,11 +45,6 @@ export const Header = () => {
 
   //           MOBILE BURGER SHOW MENU
 
-  const [showBar, setShowBar] = useState(false);
-
-  const openBar = () => {
-    setShowBar(!showBar);
-  };
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) return;
@@ -61,10 +56,9 @@ export const Header = () => {
   return (
     <div className="  text-black dark:w-full lg:w-full flex justify-center py-4  bg-white lg:sticky top-0 z-50 shadow-sm">
       <div className=" SideBar  flex lg:flex items-center w-10/12 place-content-between  ">
-        <div className=" block w-5 lg:hidden" onClick={openBar}>
-          <Bar />
+        <div className=" block  lg:hidden">
+          <MobileBareTest />
         </div>
-        <SideBar openBar={openBar} showBar={showBar} />
 
         <div>
           <Link href={"/"}>
