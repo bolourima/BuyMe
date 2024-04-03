@@ -1,11 +1,13 @@
 import Bar from "@/icon/Bar";
 
-import { DownIcon } from "@/icon/DownIcon";
+import {
+  DownIcon,
+  MyCartIcon,
+  OrderIcon,
+  ProfileIcon,
+  SearchIcon,
+} from "@/icon";
 
-import { MyCartIcon } from "@/icon/MyCartIcon";
-import { OrderIcon } from "@/icon/OrderIcon";
-import { ProfileIcon } from "@/icon/ProfileIcon";
-import { SearchIcon } from "@/icon/SearchIcon";
 import { useRouter } from "next/router";
 
 import Link from "next/link";
@@ -46,11 +48,7 @@ export const Header = () => {
   const [showBar, setShowBar] = useState(false);
 
   const openBar = () => {
-    if (showBar === true) {
-      setShowBar(false);
-    } else {
-      setShowBar(true);
-    }
+    setShowBar(!showBar);
   };
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -63,10 +61,10 @@ export const Header = () => {
   return (
     <div className="  text-black dark:w-full lg:w-full flex justify-center py-4  bg-white lg:sticky top-0 z-50 shadow-sm">
       <div className=" SideBar  flex lg:flex items-center w-10/12 place-content-between  ">
-        {showBar && <SideBar OpenBar={openBar} />}
-        <div className=" block w-5 lg:hidden  " onClick={openBar}>
+        <div className=" block w-5 lg:hidden" onClick={openBar}>
           <Bar />
         </div>
+        <SideBar openBar={openBar} showBar={showBar} />
 
         <div>
           <Link href={"/"}>

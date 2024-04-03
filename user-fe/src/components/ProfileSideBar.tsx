@@ -1,6 +1,6 @@
 import React from "react";
-import { HandIcon } from "@/icon/HandIcon";
-import { UserIcon } from "@/icon/UserIcon";
+import { HandIcon, UserIcon } from "@/icon";
+
 import CartIcon from "@/icon/CartIcon";
 import LocationIcon from "@/icon/LocationIcon";
 import NotificationIcon from "@/icon/NotificationIcon";

@@ -49,6 +49,9 @@
 .Pcart{
     transition: all 0.4s ease-in-out;
 }
+.sideBar {
+    transition: 0.4s ease-in;
+}
 
 
 

@@ -5,10 +5,21 @@ import CartIcon from "@/icon/CartIcon";
 import LocationIcon from "@/icon/LocationIcon";
 import NotificationIcon from "@/icon/NotificationIcon";
 import { SubCategory } from "./SubCategory";
+import Link from "next/link";
 
-export default function SideBar({ OpenBar }: { OpenBar: () => void }) {
+export default function SideBar({
+  openBar,
+  showBar,
+}: {
+  openBar: () => void;
+  showBar: boolean;
+}) {
   return (
-    <div className="absolute top-0 w-full right-0 h-full z-10 bg-zinc-950/50">
+    <div
+      className={`absolute top-0 w-full right-0 h-full z-10 bg-zinc-950/50 transition-all duration-300 ${
+        showBar ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
       <div className="flex justify-between p-5 bg-white w-10/12 h-full">
         <div className=" w-full flex flex-col gap-6">
           <div className=" flex flex-col gap-2">
@@ -19,12 +30,14 @@ export default function SideBar({ OpenBar }: { OpenBar: () => void }) {
           </div>
 
           <div className="  border-y-2 py-9 flex flex-col gap-4">
-            <div className=" flex gap-5 shadow-sm">
-              <div className=" w-7  h-7">
-                <CartIcon />
+            <Link href={"/basket"}>
+              <div className=" flex gap-5 shadow-sm">
+                <div className=" w-7  h-7">
+                  <CartIcon />
+                </div>
+                <h1 className="  text-xl font-semibold ">My order</h1>
               </div>
-              <h1 className="  text-xl font-semibold ">My order</h1>
-            </div>
+            </Link>
 
             <div className=" flex gap-6 px-1 shadow-sm">
               <div className=" w-5  h-5">
@@ -50,7 +63,7 @@ export default function SideBar({ OpenBar }: { OpenBar: () => void }) {
             </div>
           </div>
         </div>
-        <div className="w-5" onClick={OpenBar}>
+        <div className="w-5" onClick={openBar}>
           <CloseIcon />
         </div>
       </div>

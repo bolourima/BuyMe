@@ -1,11 +1,14 @@
 import React from "react";
-import LeftArrowIcon from "@/icon/LeftArrowIcon";
-import { AExpressIcon } from "@/icon/AExpressIcon";
-import { MasterCardIcon } from "@/icon/MasterCardIcon";
-import { PayPallIcon } from "@/icon/PayPallIcon";
-import { VisaIcon } from "@/icon/VisaIcon";
-import { ApplePayIcon } from "@/icon/ApplePayIcon";
-import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
+
+import {
+  AExpressIcon,
+  MasterCardIcon,
+  PayPallIcon,
+  VisaIcon,
+  ApplePayIcon,
+} from "@/icon";
+
+import { ProductsInBasketContext } from "@/context/FoodsInBasket";
 import { changeProductQuantity } from "@/utilities/countChange";
 import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
