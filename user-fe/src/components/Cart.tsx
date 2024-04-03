@@ -8,7 +8,7 @@ import {
   ApplePayIcon,
 } from "@/icon";
 
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import { changeProductQuantity } from "@/utilities/countChange";
 import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
