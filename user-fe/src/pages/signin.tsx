@@ -31,7 +31,7 @@ export default function SignIn() {
   return (
     <div className="lg:flex md:flex  sm:flex">
       <div className=" lg:flex md:flex md:w-3/5 sm:w-full hidden">
-        <img className="rounded-bl-xl w-full" src="./SignUpPic.png" alt="" />
+        <img className="rounded-bl-xl" src="./SignUpPic.png" alt="" />
       </div>
       <div className="lg:flex flex p-10 flex-col md:flex md:w-2/5  sm:w-full items-center">
         <div className="lg:flex-col items-center sm:flex-col  sm:flex">
