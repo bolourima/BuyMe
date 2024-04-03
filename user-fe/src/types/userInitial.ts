@@ -5,4 +5,6 @@ export const userInitial = {
   phoneNumber: 0,
   password: "",
   __v: 0,
+  avatarImg: "",
+  addresses: [],
 };

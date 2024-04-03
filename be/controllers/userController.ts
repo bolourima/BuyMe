@@ -66,6 +66,8 @@ export const signUp = async (req: Request, res: Response) => {
       email,
       phoneNumber,
       password: hashedPassport,
+      avatarImg:
+        "https://res.cloudinary.com/dl93ggn7x/image/upload/v1710491194/bvkfvotkzfe0ikwznfaa.jpg",
     });
     const newBasket = await Basket.create({
       user: newUser._id,
@@ -119,5 +121,20 @@ export const signIn = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error during signin user. Message is:", error);
     res.status(400).json({ message: "User signin failed" });
+  }
+};
+export const editUser = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.user.id);
+    await User.findByIdAndUpdate(req.user.id, {
+      name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+      avatarImg: req.body.avatarImg,
+    });
+    return res.status(200).json({ msg: "Successfully edited" });
+  } catch (error) {
+    console.error("error in edituser", error);
+    return res.status(400).json({ msg: error });
   }
 };

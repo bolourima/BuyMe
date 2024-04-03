@@ -1,5 +1,6 @@
 import Router from "express";
 import {
+  editUser,
   getUserInfo,
   getUsers,
   refreshToken,
@@ -11,6 +12,7 @@ const userRouter = Router();
 userRouter.get("/users", getUsers);
 userRouter.get("/refreshToken", refreshToken);
 userRouter.get("/getUserInfo", accessTokenAuth, getUserInfo);
+userRouter.put("/editUser", accessTokenAuth, editUser);
 export { userRouter };
 
 // const authRouter = Router();

@@ -5,4 +5,6 @@ export type UserType = {
   phoneNumber: number;
   password: string;
   __v: number;
+  avatarImg: string;
+  addresses: string[];
 };

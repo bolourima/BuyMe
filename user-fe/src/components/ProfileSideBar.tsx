@@ -5,13 +5,12 @@ import CartIcon from "@/icon/CartIcon";
 import LocationIcon from "@/icon/LocationIcon";
 import NotificationIcon from "@/icon/NotificationIcon";
 import { UserType } from "@/types/userType";
-
 export const ProfileSideBar = ({ user }: { user: UserType }) => {
   return (
     <div className=" border-gray-200 lg:border-gray-200 border-[1px]">
       <div className="flex gap-5 items-center p-5">
         <div className="flex w-12 h-12">
-          <img className="rounded-full" src="./IconPicture.jpeg" alt="" />
+          <img className="rounded-full" src={user.avatarImg} alt="" />
         </div>
         <div className="">
           <div className="flex gap-3">
