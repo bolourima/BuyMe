@@ -54,9 +54,12 @@ const Basket = () => {
     <div className=" flex flex-col  lg:w-full lg:flex lg:flex-row justify-center pt-16 min-h-screen">
       <div className=" flex flex-col w-full lg:flex lg:flex-col gap-6 lg:w-[900px]">
         {productsInBasket &&
-          productsInBasket.map((product) => {
+          productsInBasket.map((product, i) => {
             return (
-              <div className=" flex flex-col lg:flex lg:flex-row gap-2 w-full h-[300px] items-center px-4 my-4">
+              <div
+                key={i}
+                className=" flex flex-col lg:flex lg:flex-row gap-2 w-full h-[300px] items-center px-4 my-4"
+              >
                 <img
                   src={product.product?.images[0]}
                   className="w-1/2 h-full"
