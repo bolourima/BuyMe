@@ -13,6 +13,8 @@ import { changeProductQuantity } from "@/utilities/countChange";
 import { createOrder } from "@/utilities/createOrder";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { refresh } from "@/utilities/refreshToken";
 
 const Basket = () => {
   const { productsInBasket, setProductsInBasket } = useContext(
@@ -23,6 +25,11 @@ const Basket = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) return;
+    const exp = jwtDecode(accessToken).exp;
+    if (!exp) return;
+    if (exp < Date.now() / 1000) {
+      refresh();
+    }
     setToken(accessToken);
   }, []);
   const countTotal = useMemo(async () => {

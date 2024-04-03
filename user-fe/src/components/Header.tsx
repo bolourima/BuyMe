@@ -12,13 +12,18 @@ import { useRouter } from "next/router";
 
 import Link from "next/link";
 
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { tree } from "next/dist/build/templates/app-page";
 import CloseIcon from "@/icon/CloseIcon";
 import SideBar from "./SideBar";
+import { TokenContext } from "@/context/TokenContext";
+import { toastifyWarning } from "@/utilities/toastify";
+import { jwtDecode } from "jwt-decode";
+import { refresh } from "@/utilities/refreshToken";
 
 export const Header = () => {
   const router = useRouter();
+  const { token, setToken } = useContext(TokenContext);
 
   // ----------------------------------------------------
 
@@ -45,7 +50,14 @@ export const Header = () => {
   const openBar = () => {
     setShowBar(!showBar);
   };
-
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    const exp = jwtDecode(accessToken).exp;
+    if (!exp) return;
+    if (exp < Date.now() / 1000) refresh();
+    setToken(accessToken);
+  }, []);
   return (
     <div className="  text-black dark:w-full lg:w-full flex justify-center py-4  bg-white lg:sticky top-0 z-50 shadow-sm">
       <div className=" SideBar  flex lg:flex items-center w-10/12 place-content-between  ">
@@ -85,17 +97,27 @@ export const Header = () => {
               <div onClick={clickSearch}>
                 <SearchIcon />
               </div>
-
               <OrderIcon />
-              <Link href={"/basket"}>
+              <button
+                onClick={() => {
+                  if (!token) toastifyWarning("Please sign in");
+                  else router.push("/basket");
+                }}
+              >
                 <MyCartIcon />
-              </Link>
+              </button>
             </div>
 
             <div>
-              <Link href={"/signin"}>
+              <button
+                onClick={() => {
+                  if (!token) {
+                    toastifyWarning("Please sign in"), router.push("/signin");
+                  } else router.push("/myprofile");
+                }}
+              >
                 <ProfileIcon />
-              </Link>
+              </button>
             </div>
           </div>
         </div>

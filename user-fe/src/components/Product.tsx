@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ProductType } from "../types/productType";
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import { ClickHandler } from "@/types/handlerType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
 import ImageList from "@mui/material/ImageList";

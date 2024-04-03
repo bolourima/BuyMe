@@ -1,11 +1,16 @@
 import { instance } from "@/instance";
 import { toastifyError, toastifySuccess } from "./toastify";
 
-export const loginUser = async (data: {}, router: Function) => {
+export const loginUser = async (
+  data: {},
+  router: Function,
+  setToken: React.Dispatch<React.SetStateAction<string>>
+) => {
   try {
     const response = await instance.post("signin", data);
     if (response.status == 200) {
       localStorage.setItem("accessToken", response.data.accessToken);
+      setToken(response.data.accessToken);
       toastifySuccess("Signin succesfully");
       router("/");
     }

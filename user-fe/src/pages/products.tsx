@@ -1,4 +1,4 @@
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";

@@ -8,6 +8,5 @@ export const getBasketById = async (token: string) => {
     return res.data.products;
   } catch (error) {
     console.error("error in getbasketdata", error);
-    return [];
   }
 };

@@ -13,21 +13,30 @@ import { removeFromBasket } from "@/utilities/removeFromBasket";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { getBasketById } from "@/utilities/getBasketOfUser";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
+import { TokenContext } from "@/context/TokenContext";
+import { useRouter } from "next/router";
+import { toastifyWarning } from "@/utilities/toastify";
 const Basket = () => {
+  const router = useRouter();
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
   const [total, setTotal] = useState(0);
-  const [token, setToken] = useState<string>("");
-  const setBasket = async (token: string) => {
-    const basketData: ProductTypeWithQuantity[] = await getBasketById(token);
+  const { token, setToken } = useContext(TokenContext);
+  const setBasket = async (accessToken: string) => {
+    const basketData: ProductTypeWithQuantity[] = await getBasketById(
+      accessToken
+    );
     setProductsInBasket(basketData);
   };
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) return;
-    setBasket(accessToken);
+    if (!accessToken) {
+      router.push("/signin");
+      return toastifyWarning("Please sign in");
+    }
     setToken(accessToken);
+    setBasket(accessToken);
   }, []);
   const countTotal = useMemo(async () => {
     setTotal(

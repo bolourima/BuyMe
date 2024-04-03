@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import Basket from "../models/basketModel";
 
 const jwtPrivateKey = process.env.SECRET_KEY;
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -14,6 +17,41 @@ export const getUsers = async (req: Request, res: Response) => {
     console.error("error in getUsers", error);
     return res.status(400).send("Failed to getUser");
   }
+};
+export const getUserInfo = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.status(200).json({ user: user });
+  } catch (error) {
+    console.error("error in getUserInfo", error);
+    return res.status(400).json({ msg: "Failed to getUserInfo" });
+  }
+};
+export const refreshToken = async (req: Request, res: Response) => {
+  // console.log(req.cookies, "cookies");
+  // console.log(req.cookies, "cookies");
+  // return res.status(200).send("send");
+  // const refreshToken = await req.cookies["refreshToken"];
+  // if (!refreshToken) {
+  //   return res.status(400).json({ msg: "Access denied" });
+  // }
+  // if (typeof jwtPrivateKey !== "string") {
+  //   throw new Error("jwtPrivateKey is not defined");
+  // }
+  // return res.status(200).send("");
+  // try {
+  //   const decoded = jwt.verify(refreshToken, jwtPrivateKey) as JwtPayload;
+  //   const accessToken = jwt.sign({ id: decoded.id }, jwtPrivateKey as string, {
+  //     expiresIn: "1h",
+  //   });
+  //   return res
+  //     .status(200)
+  //     .header("Authorization", accessToken)
+  //     .json({ id: `${decoded.id}`, accessToken: `${accessToken}` });
+  // } catch (error) {
+  //   console.error(error);
+  //   return res.status(400).json({ msg: "Someting wrong in refreshToken" });
+  // }
 };
 export const signUp = async (req: Request, res: Response) => {
   const { name, email, phoneNumber, password } = req.body;
@@ -28,6 +66,8 @@ export const signUp = async (req: Request, res: Response) => {
       email,
       phoneNumber,
       password: hashedPassport,
+      avatarImg:
+        "https://res.cloudinary.com/dl93ggn7x/image/upload/v1710491194/bvkfvotkzfe0ikwznfaa.jpg",
     });
     const newBasket = await Basket.create({
       user: newUser._id,
@@ -62,7 +102,7 @@ export const signIn = async (req: Request, res: Response) => {
       { id: foundUser._id },
       jwtPrivateKey as string,
       {
-        expiresIn: "1d",
+        expiresIn: "10d",
       }
     );
 
@@ -70,7 +110,7 @@ export const signIn = async (req: Request, res: Response) => {
       { id: foundUser._id },
       jwtPrivateKey as string,
       {
-        expiresIn: "1d",
+        expiresIn: "10d",
       }
     );
     res
@@ -81,5 +121,20 @@ export const signIn = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error during signin user. Message is:", error);
     res.status(400).json({ message: "User signin failed" });
+  }
+};
+export const editUser = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.user.id);
+    await User.findByIdAndUpdate(req.user.id, {
+      name: req.body.name,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+      avatarImg: req.body.avatarImg,
+    });
+    return res.status(200).json({ msg: "Successfully edited" });
+  } catch (error) {
+    console.error("error in edituser", error);
+    return res.status(400).json({ msg: error });
   }
 };
