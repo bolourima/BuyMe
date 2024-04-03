@@ -13,7 +13,7 @@ export const Hero = () => {
         >
           <Link
             href={"/productList/Clothing"}
-            className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
+            className=" herohover text-3xl lg:text-6xl text-white font-extrabold"
           >
             <span>Clothing</span>
           </Link>
@@ -28,7 +28,7 @@ export const Hero = () => {
           >
             <Link
               href={"/productList/Electronics"}
-              className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
+              className=" herohover text-3xl lg:text-6xl text-white font-extrabold"
             >
               <span>Electronics</span>
             </Link>
@@ -41,7 +41,7 @@ export const Hero = () => {
           >
             <Link
               href={"/productList/Books"}
-              className=" Hero-text text-6xl text-white font-extrabold"
+              className=" herohover text-6xl text-white font-extrabold"
             >
               <span>Books</span>
             </Link>
