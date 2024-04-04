@@ -54,7 +54,11 @@ export const Header = () => {
     setToken(accessToken);
   }, []);
   return (
-    <div className="  text-black dark:w-full lg:w-full flex justify-center py-4  bg-white lg:sticky top-0 z-50 shadow-sm">
+    <div
+      className={`text-black dark:w-full lg:w-full flex justify-center py-4 bg-white lg:sticky top-0 z-50 shadow ${
+        router.asPath === "/" ? "mb-4" : "mb-10"
+      }`}
+    >
       <div className=" SideBar  flex lg:flex items-center w-10/12 place-content-between  ">
         <div className=" block  lg:hidden">
           <MobileBareTest />
@@ -64,13 +68,19 @@ export const Header = () => {
           <Link href={"/"}>
             <div className="flex hover:shadow-sm">
               <h1 className=" font-extrabold text-4xl">Buy</h1>
-              <h1 className=" content-center font-semibold text-2xl">me</h1>
+              <h1 className="  font-semibold text-2xl content-end">me</h1>
             </div>
           </Link>
         </div>
 
-        <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center">
-          <h1 className=" font-semibold text-xl">Home</h1>
+        <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center  ">
+          <h1
+            className={`font-semibold text-xl ${
+              router.asPath === "/" ? "font-bold" : "font-normal text-zinc-500"
+            }`}
+          >
+            Home
+          </h1>
           <Link href={"/productList"}>
             <h1 className=" lg:content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">
               Categories
