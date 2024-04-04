@@ -34,6 +34,7 @@ export const changeProductQuantity = async (
       ...product,
     };
     setProductsInBasket([...previosProducts, newProduct, ...nextProducts]);
+    console.log("first");
     const res = await instance.put(
       `/basket/${product.product._id}`,
       {

@@ -11,11 +11,6 @@ export default function Home() {
   return (
     <div className=" static flex flex-col gap-20">
       <Hero />
-      {/* <RecommendedItems productData={productData} />
-      <Product productData={productData} /> */}
-      {/* <Categories /> */}
-      {/* <RecommendedItems ProductData={productData} /> */}
-      {/* <RecommendedItems ProductData={productData} /> */}
     </div>
   );
 }

@@ -37,13 +37,23 @@ export default function SignIn() {
     router.push("/");
   }, []);
   return (
-    <div className="lg:flex md:flex  sm:flex">
-      <div className=" lg:flex md:flex md:w-3/5 sm:w-full hidden">
-        <img className="rounded-bl-xl w-full" src="./SignUpPic.png" alt="" />
+    <div className="lg:flex w-full h-full md:flex  sm:flex">
+      <div
+        className=" lg:flex w-full h-full bg-center bg-cover md:flex md:w-3/5 sm:w-full hidden"
+        style={{
+          backgroundImage: `url(https://assets.teenvogue.com/photos/633dbbb29407f031a64abb0a/16:9/w_2560%2Cc_limit/220801-05_0943_03_QC_EXT.jpg`,
+        }}
+      >
+        <div className="w-full h-screen p-10 ">
+          <div className="flex ">
+            <h1 className=" text-9xl font-semibold">Buy</h1>
+            <h1 className=" text-7xl content-end ">me</h1>
+          </div>
+        </div>
       </div>
-      <div className="lg:flex flex p-10 flex-col md:flex md:w-2/5  sm:w-full items-center">
+      <div className="lg:flex flex p-10 items-center justify-center  flex-col md:flex md:w-2/5  sm:w-full sm:items-center">
         <div className="lg:flex-col items-center sm:flex-col  sm:flex">
-          <h2 className="text-gray-100 font-bold">Signin your Account</h2>
+          <h2 className="text-black font-bold">Signin your Account</h2>
         </div>
         <div>
           <div className="flex gap-4 md:flex sm:flex flex-col items-center mt-5">
