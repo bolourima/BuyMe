@@ -17,7 +17,11 @@ import { paymentRouter } from "./routes/paymentRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "*", credentials: true }));
+app.use(
+  cors({
+    origin: "https://buy-me-delta.vercel.app",
+  })
+);
 app.use(categoryRouter);
 app.use(productRouter);
 app.use(subCategoryRouter);
