@@ -1,5 +1,6 @@
 import { Slider } from "@mui/material";
 import React, { useState } from "react";
+import { TypeSubCategory } from "@/types/subCategoryType";
 const MAX = 100000000;
 const MIN = 0;
 
@@ -7,24 +8,12 @@ function valuetext(value: number) {
   return `${value}MNT`;
 }
 const minDistance = 500000;
-type typeBrand = {
-  _id: string;
-  name: string;
-};
 
-type typeFeature = {
-  _id: string;
-  name: string;
-};
-
-type typeCategory = {
-  _id: string;
-  categoryName: string;
-  brands: typeBrand[];
-  features: typeFeature[];
-};
-
-export const SubCategory = () => {
+export const SubCategory = ({
+  subCategoryData,
+}: {
+  subCategoryData: TypeSubCategory[];
+}) => {
   const [value2, setValue2] = React.useState<number[]>([MIN, MAX]);
 
   const handleChange2 = (
@@ -48,46 +37,6 @@ export const SubCategory = () => {
       setValue2(newValue as number[]);
     }
   };
-  const SubCategory: typeCategory[] = [
-    {
-      _id: "SubCategory1",
-      categoryName: "Clothes",
-      brands: [
-        { _id: "brand1", name: "Top" },
-        { _id: "brand2", name: "Dress" },
-        { _id: "brand3", name: "Shirt" },
-      ],
-      features: [
-        { _id: "feature1", name: "Bluetooth" },
-        { _id: "feature2", name: "WiFi" },
-      ],
-    },
-    {
-      _id: "SubCategory2",
-      categoryName: "Electronics",
-      brands: [
-        { _id: "brand1", name: "Phone" },
-        { _id: "brand2", name: "Laptop" },
-        { _id: "brand3", name: "PC" },
-      ],
-      features: [
-        { _id: "features", name: "fuck" },
-        { _id: "feature2", name: "WiFi" },
-      ],
-    },
-    {
-      _id: "SubCategory3",
-      categoryName: "Books",
-      brands: [
-        { _id: "brand1", name: "Thriller" },
-        { _id: "brand2", name: "Fiction" },
-      ],
-      features: [
-        { _id: "feature1", name: "Bluetooth" },
-        { _id: "feature2", name: "WiFi" },
-      ],
-    },
-  ];
   const [isOpenCategory, setOpenCategory] = useState(true);
   const [isOpenBrands, setOpenBrands] = useState(true);
   const [isOpenFeatures, setOpenFeatures] = useState(true);
@@ -124,7 +73,7 @@ export const SubCategory = () => {
         </div>
 
         <div className={`uppercase ml-1 pl-1 mt-3`}>
-          {SubCategory.map((subCategory, index) => (
+          {subCategoryData.map((subCategory, index) => (
             <div className=" p-2 hover:bg-slate-300 rounded-l-lg">
               <button
                 key={index}
@@ -146,7 +95,7 @@ export const SubCategory = () => {
           <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
         </div>
         <div className="pl-1 ml-1 uppercase mt-3">
-          {SubCategory[subCategoryIndex].brands.map((brands) => (
+          {subCategoryData[subCategoryIndex].brands.map((brands) => (
             <div
               key={brands._id}
               className={` p-2 hover:bg-slate-300 rounded-l-lg ${
@@ -181,7 +130,7 @@ export const SubCategory = () => {
           <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
         </div>
         <div className="pl-1 ml-1 uppercase mt-3">
-          {SubCategory[subCategoryIndex].brands.map((brands) => (
+          {subCategoryData[subCategoryIndex].brands.map((brands) => (
             <div
               key={brands._id}
               className={` p-2 hover:bg-slate-300 rounded-l-lg ${
