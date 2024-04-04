@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "https://buy-me-delta.vercel.app",
+    origin: "*",
   })
 );
 app.use(categoryRouter);
