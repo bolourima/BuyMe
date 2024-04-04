@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { instance } from "@/instance";
 import { Category } from "@/types/categoryType";
 import { MainProducts } from "@/components/MainProducts";
@@ -12,6 +12,7 @@ import { OrderType } from "@/types/orderType";
 import { getOrders } from "@/utilities/getOrders";
 import { getProducts } from "@/utilities/getProducts";
 import { Product } from "@/types/productType";
+import { TokenContext } from "@/contexts/TokenContext";
 
 export default function Home({
   categoryData,
@@ -24,6 +25,7 @@ export default function Home({
 }) {
   const [visibleComponent, setVisibleComponent] = useState("");
   const [orderData, setOrderData] = useState<OrderType[]>([]);
+  const { token, setToken } = useContext(TokenContext);
   const [productData, setProductData] = useState<GetProductType[]>([]);
   const setProduct = (data: GetProductType[]) => {
     setProductData(data);
@@ -34,6 +36,7 @@ export default function Home({
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) return;
+    setToken(token);
     getProducts(token, setProduct);
     getOrders(token, setOrder);
   }, []);
@@ -53,17 +56,9 @@ export default function Home({
   );
 }
 export const getServerSideProps = async () => {
-  try {
-    const categoryRes = await instance.get("/getCategories");
-    // const productRes = await instance.get("/getProducts");
-    // const orderRes = await instance.get("/getOrdersInAdmin");
-    // const productData = productRes.data;
-    const categoryData = categoryRes.data;
-    // const orderData = orderRes.data;
-    return {
-      props: { categoryData },
-    };
-  } catch (error) {
-    console.error("error in getSSP in index", error);
-  }
+  const categoryRes = await instance.get("/getCategories");
+  const categoryData = categoryRes.data;
+  return {
+    props: { categoryData },
+  };
 };

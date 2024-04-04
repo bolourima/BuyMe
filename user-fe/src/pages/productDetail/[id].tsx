@@ -32,8 +32,6 @@ export default function ProductId({
     if (!ID) return;
     getProduct(ID);
   }, [ID]);
-  console.log(selectedImg);
-
   const ChangeBtn = (event: React.MouseEvent<HTMLButtonElement>) => {
     const buttonText = (event.target as HTMLButtonElement).innerText;
 
@@ -52,9 +50,10 @@ export default function ProductId({
         <div className="w-1/2 flex flex-col items-center">
           <img src={selectedImg} className="h-[400px] shadow-xl rounded-md" />
           <div className="flex gap-8 mt-3 justify-center">
-            {productData?.images.map((img) => {
+            {productData?.images.map((img, i) => {
               return (
                 <img
+                  key={i}
                   onClick={() => setSelectedImg(img)}
                   src={img}
                   className="h-16 shadow-xl rounded-md"

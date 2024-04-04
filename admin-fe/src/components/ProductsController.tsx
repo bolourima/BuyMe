@@ -1,3 +1,4 @@
+import { TokenContext } from "@/contexts/TokenContext";
 import { instance } from "@/instance";
 import { Edit } from "@/svg/Edit";
 import { IconCategory } from "@/svg/IconCategory";
@@ -6,7 +7,7 @@ import { IconMonthly } from "@/svg/IconMonthly";
 import { IconSearch } from "@/svg/IconSearch";
 import { Trash } from "@/svg/Trash";
 import { GetProductType } from "@/types/getProductType";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 export const ProductsController = ({
   setIsAddProductVisible,
@@ -19,9 +20,12 @@ export const ProductsController = ({
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>;
   setEditableProduct: React.Dispatch<React.SetStateAction<GetProductType>>;
 }) => {
+  const { token, setToken } = useContext(TokenContext);
   const deleteProduct = async (id: any) => {
     try {
-      const res = await instance.delete(`/deleteProduct/${id}`);
+      const res = await instance.delete(`/deleteProduct/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       if (res.status === 200) {
         alert("Product successfully deleted");
@@ -32,6 +36,11 @@ export const ProductsController = ({
       console.error("Error deleting product:", error);
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+    setToken(token);
+  }, []);
   return (
     <>
       <div className="flex gap-5 h-12 items-center p-4">

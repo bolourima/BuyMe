@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ProductType } from "../types/productType";
-import { ProductsInBasketContext } from "@/context/FoodsInBasket";
+import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import { ClickHandler } from "@/types/handlerType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
 import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
+
 import { Masonry } from "./Masonry";
 import Box from "@mui/material/Box";
-import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
+
 export const Product = ({ productData }: { productData: ProductType[] }) => {
   const [token, setToken] = useState("");
   const maxDatasToShow = 50;

@@ -4,9 +4,9 @@ import React from "react";
 export const Hero = () => {
   return (
     <div className="w-full flex p-3  lg:w-full lg:flex lg:p-0 justify-center">
-      <div className=" w-10/12 flex flex-col  gap-7 lg:w-full lg:flex lg:flex-row lg:gap-0 rounded-lg">
+      <div className=" w-10/12 flex flex-col  gap-7 lg:w-8/12 lg:flex lg:flex-row lg:gap-0 rounded-lg">
         <div
-          className=" h-52 rounded md:h-[200px] bg-center bg-cover  lg:w-6/12 lg:h-[1080px] hero lg:rounded-none  "
+          className=" h-52 rounded md:h-[200px] bg-center bg-cover  lg:w-6/12 lg:h-[550px] hero lg:rounded-none  "
           style={{
             backgroundImage: `url(https://images.pexels.com/photos/3002552/pexels-photo-3002552.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
           }}

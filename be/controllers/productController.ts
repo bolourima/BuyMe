@@ -149,7 +149,9 @@ export const getSelectedProductsInAdmin = async (
   res: Response
 ) => {
   try {
-    const products = await Product.find({ shopId: req.user.id });
+    const products = await Product.find({ shopId: req.user.id }).populate(
+      "categoryId"
+    );
     return res.status(200).send(products);
   } catch (error) {
     console.error("error in getSelectedProductsInAdmin", error);

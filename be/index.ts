@@ -13,13 +13,13 @@ import upload from "./middlewares/multer";
 import { basketRouter } from "./routes/basketRouter";
 import { adminRouter } from "./routes/adminRouter";
 import { addressRouter } from "./routes/addressRouter";
+import { paymentRouter } from "./routes/paymentRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
-    credentials: true,
+    origin: "*",
   })
 );
 app.use(categoryRouter);
@@ -32,6 +32,7 @@ app.use(orderRouter);
 app.use(basketRouter);
 app.use(adminRouter);
 app.use(addressRouter);
+app.use(paymentRouter);
 connectToDB();
 const PORT = 8000;
 app.listen(PORT, () => {
