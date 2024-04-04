@@ -61,7 +61,13 @@ export default function Income() {
         <NavBar />
         <div className="flex gap-20">
           <div className="w-[222px]">
-            <LeftBar />
+            <LeftBar
+              setVisibleComponent={function (
+                value: React.SetStateAction<string>
+              ): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
           </div>
           <div className="flex flex-col gap-3 bg-[#ECEDF0] w-full">
             <div className="flex flex-col bg-white w-[724px] h-[160px] rounded-lg  m-auto">
