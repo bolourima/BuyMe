@@ -56,17 +56,9 @@ export default function Home({
   );
 }
 export const getServerSideProps = async () => {
-  try {
-    const categoryRes = await instance.get("/getCategories");
-    // const productRes = await instance.get("/getProducts");
-    // const orderRes = await instance.get("/getOrdersInAdmin");
-    // const productData = productRes.data;
-    const categoryData = categoryRes.data;
-    // const orderData = orderRes.data;
-    return {
-      props: { categoryData },
-    };
-  } catch (error) {
-    console.error("error in getSSP in index", error);
-  }
+  const categoryRes = await instance.get("/getCategories");
+  const categoryData = categoryRes.data;
+  return {
+    props: { categoryData },
+  };
 };
