@@ -11,7 +11,8 @@ type Order = {
 export const createOrder = async (
   products: ProductTypeWithQuantity[],
   token: string,
-  total: number
+  total: number,
+  setQrcode: React.Dispatch<React.SetStateAction<string>>
 ) => {
   try {
     const selectedProductContainer: Order[] = [];
@@ -28,23 +29,11 @@ export const createOrder = async (
         headers: { Authorization: `Basic UE9XRVJfRVhQTzpvOXc4V0xoWg==` },
       }
     );
-    const invoiceRes = await instance.post(
-      "https://merchant.qpay.mn/v2/invoice",
-      {
-        invoice_code: "POWER_EXPO_INVOICE",
-        sender_invoice_no: "1234567",
-        invoice_receiver_code: "terminal",
-        invoice_description: "test",
-        amount: 10,
-        callback_url:
-          "https://buymeuserfe-ofjixqgcj-bolormaas-projects.vercel.app",
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${paymentRes.data.access_token}`,
-        },
-      }
-    );
+    const invoiceRes = await instance.post("/createInvoice", {
+      token: paymentRes.data.access_token,
+    });
+    setQrcode(invoiceRes.data.qPay_shortUrl);
+    localStorage.setItem("paymentToken", paymentRes.data.access_token);
     const res = await instance.post(
       "/createOrder",
       {
@@ -54,10 +43,9 @@ export const createOrder = async (
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    if (res.status == 201) return toastifySuccess("Created");
-    if (res.status == 403) return toastifyError("User invalid");
-    if (res.status == 400) return toastifyError("Failed to create order");
+    toastifySuccess("Order created");
+    return localStorage.setItem("invoiceId", res.data.invoiceId);
   } catch (error) {
-    console.error("error in creating order", error);
+    toastifyError("Failed to order");
   }
 };

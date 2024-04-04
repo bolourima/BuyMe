@@ -12,6 +12,7 @@ const OrderSchema = new Schema({
   createdAt: Date,
   updatedAt: Date,
   invoiceId: String,
+  paymentStatus: { type: String, enum: ["PAID", "UNPAID"] },
 });
 const Order = model("Order", OrderSchema);
 export default Order;

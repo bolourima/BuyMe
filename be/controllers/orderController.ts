@@ -9,10 +9,6 @@ const orderNumberGenerator = () => {
 };
 export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    await Basket.findOneAndUpdate(
-      { user: req.user.id },
-      { $set: { products: [] } }
-    );
     const orderNumber = orderNumberGenerator();
     const order = await Order.create({
       products: req.body.products,
@@ -22,8 +18,15 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
       createdAt: new Date(),
       updatedAt: new Date(),
       invoiceId: req.body.invoiceId,
+      paymentStatus: "UNPAID",
     });
-    return res.status(201).json({ msg: "Order successfully created" });
+    await Basket.findOneAndUpdate(
+      { user: req.user.id },
+      { $set: { products: [] } }
+    );
+    return res
+      .status(201)
+      .json({ msg: "Order successfully created", invoiceId: order.invoiceId });
   } catch (error) {
     console.error("error in creating order", error);
     return res.status(400).json({ msg: "Failed to create order" });
