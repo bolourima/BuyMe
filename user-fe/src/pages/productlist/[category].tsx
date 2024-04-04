@@ -1,13 +1,11 @@
 import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
-import { Masonry } from "@/components/Masonry";
-import ProductCardDtl from "@/components/productPopupDTL";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import React from "react";
-import { LoveIcon } from "@/icon/LoveIcon";
 import { GetServerSideProps } from "next";
 import { TypeSubCategory } from "@/types/subCategoryType";
+import { categoryType } from "@/types/categoryType";
 type Params = {
   category: string;
 };
@@ -17,15 +15,17 @@ type Props = {
 
 function productList({
   productData,
-  SubCategoryData,
+  subCategoryBackendData,
+  categoryData
 }: {
+  categoryData:categoryType[];
   productData: ProductType[];
-  SubCategoryData: TypeSubCategory[];
+  subCategoryBackendData: TypeSubCategory[];
 }) {
   return (
     <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
-        <SubCategory subCategoryData={SubCategoryData} />
+        <SubCategory subCategoryData={subCategoryBackendData} categoryData={categoryData} />
         <Product productData={productData} />
       </div>
     </div>
@@ -35,17 +35,20 @@ export default productList;
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   params
 ) => {
-  if (!params) {
-    return {
-      notFound: true,
-    };
-  }
-  const { name } = params.query;
-  const productRes = await instance.get(`/getProducts/${name}`);
-  const SubCategoryRes = await instance.get(`/getSubcategorys/${name}`);
-  const SubCategoryData = SubCategoryRes.data;
+
+
+  const { category } = params.query;
+  const productRes = await instance.get(`/getProducts/${category}`);
+  const subCategoryRes = await instance.get(`/getSubCategorys/${category}`);
+  const categoryRes = await instance.get(`/getCategories`);
   const productData = productRes.data;
+  const subCategoryBackendData = subCategoryRes.data;
+  const categoryData = categoryRes.data;
+  console.log("bumaa",subCategoryBackendData)
+
   return {
-    props: { productData, SubCategoryData },
+    props: { productData, subCategoryBackendData,
+      categoryData 
+    },
   };
 };

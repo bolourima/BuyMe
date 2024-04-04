@@ -5,12 +5,21 @@ import Category from "../models/categoryModel";
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
-export const getProducts = async (req: Request, res: Response) => {
+export const getFilteredProducts = async (req: Request, res: Response) => {
   try {
-    const name = req.params.name;
+    const name = req.params.category;
     const filteredCategory = await Category.find({ name });
     const categoryId = filteredCategory[0]._id;
     const products = await Product.find({ categoryId }).populate("categoryId");
+    return res.status(200).send(products);
+  } catch (error) {
+    console.error("error in getProducts", "PRODUCT ERRER", error);
+    return res.status(400).send("Failed to getProducts");
+  }
+};
+export const getProducts = async (req: Request, res: Response) => {
+  try {
+  const products = await Product.find({}).populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);

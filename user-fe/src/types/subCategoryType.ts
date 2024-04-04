@@ -1,13 +1,12 @@
 export type TypeSubCategory = {
   _id: string;
-  categoryName: string;
+  name: string;
   brands: typeBrand[];
   features: typeFeature[];
 };
-type typeBrand = {
-  _id: string;
-  name: string;
-};
+type typeBrand = [
+  name: string
+]
 
 type typeFeature = {
   _id: string;

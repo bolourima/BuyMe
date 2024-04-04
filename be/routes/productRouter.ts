@@ -3,6 +3,7 @@ import {
   createProduct,
   deleteProduct,
   editProduct,
+  getFilteredProducts,
   getProductDetail,
   getProducts,
   getSelectedProductsInAdmin,
@@ -16,7 +17,8 @@ productRouter.route("/editProduct").put(accessTokenAuth, editProduct);
 productRouter
   .route("/selectImage")
   .post(upload.single("img"), accessTokenAuth, uploadSingleImage);
-productRouter.route("/getProducts/:name").get(getProducts);
+productRouter.route("/getProducts").get(getProducts)
+productRouter.route("/getProducts/:category").get(getFilteredProducts);
 productRouter
   .route("/deleteProduct/:id")
   .delete(accessTokenAuth, deleteProduct);

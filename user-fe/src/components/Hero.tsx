@@ -12,7 +12,7 @@ export const Hero = () => {
           }}
         >
           <Link
-            href={"/productList/Clothing"}
+            href={"/productlist/clothing"}
             className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
           >
             <span>Clothing</span>
@@ -27,7 +27,7 @@ export const Hero = () => {
             }}
           >
             <Link
-              href={"/productList/Electronics"}
+              href={"/productlist/electronics"}
               className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
             >
               <span>Electronics</span>
@@ -40,7 +40,7 @@ export const Hero = () => {
             }}
           >
             <Link
-              href={"/productList/Books"}
+              href={"/productlist/books"}
               className=" Hero-text text-6xl text-white font-extrabold"
             >
               <span>Books</span>

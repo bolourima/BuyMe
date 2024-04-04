@@ -67,12 +67,12 @@ export const Header = () => {
 
         <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center">
           <h1 className=" font-semibold text-xl">Home</h1>
-          {/* <Link href={"/productList"}>
+          <Link href={"/productlist"}>
             <h1 className=" lg:content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">
               Categories
               <DownIcon />
             </h1>
-          </Link> */}
+          </Link>
         </div>
         <div>
           <div className=" relative lg:flex gap-6 items-center">

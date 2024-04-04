@@ -1,20 +1,22 @@
+import React, { useState, ChangeEvent } from "react";
 import { Slider } from "@mui/material";
-import React, { useState } from "react";
 import { TypeSubCategory } from "@/types/subCategoryType";
-const MAX = 100000000;
-const MIN = 0;
-
-function valuetext(value: number) {
+import { categoryType } from "@/types/categoryType";
+import Link from "next/link";
+const MAX: number = 100000;
+const MIN: number = 0;
+const minDistance: number = 10000;
+function valuetext(value: number): string {
   return `${value}MNT`;
 }
-const minDistance = 500000;
-
 export const SubCategory = ({
   subCategoryData,
+  categoryData
 }: {
+  categoryData:categoryType[]
   subCategoryData: TypeSubCategory[];
 }) => {
-  const [value2, setValue2] = React.useState<number[]>([MIN, MAX]);
+  const [value2, setValue2] = useState<number[]>([MIN, MAX]);
 
   const handleChange2 = (
     event: Event,
@@ -37,74 +39,93 @@ export const SubCategory = ({
       setValue2(newValue as number[]);
     }
   };
+
   const [isOpenCategory, setOpenCategory] = useState(true);
+  const [isOpenSubCategory, setOpenSubCategory] = useState(true);
   const [isOpenBrands, setOpenBrands] = useState(true);
-  const [isOpenFeatures, setOpenFeatures] = useState(true);
-  const [isOpenColors, setOpenColors] = useState(true);
   const [subCategoryIndex, setCategoryIndex] = useState(1);
+
   const handlerSubCategory = (categoryindex: number) => {
-    console.log(categoryindex);
     setCategoryIndex(categoryindex);
   };
+
   const handleOpenCategory = () => {
-    console.log(isOpenCategory);
     setOpenCategory(!isOpenCategory);
   };
-  const handleOpenColors = () => {
-    console.log(isOpenCategory);
-    setOpenColors(!isOpenColors);
-  };
+
   const handleOpenBrands = () => {
-    console.log(isOpenBrands);
     setOpenBrands(!isOpenBrands);
-  };
-  const handleOpenFeatures = () => {
-    console.log(isOpenFeatures);
-    setOpenFeatures(!isOpenFeatures);
   };
 
   return (
-    <div className=" hidden lg:text-black w-[300px] rounded-lg p-4 lg:flex flex-col gap-5 border-2">
-      {/* Category */}
+    <div className="hidden lg:text-black w-[300px] rounded-lg p-4 lg:flex flex-col gap-5 border-2">
       <div className="">
-        <div className="flex justify-between " onClick={handleOpenCategory}>
-          <button className="font-bold uppercase  ">Category</button>
+        <div className="flex justify-between" onClick={handleOpenCategory}>
+          <button className="font-bold uppercase">Category</button>
           <p className={`${isOpenCategory ? " rotate-90" : ""}`}> &#62;</p>
         </div>
-
+        <div className={`uppercase ml-1 pl-1 mt-3`}>
+          {categoryData.map((subCategory, index) => (
+            <Link href={`/productlist/${subCategory.name}`}>
+                  <div
+              key={index}
+              className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
+                isOpenCategory ? "block" : "hidden"
+              }`}
+            >
+              <button
+                className={`transition-all uppercase `}
+                
+              >
+                {subCategory.name}
+              </button>
+            </div>
+            </Link>
+      
+          ))}
+        </div>
+      </div>
+      <div className="">
+        <div className="flex justify-between" onClick={handleOpenCategory}>
+          <button className="font-bold uppercase">Subcategory</button>
+          <p className={`${isOpenSubCategory ? " rotate-90" : ""}`}> &#62;</p>
+        </div>
         <div className={`uppercase ml-1 pl-1 mt-3`}>
           {subCategoryData.map((subCategory, index) => (
-            <div className=" p-2 hover:bg-slate-300 rounded-l-lg">
+            <div
+              key={index}
+              className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
+                isOpenSubCategory ? "block" : "hidden"
+              }`}
+              onClick={() => handlerSubCategory(index)}
+            >
               <button
-                key={index}
-                className={`transition-all uppercase ${
-                  isOpenCategory ? "block" : "hidden"
-                }`}
-                onClick={() => handlerSubCategory(index)}
+                className={`transition-all uppercase `}
+                
               >
-                {subCategory.categoryName}
+                {subCategory.name}
               </button>
             </div>
           ))}
         </div>
       </div>
-      {/* Brands */}
+      
       <div className="">
         <div className="flex justify-between" onClick={handleOpenBrands}>
-          <button className="font-bold uppercase">Subcategory</button>
+          <button className="font-bold uppercase">Brands</button>
           <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
         </div>
         <div className="pl-1 ml-1 uppercase mt-3">
-          {subCategoryData[subCategoryIndex].brands.map((brands) => (
+          {subCategoryData[subCategoryIndex].brands.map((brand, index) => (
             <div
-              key={brands._id}
-              className={` p-2 hover:bg-slate-300 rounded-l-lg ${
+              key={index}
+              className={`p-2 hover:bg-slate-300 rounded-l-lg ${
                 isOpenBrands ? "block" : "hidden"
               }`}
             >
               <div className="flex gap-4">
                 <input type="checkbox" className="" />
-                {brands.name}
+                {brand}
               </div>
             </div>
           ))}
@@ -120,49 +141,8 @@ export const SubCategory = ({
         max={MAX}
         disableSwap
       />
-
-      <input type="text" value={`${value2[0]} MNT`} />
-      <input type="text" value={`${value2[1]} MNT`} />
-      {/* Brands */}
-      <div className="">
-        <div className="flex justify-between" onClick={handleOpenColors}>
-          <button className="font-bold uppercase">filtered By colors</button>
-          <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
-        </div>
-        <div className="pl-1 ml-1 uppercase mt-3">
-          {subCategoryData[subCategoryIndex].brands.map((brands) => (
-            <div
-              key={brands._id}
-              className={` p-2 hover:bg-slate-300 rounded-l-lg ${
-                isOpenBrands ? "block" : "hidden"
-              }`}
-            >
-              {brands.name}
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* Features
-      <div className="mb-4">
-        <div className="flex justify-between" onClick={handleOpenFeatures}>
-          <button className="font-bold">Features</button>
-          <p className={`${isOpenFeatures ? " rotate-90" : ""}`}> &#62;</p>
-        </div>
-        <div className="pl-4 mt-2">
-          {SubCategory[subCategoryIndex].features.map((feature) => (
-            <div>
-              <button
-                key={feature._id}
-                className={`hover:bg-blue-200 ${
-                  isOpenFeatures ? "block" : "hidden"
-                }`}
-              >
-                {feature.name}
-              </button>
-            </div>
-          ))}
-        </div>
-      </div> */}
+      <input type="text" value={`${value2[0]} MNT`} readOnly />
+      <input type="text" value={`${value2[1]} MNT`} readOnly />
     </div>
   );
 };
