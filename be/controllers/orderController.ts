@@ -21,6 +21,7 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
       total: req.body.total,
       createdAt: new Date(),
       updatedAt: new Date(),
+      invoiceId: req.body.invoiceId,
     });
     return res.status(201).json({ msg: "Order successfully created" });
   } catch (error) {

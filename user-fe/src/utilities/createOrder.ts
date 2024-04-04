@@ -2,6 +2,7 @@ import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { headers } from "next/headers";
+import { toastifyError, toastifySuccess } from "./toastify";
 type Order = {
   product: ProductType;
   selectedProductQuantity: number;
@@ -35,7 +36,8 @@ export const createOrder = async (
         invoice_receiver_code: "terminal",
         invoice_description: "test",
         amount: 10,
-        callback_url: "http://localhost:3000",
+        callback_url:
+          "https://buymeuserfe-ofjixqgcj-bolormaas-projects.vercel.app",
       },
       {
         headers: {
@@ -43,15 +45,18 @@ export const createOrder = async (
         },
       }
     );
-    console.log("invoiceRes", invoiceRes);
-    // const res = await instance.post(
-    //   "/createOrder",
-    //   { products: selectedProductContainer, total: total },
-    //   { headers: { Authorization: `Bearer ${token}` } }
-    // );
-    // if (res.status == 201) return alert("Created");
-    // if (res.status == 403) return alert("User invalid");
-    // if (res.status == 400) return alert("Failed to create order");
+    const res = await instance.post(
+      "/createOrder",
+      {
+        products: selectedProductContainer,
+        total: total,
+        invoiceId: invoiceRes.data.invoice_id,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (res.status == 201) return toastifySuccess("Created");
+    if (res.status == 403) return toastifyError("User invalid");
+    if (res.status == 400) return toastifyError("Failed to create order");
   } catch (error) {
     console.error("error in creating order", error);
   }
