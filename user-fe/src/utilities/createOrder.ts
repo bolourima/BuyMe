@@ -36,8 +36,7 @@ export const createOrder = async (
         invoice_receiver_code: "terminal",
         invoice_description: "test",
         amount: 10,
-        callback_url:
-          "https://buymeuserfe-ofjixqgcj-bolormaas-projects.vercel.app",
+        callback_url: "http://localhost:3000",
       },
       {
         headers: {
