@@ -15,10 +15,15 @@ export default function ProductId({
 }) {
   console.log("first");
   const router = useRouter();
+  console.log("first2");
   const ID = router.query.id;
+  console.log("first3");
   const [productData, setProductData] = useState<ProductType>(ProductInitial);
+  console.log("first4");
   const [selectedImg, setSelectedImg] = useState<string>("");
+  console.log("first5");
   const [onDescription, setOnDescription] = useState(true);
+  console.log("first6");
   const [onReviews, setOnReviews] = useState(false);
   const getProduct = async (ID: idType) => {
     if (!ID) {
