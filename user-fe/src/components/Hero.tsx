@@ -12,7 +12,7 @@ export const Hero = () => {
           }}
         >
           <Link
-            href={"/productList/Clothing"}
+            href={"/productList/clothing"}
             className=" herohover text-3xl lg:text-6xl text-white font-extrabold"
           >
             <span>Clothing</span>
