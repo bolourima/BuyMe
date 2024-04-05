@@ -1,6 +1,7 @@
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
+import { toastifyError } from "./toastify";
 
 export const changeProductQuantity = async (
   product: ProductTypeWithQuantity,
@@ -31,10 +32,11 @@ export const changeProductQuantity = async (
       }
     );
     const newProduct = {
-      ...product,
+      product: product.product,
+      _id: product._id,
+      selectedProductQuantity: product.selectedProductQuantity + action,
     };
     setProductsInBasket([...previosProducts, newProduct, ...nextProducts]);
-    console.log("first");
     const res = await instance.put(
       `/basket/${product.product._id}`,
       {
@@ -43,6 +45,6 @@ export const changeProductQuantity = async (
       { headers: { Authorization: `Bearer ${token}` } }
     );
   } catch (error) {
-    console.error("error in changeProduct count", error);
+    toastifyError("error in changeProduct count");
   }
 };

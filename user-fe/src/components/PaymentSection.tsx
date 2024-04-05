@@ -1,3 +1,4 @@
+import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import {
   AExpressIcon,
   ApplePayIcon,
@@ -7,18 +8,20 @@ import {
 } from "@/icon";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { createOrder } from "@/utilities/createOrder";
+import { useContext } from "react";
 
 export const PaymentSection = ({
   total,
-  productsInBasket,
   token,
   setQrcode,
 }: {
   total: number;
-  productsInBasket: ProductTypeWithQuantity[];
   token: string;
   setQrcode: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const { productsInBasket, setProductsInBasket } = useContext(
+    ProductsInBasketContext
+  );
   return (
     <div className="w-[400px] ">
       <div className="flex flex-col border-[#DEE2E7] border-[1px] rounded-md p-5 gap-2 bg-white shadow-md">
@@ -36,7 +39,13 @@ export const PaymentSection = ({
         <div className="mt-4">
           <button
             onClick={() =>
-              createOrder(productsInBasket, token, total, setQrcode)
+              createOrder(
+                productsInBasket,
+                token,
+                total,
+                setQrcode,
+                setProductsInBasket
+              )
             }
             className="bg-black text-white w-full h-[54px] rounded-lg"
           >

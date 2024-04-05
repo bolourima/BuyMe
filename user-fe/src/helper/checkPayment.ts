@@ -4,8 +4,6 @@ import {
   toastifySuccess,
   toastifyWarning,
 } from "@/utilities/toastify";
-import axios from "axios";
-
 export const checkPayment = async () => {
   try {
     const paymentCheckRes = await instance.post("/checkPayment", {
@@ -18,6 +16,6 @@ export const checkPayment = async () => {
       return toastifySuccess("Paid!");
     } else return toastifyWarning("Not paid");
   } catch (error) {
-    toastifyError("Failed to checkpayment");
+    toastifyError("Payment time is expired");
   }
 };

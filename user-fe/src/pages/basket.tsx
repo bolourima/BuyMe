@@ -14,7 +14,6 @@ const Basket = () => {
     ProductsInBasketContext
   );
   const [qrcode, setQrcode] = useState("");
-  const [paymentToken, setPaymentToken] = useState("");
   let total: number = 0;
   const { token, setToken } = useContext(TokenContext);
   const setBasket = async (accessToken: string) => {
@@ -26,7 +25,6 @@ const Basket = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const paymentToken = localStorage.getItem("paymentToken");
-    // if (!paymentToken)
     if (!accessToken) {
       router.push("/signin");
       return toastifyWarning("Please sign in");
@@ -53,12 +51,7 @@ const Basket = () => {
         token={token}
       />
       {productsInBasket.length && (
-        <PaymentSection
-          total={total}
-          productsInBasket={productsInBasket}
-          token={token}
-          setQrcode={setQrcode}
-        />
+        <PaymentSection total={total} token={token} setQrcode={setQrcode} />
       )}
     </div>
   );

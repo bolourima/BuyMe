@@ -13,6 +13,10 @@ const OrderSchema = new Schema({
   updatedAt: Date,
   invoiceId: String,
   paymentStatus: { type: String, enum: ["PAID", "UNPAID"] },
+  deliveryStatus: {
+    type: String,
+    enum: ["PENDING", "SHIPPED", "DELIVERED", "CANCELED"],
+  },
 });
 const Order = model("Order", OrderSchema);
 export default Order;
