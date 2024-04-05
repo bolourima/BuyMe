@@ -5,7 +5,7 @@ import { payPayment } from "@/helper/payPayment";
 import { OrderType } from "@/types/orderType";
 import { toastifyError } from "@/utilities/toastify";
 import { useRouter } from "next/router";
-import { use, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 const Order = () => {
   const router = useRouter();
   const [orderData, setOrderData] = useState<OrderType[]>([]);
@@ -26,7 +26,7 @@ const Order = () => {
   }, []);
   return (
     <div className="flex flex-col overflow-scroll px-32 h-fit">
-      {qrcode && <Qr qrcode={qrcode} />}
+      {qrcode && <Qr qrcode={qrcode} setQrcode={setQrcode} />}
       {orderData.map((order) => {
         return (
           <div className="flex justify-between w-full h-fit items-center">

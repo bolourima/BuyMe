@@ -43,15 +43,21 @@ const Basket = () => {
     );
   }, [productsInBasket]);
   return (
-    <div className=" flex flex-col  lg:w-full lg:flex lg:flex-row justify-center pt-16 min-h-screen">
-      {qrcode && <Qr qrcode={qrcode} />}
-      <ProductSectionOfBasket
-        productsInBasket={productsInBasket}
-        setProductsInBasket={setProductsInBasket}
-        token={token}
-      />
-      {productsInBasket.length && (
-        <PaymentSection total={total} token={token} setQrcode={setQrcode} />
+    <div className="lg:w-full min-h-screen flex justify-center">
+      {qrcode && <Qr qrcode={qrcode} setQrcode={setQrcode} />}
+      {productsInBasket.length ? (
+        <div className="flex flex-col lg:w-full lg:flex lg:flex-row justify-center pt-16 lg:gap-16">
+          <ProductSectionOfBasket
+            productsInBasket={productsInBasket}
+            setProductsInBasket={setProductsInBasket}
+            token={token}
+          />
+          <PaymentSection total={total} token={token} setQrcode={setQrcode} />
+        </div>
+      ) : (
+        <p className="font-semibold text-2xl flex justify-center items-center">
+          Your cart is empty
+        </p>
       )}
     </div>
   );
