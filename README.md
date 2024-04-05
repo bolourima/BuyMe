@@ -1,7 +1,15 @@
-## Нэршил
+## About "BUY ME"
 
-1. folder name - [camelCase]
-2. component name - [PascalCase]
+Манай веб сайт нь бүх төрлийн бараа бүтээгдэхүүнийг худалдаалдаг бөгөөд зах зээлд эрэлд хэрэгцээтэй шинэлэг бүхнийг хэрэглэгчдэд санал болгож байна
+Мөн манай веб сайтаар дамжуулан хувиараа бизнес эрхлэгч болон бизнесийн цар хүрээгээ тэлэх хүсэлтэй хуулийн итгээд веб ээр дамжуулан бараа бүтээгдэхүүнээ худалдан борлуулах боломжийг олгодог давуу талтай
+
+
+## Веб сайтаар зочилох
+
+user-fe [buy-me-delta.vercel.app]
+admin-fe [buy-me-9vt7.vercel.app]
+backend - [buyme-x6zl.onrender.com]
+
 
 ## Асаах заавар
 
@@ -17,7 +25,7 @@
 
 4. Эхний терминал дээр доорх командуудыг дарааллын дагуу оруулна.
 
-```bash
+```zsh
 cd backend
 #
 npm install
@@ -28,7 +36,7 @@ npx nodemon index.ts
 
 5. Хоёр дахь терминал дээр доорх командуудыг дарааллын дагуу оруулна.
 
-```bash
+```zsh
 cd frontend
 #
 npm install
@@ -38,34 +46,4 @@ npm run dev
 
 Дээрх командуудыг оруулсны дараа backend [http://localhost:3000] port дээр асна.
 
-## Icon уудыг export import хийх заавар
 
-1. Icon component ийг дараах загварын дагуу үүсгэж экспорт хийнэ.
-
-```bash
-export const ExampleIcon =()=>{
-    return(
-        <svg></svg>
-    )
-}
-```
-
-2. Icon оруулсан тухайн хавтас бүрд байгаа "index.ts" дараах загварын дагуу [БҮХ!] Icon уудаа экспорт хийнэ.
-
-```bash
-export * from "./ExampleIcon"
-export * from "./ExampleShape"
-```
-
-3. Icon уудаа дараах байдлаар импорт хийж ашиглана.
-
-ЗӨВ ИМПОРТ!
-```bash
-import { ExampleIcon , ExampleShape } from "@/components/icons/aboutPage";
-```
-
-БУРУУ импорт!
-```bash
-import {ExampleIcon} from "@/components/icons/aboutPage/ExampleIcon"
-import {ExampleShape} from "@/components/icons/aboutPage/ExampleShape"
-```
