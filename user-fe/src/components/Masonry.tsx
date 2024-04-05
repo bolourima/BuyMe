@@ -23,7 +23,6 @@ export const Masonry = ({
     <ImageListItem className="rounded-lg border-2 border-gray-300">
       <Link as={`/productdetail/${_id}`} href={`/productdetail/[id]`}>
         <img src={images[imgFirstFix]} className="rounded-t-lg" />
-        {console.log("sd")}
       </Link>
       <div className="p-5 gap-1">
         <p className="text-xl">{name}</p>
