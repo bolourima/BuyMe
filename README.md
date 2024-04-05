@@ -7,9 +7,9 @@
 
 ## Веб сайтаар зочилох
 
-user-fe [buy-me-delta.vercel.app]
-admin-fe [buy-me-9vt7.vercel.app]
-backend - [buyme-x6zl.onrender.com]
+user-fe (buy-me-delta.vercel.app)
+admin-fe (buy-me-9vt7.vercel.app)
+backend - (buyme-x6zl.onrender.com)
 
 
 ## Асаах заавар
