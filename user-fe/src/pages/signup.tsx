@@ -63,15 +63,15 @@ export default function SignUp() {
         <div className="w-full h-screen p-10 ">
           <div className="flex ">
             <h1 className=" text-9xl font-semibold">Buy</h1>
-            <h1 className=" text-7xl content-end ">me</h1>
+            <h1 className=" text-7xl content-end text-white">me</h1>
           </div>
         </div>
       </div>
 
       <div className="lg:flex flex p-10 flex-col md:flex md:w-2/5  sm:w-full items-center">
         <div className="lg:flex-col items-center sm:flex-col  sm:flex">
-          <h2 className="text-black">Create New Account</h2>
-          <p className="text-sm ">Please enter details</p>
+          <h2 className="text-black text-xl">Create New Account</h2>
+          <p className="text-xs ">Please enter details</p>
         </div>
         <div>
           <div className="flex gap-4 md:flex sm:flex flex-col items-center">
@@ -151,14 +151,14 @@ export default function SignUp() {
                 <div>{formik.errors.confirmPassword}</div>
               ) : null}
               <button
-                className="btn btn-neutral mt-5"
+                className="border-gray-500 rounded-lg bg-gray-500 text-white w-[300px] h-[40px]  mt-5"
                 onClick={() => CreateUserBtn()}
                 type="submit"
               >
                 Signup
               </button>
             </form>
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               <p className="text-slate-900 text-base font-normal dark:text-slate-300">
                 Already have an account?
               </p>
