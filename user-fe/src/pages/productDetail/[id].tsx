@@ -6,6 +6,7 @@ import { idType } from "@/types/idType";
 import { ProductInitial } from "@/types/productInitial";
 import { LoveIcon } from "@/icon/LoveIcon";
 import { ClickHandler } from "@/types/handlerType";
+import { toastifyError } from "@/utilities/toastify";
 
 export default function ProductId({
   data,
@@ -31,14 +32,19 @@ export default function ProductId({
       console.log("two");
       return;
     }
-    const productRes = await instance.post(`/getProducts/${ID}`);
-    console.log("three");
-    const productData = productRes.data;
-    console.log("productdata", productData);
-    setSelectedImg(productData.images[0]);
-    console.log("setselectedImg", setSelectedImg);
-    setProductData(productData);
-    console.log("setproductdata", setProductData);
+    try {
+      const productRes = await instance.post(`/getProducts/${ID}`);
+      console.log("three");
+      const productData = productRes.data;
+      console.log("productdata", productData);
+      setSelectedImg(productData.images[0]);
+      console.log("setselectedImg", setSelectedImg);
+      setProductData(productData);
+      console.log("setproductdata", setProductData);
+    } catch (error) {
+      console.log("errooor", error);
+      toastifyError("id error");
+    }
   };
   useEffect(() => {
     if (!ID) return;
