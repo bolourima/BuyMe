@@ -23,6 +23,8 @@ const userSchema = new mongoose_1.Schema({
         minlength: 4,
         required: [true, "Please enter your passport"],
     },
+    avatarImg: String,
+    addresses: [String],
 });
 const User = (0, mongoose_1.model)("User", userSchema);
 exports.default = User;
