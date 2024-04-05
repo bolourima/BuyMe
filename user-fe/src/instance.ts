@@ -1,8 +1,8 @@
 import axios from "axios";
-const deployedBackEnd = "https://buyme-x6zl.onrender.com";
-const localBackEnd = "http://localhost:8000";
+import { toastifyError } from "./utilities/toastify";
 export const instance = axios.create({
-  baseURL: localBackEnd,
+  baseURL: "https://buyme-x6zl.onrender.com",
+  // baseURL: "http://localhost:8000",
   timeout: 8000,
 });
 
@@ -13,7 +13,6 @@ export const createUser = async (data: {}, router: Function) => {
       router("/");
     }
   } catch (error) {
-    console.error("Failed to Create User");
-    return alert("Хэрэглэгч үүсгэхэд алдаа гарлаа");
+    return toastifyError("Хэрэглэгч үүсгэхэд алдаа гарлаа");
   }
 };
