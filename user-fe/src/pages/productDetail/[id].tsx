@@ -47,6 +47,8 @@ export default function ProductId({
     }
   };
   useEffect(() => {
+    console.log("useeffect");
+
     if (!ID) return;
     console.log("useeffect");
     getProduct(ID);
