@@ -13,6 +13,7 @@ export default function ProductId({
   data: ProductType;
   setProductData: ClickHandler;
 }) {
+  console.log("first");
   const router = useRouter();
   const ID = router.query.id;
   const [productData, setProductData] = useState<ProductType>(ProductInitial);
@@ -21,20 +22,27 @@ export default function ProductId({
   const [onReviews, setOnReviews] = useState(false);
   const getProduct = async (ID: idType) => {
     if (!ID) {
+      console.log("two");
       return;
     }
     const productRes = await instance.post(`/getProducts/${ID}`);
+    console.log("three");
     const productData = productRes.data;
+    console.log("productdata", productData);
     setSelectedImg(productData.images[0]);
+    console.log("setselectedImg", setSelectedImg);
     setProductData(productData);
+    console.log("setproductdata", setProductData);
   };
   useEffect(() => {
     if (!ID) return;
+    console.log("useeffect");
     getProduct(ID);
+    console.log("getproductID", getProduct(ID));
   }, [ID]);
   const ChangeBtn = (event: React.MouseEvent<HTMLButtonElement>) => {
     const buttonText = (event.target as HTMLButtonElement).innerText;
-
+    console.log("changeBtn");
     setOnDescription(false);
     setOnReviews(false);
 
