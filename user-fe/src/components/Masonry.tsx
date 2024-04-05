@@ -21,7 +21,7 @@ export const Masonry = ({
   const imgFirstFix = 0;
   return (
     <ImageListItem className="rounded-lg border-2 border-gray-300">
-      <Link href={`/productdetail/${_id}`}>
+      <Link as={`/productdetail/${_id}`} href={`/productdetail/[id]`}>
         <img src={images[imgFirstFix]} className="rounded-t-lg" />
       </Link>
       <div className="p-5 gap-1">
