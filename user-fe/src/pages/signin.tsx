@@ -53,7 +53,7 @@ export default function SignIn() {
       </div>
       <div className="lg:flex flex p-10 items-center justify-center  flex-col md:flex md:w-2/5  sm:w-full sm:items-center">
         <div className="lg:flex-col items-center sm:flex-col  sm:flex">
-          <h2 className="text-black font-bold">Signin your Account</h2>
+          <h2 className="text-black">Signin your Account</h2>
         </div>
         <div>
           <div className="flex gap-4 md:flex sm:flex flex-col items-center mt-5">
@@ -61,7 +61,7 @@ export default function SignIn() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Email</label>
+              <label className="">Email</label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="email"
@@ -76,7 +76,7 @@ export default function SignIn() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Password </label>
+              <label className="">Password </label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
