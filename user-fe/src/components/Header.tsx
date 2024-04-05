@@ -25,10 +25,6 @@ export const Header = () => {
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
 
-  // ----------------------------------------------------
-
-  //           SHOW INPUT
-
   const [showImput, setShowInput] = useState(false);
 
   const clickSearch = () => {
@@ -38,12 +34,6 @@ export const Header = () => {
       setShowInput(true);
     }
   };
-
-  //---------------------------------------------
-
-  //----------------------------------------------
-
-  //           MOBILE BURGER SHOW MENU
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -81,7 +71,7 @@ export const Header = () => {
           >
             Home
           </h1>
-          <Link href={"/productList"}>
+          <Link href={"/productlist"}>
             <h1 className=" lg:content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">
               Categories
               <DownIcon />

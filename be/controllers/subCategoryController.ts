@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import SubCategory from "../models/subCategoryModel";
+import Category from "../models/categoryModel";
 type CategoryType = {
   _id: string;
   name: string;
@@ -23,7 +24,7 @@ export const createSubCategory = async (req: Request, res: Response) => {
     return res.status(400).json({ msg: "failed to create sub category" });
   }
 };
-export const getSubCategories = async (req: Request, res: Response) => {
+export const postSubCategories = async (req: Request, res: Response) => {
   const name = req.body.name;
   try {
     const subCategories: SubCategoryType[] = await SubCategory.find().populate(
@@ -70,4 +71,31 @@ export const editSubCategories = async (req: Request, res: Response) => {
     brands: brand,
   });
   return res.status(200).send("success");
+};
+export const getSubCategory = async (req: Request, res: Response) => {
+  try {
+    const name = req.params.category;
+    const filteredCategory = await Category.find({ name });
+      const category = filteredCategory[0]._id;
+    const subCategories = await SubCategory.find({category}).populate(
+      "category"
+    );
+
+    return res.status(200).send(subCategories);
+  } catch (error) {
+    console.error(error);
+    return res.status(400).send("failed");
+  }
+};
+export const getSubCategories = async (req: Request, res: Response) => {
+  const name = req.body.name;
+  try {
+    const subCategories = await SubCategory.find().populate(
+      "category"
+    );
+    return res.status(200).send(subCategories);
+  } catch (error) {
+    console.error(error);
+    return res.status(400).send("failed");
+  }
 };

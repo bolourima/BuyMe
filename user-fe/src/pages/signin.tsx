@@ -47,13 +47,13 @@ export default function SignIn() {
         <div className="w-full h-screen p-10 ">
           <div className="flex ">
             <h1 className=" text-9xl font-semibold">Buy</h1>
-            <h1 className=" text-7xl content-end ">me</h1>
+            <h1 className=" text-7xl content-end text-white">me</h1>
           </div>
         </div>
       </div>
       <div className="lg:flex flex p-10 items-center justify-center  flex-col md:flex md:w-2/5  sm:w-full sm:items-center">
         <div className="lg:flex-col items-center sm:flex-col  sm:flex">
-          <h2 className="text-black font-bold">Signin your Account</h2>
+          <h2 className="text-black text-xl">Login</h2>
         </div>
         <div>
           <div className="flex gap-4 md:flex sm:flex flex-col items-center mt-5">
@@ -61,7 +61,7 @@ export default function SignIn() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Email</label>
+              <label className="">Email</label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="email"
@@ -76,7 +76,7 @@ export default function SignIn() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Password </label>
+              <label className="">Password </label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
@@ -86,11 +86,14 @@ export default function SignIn() {
               {formik.touched.password && formik.errors.password ? (
                 <div>{formik.errors.password}</div>
               ) : null}
-              <button className="btn btn-neutral mt-5" type="submit">
+              <button
+                className="border-gray-500 rounded-lg bg-gray-500 text-white w-[300px] h-[40px]  mt-5"
+                type="submit"
+              >
                 Signin
               </button>
             </form>
-            <div className=" lg:flex gap-3 sm:flex justify-center ">
+            <div className=" lg:flex gap-4 sm:flex justify-center ">
               <p className="text-slate-900 text-base font-normal dark:text-slate-300">
                 Don’t have account?
               </p>

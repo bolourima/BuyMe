@@ -54,13 +54,24 @@ export default function SignUp() {
   }, []);
   return (
     <div className="lg:flex md:flex  sm:flex">
-      <div className="lg:flex md:flex md:w-3/5 sm:w-full hidden">
-        <img className="rounded-bl-xl w-full" src="./SignUpPic.png" alt="" />
+      <div
+        className=" lg:flex w-full h-full bg-center bg-cover md:flex md:w-3/5 sm:w-full hidden"
+        style={{
+          backgroundImage: `url(https://assets.teenvogue.com/photos/633dbbb29407f031a64abb0a/16:9/w_2560%2Cc_limit/220801-05_0943_03_QC_EXT.jpg`,
+        }}
+      >
+        <div className="w-full h-screen p-10 ">
+          <div className="flex ">
+            <h1 className=" text-9xl font-semibold">Buy</h1>
+            <h1 className=" text-7xl content-end text-white">me</h1>
+          </div>
+        </div>
       </div>
+
       <div className="lg:flex flex p-10 flex-col md:flex md:w-2/5  sm:w-full items-center">
         <div className="lg:flex-col items-center sm:flex-col  sm:flex">
-          <h2 className="text-gray-100 font-bold">Create New Account</h2>
-          <p className="text-sm ">Please enter details</p>
+          <h2 className="text-black text-xl">Create New Account</h2>
+          <p className="text-xs ">Please enter details</p>
         </div>
         <div>
           <div className="flex gap-4 md:flex sm:flex flex-col items-center">
@@ -68,7 +79,7 @@ export default function SignUp() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Name </label>
+              <label className="">Name </label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="text"
@@ -83,7 +94,7 @@ export default function SignUp() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Email</label>
+              <label className="">Email</label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="email"
@@ -98,7 +109,7 @@ export default function SignUp() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Phone Number </label>
+              <label className="">Phone Number </label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type=""
@@ -113,7 +124,7 @@ export default function SignUp() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Password </label>
+              <label className="">Password </label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
@@ -128,7 +139,7 @@ export default function SignUp() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">RePassword </label>
+              <label className="">RePassword </label>
               <input
                 className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
@@ -140,14 +151,14 @@ export default function SignUp() {
                 <div>{formik.errors.confirmPassword}</div>
               ) : null}
               <button
-                className="btn btn-neutral mt-5"
+                className="border-gray-500 rounded-lg bg-gray-500 text-white w-[300px] h-[40px]  mt-5"
                 onClick={() => CreateUserBtn()}
                 type="submit"
               >
                 Signup
               </button>
             </form>
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               <p className="text-slate-900 text-base font-normal dark:text-slate-300">
                 Already have an account?
               </p>
