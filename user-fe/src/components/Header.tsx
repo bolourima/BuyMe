@@ -19,7 +19,7 @@ import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "@/utilities/refreshToken";
-import MobileBareTest from "./MobileBareTest";
+import MobileBareTest from "./MobileBar";
 
 export const Header = () => {
   const router = useRouter();
@@ -102,7 +102,7 @@ export const Header = () => {
               </button>
             </div>
 
-            <div>
+            <div className=" flex ">
               <button
                 onClick={() => {
                   if (!token) {
