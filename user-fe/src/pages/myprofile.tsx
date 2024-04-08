@@ -48,8 +48,8 @@ export default function MyProfile() {
           <div className=" hidden lg:flex">
             <ProfileSideBar user={user} />
           </div>
-          <div className="flex flex-col gap-6 w-3/4">
-            <div className="flex justify-between w-full px-5">
+          <div className="flex flex-col gap-6 w-3/4 px-5">
+            <div className="flex justify-between items-center w-full lg:flex">
               <div>
                 <MyProfilePicEdit
                   avatar={user.avatarImg}
@@ -61,7 +61,7 @@ export default function MyProfile() {
               <div className="w-fit h-fit flex flex-col gap-8">
                 <button
                   onClick={() => setEditUser(!editUser)}
-                  className="bttn flex bg-black text-white w-[200px] h-[50px] justify-center items-center rounded-lg "
+                  className="bttn flex bg-black text-white w-[200px] h-[40px] justify-center items-center rounded-lg "
                 >
                   <div className="w-5 h-5 mx-4">
                     <EditIconWhite />
@@ -75,7 +75,7 @@ export default function MyProfile() {
                     router.push("/signin");
                     toastifySuccess("Successfully signed out");
                   }}
-                  className="bttn flex bg-black text-white w-[200px] h-[50px] justify-center items-center rounded-lg "
+                  className="bttn flex bg-black text-white w-[200px] h-[40px] justify-center items-center rounded-lg "
                 >
                   <p>Sign out</p>
                 </button>
