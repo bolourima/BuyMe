@@ -5,6 +5,7 @@ import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { TokenContext } from "@/context/TokenContext";
 import { useRouter } from "next/router";
 import { toastifyWarning } from "@/utilities/toastify";
+import { AddressInput } from "@/components/AddressInput";
 import { Qr } from "@/components/Qr";
 import { PaymentSection } from "@/components/PaymentSection";
 import { ProductSectionOfBasket } from "@/components/ProductSectionOfBasket";
@@ -59,6 +60,7 @@ const Basket = () => {
           Your cart is empty
         </p>
       )}
+      <AddressInput />
     </div>
   );
 };

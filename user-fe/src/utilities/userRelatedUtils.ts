@@ -30,3 +30,22 @@ export const createUser = async (data: {}, router: Function) => {
     return toastifyError("The email is registered already");
   }
 };
+
+export const createAddress = async (
+  data: {},
+  token: String,
+  router: Function
+) => {
+  try {
+    console.log("data", data);
+    const response = await instance.post(`/address`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.status == 201) {
+      toastifySuccess("Хаяг амжилттай хадгалагдлаа");
+    }
+  } catch (error) {
+    return toastifyError("Хаяг үүсэж чадсангүй");
+  }
+};

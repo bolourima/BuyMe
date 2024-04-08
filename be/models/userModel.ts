@@ -1,4 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
+import Address from "./addressModel";
+
 const userSchema = new Schema({
   name: {
     type: String,
@@ -24,5 +26,5 @@ const userSchema = new Schema({
   avatarImg: String,
   addresses: [String],
 });
-const User = model("User", userSchema);
+const User = models.Users || model("User", userSchema);
 export default User;
