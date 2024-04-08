@@ -101,7 +101,6 @@ export const Header = () => {
                 <MyCartIcon />
               </button>
             </div>
-
             <div className=" flex ">
               <button
                 onClick={() => {

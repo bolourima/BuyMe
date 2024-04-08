@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Basket from "../models/basketModel";
 import Product from "../models/productModel";
-interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   user?: any;
 }
 export const editBasket = async (req: AuthenticatedRequest, res: Response) => {
