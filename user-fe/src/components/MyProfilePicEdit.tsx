@@ -35,7 +35,6 @@ export const MyProfilePicEdit = ({
           src={img ? img : avatar}
           alt=""
         />
-
         <input
           type="file"
           multiple={false}

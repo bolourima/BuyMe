@@ -8,7 +8,13 @@ import ImageList from "@mui/material/ImageList";
 import { Masonry } from "./Masonry";
 import Box from "@mui/material/Box";
 
-export const Product = ({ productData }: { productData: ProductType[] }) => {
+export const Product = ({
+  productData,
+  favProducts,
+}: {
+  productData: ProductType[];
+  favProducts: ProductType[];
+}) => {
   const [token, setToken] = useState("");
   const maxDatasToShow = 50;
   const [renderedDataindex, setDataIndex] = useState(0);
@@ -34,15 +40,25 @@ export const Product = ({ productData }: { productData: ProductType[] }) => {
       onDouble
     );
   };
-
   return (
     <div>
       <div>
         <Box sx={{ width: 1000, height: 1000, overflowY: "scroll" }}>
           <ImageList variant="masonry" cols={3} gap={24}>
-            {productData.map((Data, i) => (
-              <Masonry key={i} data={Data} setProductData={setProductData} />
-            ))}
+            {productData.map((Data, i) => {
+              const test = favProducts.filter((prod) => {
+                return prod._id === Data._id;
+              });
+              const isFav = test.length == 0 ? false : true;
+              return (
+                <Masonry
+                  key={i}
+                  data={Data}
+                  setProductData={setProductData}
+                  isFav={isFav}
+                />
+              );
+            })}
           </ImageList>
         </Box>
       </div>

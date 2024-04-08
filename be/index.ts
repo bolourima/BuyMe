@@ -12,6 +12,7 @@ import { basketRouter } from "./routes/basketRouter";
 import { adminRouter } from "./routes/adminRouter";
 import { addressRouter } from "./routes/addressRouter";
 import { paymentRouter } from "./routes/paymentRouter";
+import { favoritesRouter } from "./routes/favoritesRouter";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,6 +32,7 @@ app.use(basketRouter);
 app.use(adminRouter);
 app.use(addressRouter);
 app.use(paymentRouter);
+app.use(favoritesRouter);
 connectToDB();
 const PORT = 8000;
 app.listen(PORT, () => {
