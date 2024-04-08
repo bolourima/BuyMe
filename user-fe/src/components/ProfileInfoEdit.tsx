@@ -38,14 +38,11 @@ export const ProfileInfoEdit = ({
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="w-full h-fit flex flex-col gap-8"
-    >
-      <div className="w-full flex flex-col px-5">
+    <form onSubmit={formik.handleSubmit} className="w-full flex flex-col gap-8">
+      <div className="w-full flex flex-col justify-center gap-3">
         <label className="text-xs">First Name</label>
         <input
-          className="input bg-white border-black border-1[px]"
+          className="input bg-white border-gray-300 border-[1px] rounded-md w-[300px] h-[30px] flex items-center pl-5"
           type="text"
           placeholder="First Name"
           {...formik.getFieldProps("name")}
@@ -54,11 +51,11 @@ export const ProfileInfoEdit = ({
           <div>{formik.errors.name}</div>
         ) : null}
       </div>
-      <div className="w-full lg:flex gap-6 px-5">
-        <div className="flex flex-col gap-2">
+      <div className="w-full gap-12 lg:flex">
+        <div className="flex flex-col gap-3">
           <label className="text-xs">Phone Number</label>
           <input
-            className="input bg-white  border-black border-1[px]"
+            className="input bg-white border-gray-300 border-[1px] rounded-md w-[300px] h-[30px] flex items-center pl-5"
             type="text"
             placeholder="Phone Number"
             {...formik.getFieldProps("phoneNumber")}
@@ -67,10 +64,10 @@ export const ProfileInfoEdit = ({
             <div>{formik.errors.phoneNumber}</div>
           ) : null}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <label className="text-xs">Email Address</label>
           <input
-            className="input bg-white border-black border-1[px]"
+            className="input bg-white border-gray-300 border-[1px] rounded-md w-[300px] h-[30px] flex items-center pl-5"
             type="text"
             placeholder="Email Address"
             {...formik.getFieldProps("email")}
@@ -81,7 +78,7 @@ export const ProfileInfoEdit = ({
         </div>
       </div>
       <button
-        className="w-24 h-12 bg-black text-white rounded-xl ml-8"
+        className="border-black border-[1px] text-black justify-center rounded-xl w-[300px] h-[40px]"
         type="submit"
       >
         Done
