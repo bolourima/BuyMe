@@ -1,5 +1,5 @@
 import React from "react";
-import { EditIcon } from "../icon/EditIcon";
+
 import { instance } from "@/instance";
 
 export const MyProfilePicEdit = ({
@@ -29,15 +29,13 @@ export const MyProfilePicEdit = ({
   };
   return (
     <div className="">
-      <label className="relative">
+      <label className="">
         <img
-          className="flex w-[70px] h-[70px] rounded-full "
+          className="max-w-none flex w-[70px] h-[70px] rounded-full "
           src={img ? img : avatar}
           alt=""
         />
-        <div className="absolute w-5 h-5 bottom-0 left-12">
-          <EditIcon />
-        </div>
+
         <input
           type="file"
           multiple={false}

@@ -101,3 +101,6 @@ span{
     justify-content: center;
     align-items: center;
 }
+.bttn:hover svg{
+  fill: white;
+}
