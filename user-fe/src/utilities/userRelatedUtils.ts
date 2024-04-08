@@ -37,7 +37,6 @@ export const createAddress = async (
   router: Function
 ) => {
   try {
-    console.log("data", data);
     const response = await instance.post(`/address`, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
