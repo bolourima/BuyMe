@@ -1,7 +1,14 @@
 import { Request, Response } from "express";
 import axios from "axios";
 import Order from "../models/orderModel";
-export const createInvoice = async (req: Request, res: Response) => {
+import Invoice from "../models/invoiceModel";
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
+export const createInvoice = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   try {
     const response = await axios.post(
       "https://merchant.qpay.mn/v2/invoice",
@@ -20,6 +27,12 @@ export const createInvoice = async (req: Request, res: Response) => {
         },
       }
     );
+    const invoice = await Invoice.create({
+      id: response.data.invoice_id,
+      user: req.user.id,
+      isPaid: false,
+      createdAt: new Date(),
+    });
     return res.status(201).send(response.data);
   } catch (error) {
     console.error("error in create invoice", error);
@@ -48,7 +61,7 @@ export const checkPayment = async (req: Request, res: Response) => {
     }
     return res.status(200).send(response.data.rows[0]?.payment_status);
   } catch (error) {
-    console.log("error in checkpayment", error);
+    console.error("error in checkpayment", error);
     return res.status(400).send("Failed");
   }
 };
