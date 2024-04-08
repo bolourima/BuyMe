@@ -31,9 +31,17 @@ export const createUser = async (data: {}, router: Function) => {
   }
 };
 
-export const createAddress = async (data: {}, router: Function) => {
+export const createAddress = async (
+  data: {},
+  token: String,
+  router: Function
+) => {
   try {
-    const response = await instance.post("/address", data);
+    console.log("data", data);
+    const response = await instance.post(`/address`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
     if (response.status == 201) {
       toastifySuccess("Хаяг амжилттай хадгалагдлаа");
     }

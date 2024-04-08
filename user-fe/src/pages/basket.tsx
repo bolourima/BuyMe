@@ -54,6 +54,7 @@ const Basket = () => {
       {productsInBasket.length && (
         <PaymentSection total={total} token={token} setQrcode={setQrcode} />
       )}
+      <AddressInput />
     </div>
   );
 };

@@ -24,6 +24,7 @@ export const AddressInput = () => {
       router.push("/signin");
       return toastifyWarning("Please sign in");
     }
+    setUser(jwtDecode(accessToken));
     const exp = jwtDecode(accessToken).exp;
     if (!exp) return;
     if (exp < Date.now() / 1000) {
@@ -77,14 +78,19 @@ export const AddressInput = () => {
         building: formik.values.building,
         deliveryNote: formik.values.deliveryNote,
       };
-      createAddress(addressInfo, router.push);
+      createAddress(addressInfo, token, router.push);
     },
   });
   return (
-    <div>
-      <form className="flex flex-col gap-2" onSubmit={formik.handleSubmit}>
-        <div>
-          <label className="">Хаягийн нэр</label>
+    <div className="w-full flex justify-center">
+      <form
+        className="flex flex-col gap-2 w-[300px]"
+        onSubmit={formik.handleSubmit}
+      >
+        <div className="flex flex-col">
+          <label className="text-2xl my-3 flex justify-center">
+            Address Name
+          </label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
             placeholder="Example: Home, Office"
@@ -94,55 +100,55 @@ export const AddressInput = () => {
             <div>{formik.errors.addressName}</div>
           ) : null}
         </div>
-        <div>
-          <label className="">Хот</label>
+        <div className="flex flex-col">
+          <label className="text-2xl my-3">City</label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="Example: Home, Office"
+            placeholder="Ulaanbaatar"
             {...formik.getFieldProps("city")}
           />
           {formik.touched.city && formik.errors.city ? (
             <div>{formik.errors.city}</div>
           ) : null}
         </div>
-        <div>
-          <label className="">Дүүрэг</label>
+        <div className="flex flex-col">
+          <label className="text-2xl my-3">District</label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="Example: Home, Office"
+            placeholder="district"
             {...formik.getFieldProps("district")}
           />
           {formik.touched.district && formik.errors.district ? (
             <div>{formik.errors.district}</div>
           ) : null}
         </div>
-        <div>
-          <label className="">Хороо</label>
+        <div className="flex flex-col">
+          <label className="text-2xl my-3">Khoroo</label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="Example: Home, Office"
+            placeholder="khoroo"
             {...formik.getFieldProps("khoroo")}
           />
           {formik.touched.khoroo && formik.errors.khoroo ? (
             <div>{formik.errors.khoroo}</div>
           ) : null}
         </div>
-        <div>
-          <label className="">Байр, Тоот</label>
+        <div className="flex flex-col">
+          <label className="text-2xl my-3">Building</label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="Example: Home, Office"
+            placeholder="building number"
             {...formik.getFieldProps("building")}
           />
           {formik.touched.building && formik.errors.building ? (
             <div>{formik.errors.building}</div>
           ) : null}
         </div>
-        <div>
-          <label className="">Нэмэлт мэдээлэл, Орцны код</label>
+        <div className="flex flex-col">
+          <label className="text-2xl my-3">Additional information</label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="Example: Home, Office"
+            placeholder="Example: Pls delivery after 6pm"
             {...formik.getFieldProps("deliveryNote")}
           />
           {formik.touched.deliveryNote && formik.errors.deliveryNote ? (
@@ -150,10 +156,10 @@ export const AddressInput = () => {
           ) : null}
         </div>
         <button
-          className="border-gray-500 rounded-lg bg-gray-500 text-white w-[300px] h-[40px]  mt-5"
+          className="border-gray-500 rounded-lg bg-black text-white w-[300px] h-[40px]  mt-5"
           type="submit"
         >
-          Next
+          NEXT
         </button>
       </form>
     </div>
