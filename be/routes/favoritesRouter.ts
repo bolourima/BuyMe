@@ -9,7 +9,9 @@ import {
 
 export const favoritesRouter = Router();
 favoritesRouter
+  .route("/removeFromFavs/:id")
+  .delete(accessTokenAuth, removeFromFavs);
+favoritesRouter
   .route("/favs")
   .post(accessTokenAuth, createFav)
-  .get(accessTokenAuth, getFavs)
-  .delete(accessTokenAuth, removeFromFavs);
+  .get(accessTokenAuth, getFavs);

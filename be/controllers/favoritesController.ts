@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { AuthenticatedRequest } from "./basketController";
 import Favorites from "../models/favoritesModel";
+import { Types } from "mongoose";
 export const createFav = async (req: AuthenticatedRequest, res: Response) => {
   const result = await Favorites.findOne({ user: req.user.id });
   if (result) return addToFavorites(req, res);
@@ -10,8 +11,7 @@ export const createFav = async (req: AuthenticatedRequest, res: Response) => {
       products: [],
       addedAt: new Date(),
     });
-    await addToFavorites(req, res);
-    return res.status(201).json({ msg: "Created" });
+    return await addToFavorites(req, res);
   } catch (error) {
     console.error("error in create fav", error);
     return res.status(400).json({ err: error });
@@ -22,6 +22,18 @@ export const addToFavorites = async (
   res: Response
 ) => {
   try {
+    const fav = await Favorites.findOne({ user: req.user.id });
+    const checkCoincidence = fav?.products.filter((product) => {
+      return product._id.toString() === req.body.productId;
+    });
+    if (checkCoincidence?.length != 0) {
+      await Favorites.findOneAndUpdate(
+        { user: req.user.id },
+        { $pull: { products: new Types.ObjectId(req.body.productId) } },
+        { new: true }
+      );
+      return res.status(208).json({ msg: "removed" });
+    }
     await Favorites.findOneAndUpdate(
       { user: req.user.id },
       { $push: { products: req.body.productId } },
@@ -36,7 +48,7 @@ export const addToFavorites = async (
 export const getFavs = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const favs = await Favorites.find({ user: req.user.id }).populate(
-      "products.product"
+      "products"
     );
     return res.status(200).send(favs);
   } catch (error) {
@@ -51,7 +63,7 @@ export const removeFromFavs = async (
   try {
     await Favorites.findOneAndUpdate(
       { user: req.user.id },
-      { $pull: { products: { product: req.body.productId } } },
+      { $pull: { products: new Types.ObjectId(req.params.id) } },
       { new: true }
     );
     return res.status(200).json({ msg: "removed" });

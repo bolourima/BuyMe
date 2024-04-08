@@ -1,4 +1,3 @@
-import * as React from "react";
 import ImageListItem from "@mui/material/ImageListItem";
 import { ProductType } from "@/types/productType";
 import { ClickHandler } from "@/types/handlerType";
@@ -7,16 +6,21 @@ import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { addToFavs } from "@/helper/addToFavs";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
+import { getFavProducts } from "@/helper/getFavProducts";
+import { removeFromFavs } from "@/helper/removeFromBasket";
+import { RedLoveIcon } from "@/icon/RedLoveIcon";
 
 export const Masonry = ({
   data,
   setProductData,
+  isFav,
 }: {
   data: ProductType;
   setProductData: ClickHandler;
+  isFav: boolean;
 }) => {
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
@@ -44,10 +48,25 @@ export const Masonry = ({
       </div>
       <div className="flex gap-2 justify-center items-center mb-4">
         <button
-          onClick={() => addToFavs(_id, token)}
-          className=" p-2 rounded-lg bg-black w-14 flex justify-center items-center h-8"
+          onClick={() => {
+            if (!isFav) {
+              return addToFavs(_id, token);
+            }
+            removeFromFavs(token, _id);
+          }}
+          className={`p-2 rounded-lg ${
+            isFav
+              ? "bg-white border-[1px] border-solid border-red-800"
+              : "bg-black"
+          } w-14 flex justify-center items-center h-8`}
         >
-          <LoveIcon />
+          {isFav ? (
+            <div className="w-6 h-6">
+              <RedLoveIcon />
+            </div>
+          ) : (
+            <LoveIcon />
+          )}
         </button>
         <button
           onClick={() => {

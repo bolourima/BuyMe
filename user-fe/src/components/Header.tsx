@@ -91,7 +91,12 @@ export const Header = () => {
               <div onClick={clickSearch}>
                 <SearchIcon />
               </div>
-              <OrderIcon />
+              <button
+                onClick={() => router.push("/favorites")}
+                className="w-4 h-4"
+              >
+                <OrderIcon />
+              </button>
               <button
                 onClick={() => {
                   if (!token) toastifyWarning("Please sign in");
