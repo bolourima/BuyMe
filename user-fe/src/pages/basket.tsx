@@ -5,7 +5,6 @@ import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { TokenContext } from "@/context/TokenContext";
 import { useRouter } from "next/router";
 import { toastifyWarning } from "@/utilities/toastify";
-import { AddressInput } from "@/components/AddressInput";
 import { Qr } from "@/components/Qr";
 import { PaymentSection } from "@/components/PaymentSection";
 import { ProductSectionOfBasket } from "@/components/ProductSectionOfBasket";
@@ -56,11 +55,17 @@ const Basket = () => {
           <PaymentSection total={total} token={token} setQrcode={setQrcode} />
         </div>
       ) : (
-        <p className="font-semibold text-2xl flex justify-center items-center">
-          Your cart is empty
-        </p>
+        <div className="flex flex-col mt-60 items-center">
+          <p className="font-semibold text-2xl flex justify-center items-center">
+            Your cart is empty
+          </p>
+          <a href="/order">
+            <button className="rounded-lg bg-black text-white w-[300px] h-[40px]  mt-5">
+              My orders
+            </button>
+          </a>
+        </div>
       )}
-      <AddressInput />
     </div>
   );
 };

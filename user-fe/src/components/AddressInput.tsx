@@ -1,6 +1,8 @@
+import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import { TokenContext } from "@/context/TokenContext";
 import { userInitial } from "@/types/userInitial";
 import { UserType } from "@/types/userType";
+import { createOrder } from "@/utilities/createOrder";
 import { getUserInfo } from "@/utilities/getUserInfo";
 import { refresh } from "@/utilities/refreshToken";
 import { toastifyWarning } from "@/utilities/toastify";
@@ -11,7 +13,17 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 
-export const AddressInput = () => {
+export const AddressInput = ({
+  total,
+  setQrcode,
+}: {
+  total: number;
+  token: string;
+  setQrcode: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  const { productsInBasket, setProductsInBasket } = useContext(
+    ProductsInBasketContext
+  );
   const { token, setToken } = useContext(TokenContext);
   const [user, setUser] = useState<UserType>(userInitial);
 
@@ -68,7 +80,7 @@ export const AddressInput = () => {
         .min(2, "2-с дээш тэмдэгт ашиглана уу")
         .max(30, "30-с бага тэмдэгт оруулна уу"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const addressInfo = {
         user: user._id,
         addressName: formik.values.addressName,
@@ -78,18 +90,28 @@ export const AddressInput = () => {
         building: formik.values.building,
         deliveryNote: formik.values.deliveryNote,
       };
-      createAddress(addressInfo, token, router.push);
+      await createAddress(addressInfo, token, router.push);
+      await createOrder(
+        productsInBasket,
+        token,
+        total,
+        setQrcode,
+        setProductsInBasket
+      );
     },
   });
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex flex-col justify-center items-center">
+      <p className="text-xl font-sans font-semibold my-3 flex justify-center mt-8">
+        ADDRESS
+      </p>
       <form
-        className="flex flex-col gap-2 w-[300px]"
+        className="flex flex-col gap-2 w-[300px] "
         onSubmit={formik.handleSubmit}
       >
         <div className="flex flex-col">
-          <label className="text-2xl my-3 flex justify-center">
-            Address Name
+          <label className="text-xl font-sans font-semibold my-3">
+            Address name
           </label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
@@ -101,7 +123,7 @@ export const AddressInput = () => {
           ) : null}
         </div>
         <div className="flex flex-col">
-          <label className="text-2xl my-3">City</label>
+          <label className="text-xl font-sans font-semibold my-3">City</label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
             placeholder="Ulaanbaatar"
@@ -112,7 +134,9 @@ export const AddressInput = () => {
           ) : null}
         </div>
         <div className="flex flex-col">
-          <label className="text-2xl my-3">District</label>
+          <label className="text-xl font-sans font-semibold my-3">
+            District
+          </label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
             placeholder="district"
@@ -123,7 +147,7 @@ export const AddressInput = () => {
           ) : null}
         </div>
         <div className="flex flex-col">
-          <label className="text-2xl my-3">Khoroo</label>
+          <label className="text-xl font-sans font-semibold my-3">Khoroo</label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
             placeholder="khoroo"
@@ -134,7 +158,9 @@ export const AddressInput = () => {
           ) : null}
         </div>
         <div className="flex flex-col">
-          <label className="text-2xl my-3">Building</label>
+          <label className="text-xl font-sans font-semibold my-3">
+            Building
+          </label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
             placeholder="building number"
@@ -145,7 +171,9 @@ export const AddressInput = () => {
           ) : null}
         </div>
         <div className="flex flex-col">
-          <label className="text-2xl my-3">Additional information</label>
+          <label className="text-xl font-sans font-semibold my-3">
+            Additional information
+          </label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
             placeholder="Example: Pls delivery after 6pm"
@@ -159,7 +187,7 @@ export const AddressInput = () => {
           className="border-gray-500 rounded-lg bg-black text-white w-[300px] h-[40px]  mt-5"
           type="submit"
         >
-          NEXT
+          PAY
         </button>
       </form>
     </div>

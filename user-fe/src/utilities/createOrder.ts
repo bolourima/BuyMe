@@ -34,9 +34,13 @@ export const createOrder = async (
       }
     );
     localStorage.setItem("paymentToken", tokenRes.data.access_token);
-    const invoiceRes = await instance.post("/createInvoice", {
-      token: tokenRes.data.access_token,
-    });
+    const invoiceRes = await instance.post(
+      "/createInvoice",
+      {
+        token: tokenRes.data.access_token,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     localStorage.setItem("invoiceId", invoiceRes.data.invoice_id);
     setQrcode(invoiceRes.data.qPay_shortUrl);
     const res = await instance.post(
