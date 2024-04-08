@@ -48,7 +48,7 @@ const Basket = () => {
   }, [productsInBasket]);
   return (
     <div className="w-full flex flex-col items-center pt-16 min-h-screen">
-      {qrcode && <Qr qrcode={qrcode} />}
+      {qrcode && <Qr qrcode={qrcode} setQrcode={setQrcode} />}
       <div className="flex gap-6">
         {productsInBasket.map((product) => {
           return (

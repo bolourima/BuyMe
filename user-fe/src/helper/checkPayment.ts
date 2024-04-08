@@ -4,7 +4,10 @@ import {
   toastifySuccess,
   toastifyWarning,
 } from "@/utilities/toastify";
-export const checkPayment = async () => {
+import { Dispatch, SetStateAction } from "react";
+export const checkPayment = async (
+  setIsPaid: Dispatch<SetStateAction<boolean>>
+) => {
   try {
     const paymentCheckRes = await instance.post("/checkPayment", {
       invoiceId: localStorage.getItem("invoiceId"),
@@ -13,6 +16,7 @@ export const checkPayment = async () => {
     if (paymentCheckRes.data === "PAID") {
       localStorage.removeItem("invoiceId");
       localStorage.removeItem("paymentToken");
+      setIsPaid(true);
       return toastifySuccess("Paid!");
     } else return toastifyWarning("Not paid");
   } catch (error) {

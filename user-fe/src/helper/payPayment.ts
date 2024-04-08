@@ -15,9 +15,13 @@ export const payPayment = async (
       }
     );
     localStorage.setItem("paymentToken", tokenRes.data.access_token);
-    const invoiceRes = await instance.post("/createInvoice", {
-      token: tokenRes.data.access_token,
-    });
+    const invoiceRes = await instance.post(
+      "/createInvoice",
+      {
+        token: tokenRes.data.access_token,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     await instance.put(
       `/changeOrderInvoice/${orderId}`,
       {
