@@ -61,7 +61,7 @@ export default function MyProfile() {
               <div className="w-fit h-fit flex flex-col gap-8">
                 <button
                   onClick={() => setEditUser(!editUser)}
-                  className="bttn flex bg-black text-white w-[200px] h-[40px] justify-center items-center rounded-lg "
+                  className="flex bg-black text-white w-[200px] h-[40px] justify-center items-center rounded-lg "
                 >
                   <div className="w-5 h-5 mx-4">
                     <EditIconWhite />
