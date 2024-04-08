@@ -99,7 +99,7 @@ export const signIn = async (req: Request, res: Response) => {
     }
 
     const accessToken = jwt.sign(
-      { id: foundUser._id },
+      { id: foundUser._id, username: foundUser.shopName },
       jwtPrivateKey as string,
       {
         expiresIn: "10d",

@@ -19,15 +19,13 @@ export const LeftBar = () => {
           </div>
         </div>
       </Link>
-      <Link href={"/order"}>
-        <button className="flex items-center hover:bg-[#F7F7F8]">
-          <div className="flex w-14 h-10 justify-center items-center">
-            <Icon2 />
-          </div>
-          <div>
-            <p>Захилга</p>
-          </div>
-        </button>
+      <Link href={"/order"} className="flex items-center hover:bg-[#F7F7F8]">
+        <div className="flex w-14 h-10 justify-center items-center">
+          <Icon2 />
+        </div>
+        <div>
+          <p>Захилга</p>
+        </div>
       </Link>
 
       <Link href={"/income"}>

@@ -92,27 +92,26 @@ const DataTable = ({
 
   return (
     <div>
-      <div className="p-3 ">Бүтээгдэхүүн</div>
-      <div className="flex items-center">
+      <div className="flex items-center pt-3">
         <button
           onClick={() => setIsAddProductVisible(true)}
-          className="flex w-[280px] h-12 bg-black text-white rounded-lg items-center justify-center gap-3"
+          className="flex w-[280px] h-12 bg-black text-white rounded-lg items-center justify-center gap-3 mb-5"
         >
           <span className="text-2xl">+</span>
           <span>Бүтээгдэхүүн нэмэх</span>
         </button>
       </div>
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: 800, width: "100%" }}>
         <DataGrid
           getRowId={(row) => row._id}
           rows={productData}
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[10, 15]}
           disableRowSelectionOnClick
           onRowSelectionModelChange={(_id) => {}}
         />
