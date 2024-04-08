@@ -55,7 +55,7 @@ const Basket = () => {
           <PaymentSection total={total} token={token} setQrcode={setQrcode} />
         </div>
       ) : (
-        <div className="flex flex-col mt-60 items-center">
+        <div className="flex flex-col mt-32 items-center">
           <p className="font-semibold text-2xl flex justify-center items-center">
             Your cart is empty
           </p>
