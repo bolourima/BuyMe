@@ -5,6 +5,7 @@ import { ClickHandler } from "@/types/handlerType";
 import { LoveIcon } from "@/icon/LoveIcon";
 import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 export const Masonry = ({
   data,
@@ -20,11 +21,9 @@ export const Masonry = ({
   const imgFirstFix = 0;
   return (
     <ImageListItem className="rounded-lg border-2 border-gray-300">
-      <img
-        onClick={() => router.push(`/productdetail/${_id}`)}
-        src={images[imgFirstFix]}
-        className="rounded-t-lg"
-      />
+      <Link as={`/productdetail/${_id}`} href={`/productdetail/[id]`}>
+        <img src={images[imgFirstFix]} className="rounded-t-lg" />
+      </Link>
       <div className="p-5 gap-1">
         <p className="text-xl">{name}</p>
         <p className="text-lg font-bold">{price.toLocaleString()}</p>
