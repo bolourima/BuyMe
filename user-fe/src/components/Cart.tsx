@@ -15,11 +15,13 @@ import { removeFromBasket } from "@/utilities/removeFromBasket";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "@/utilities/refreshToken";
+import { Qr } from "./Qr";
 
 const Basket = () => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
+  const [qrcode, setQrcode] = useState("");
   const [total, setTotal] = useState(0);
   const [token, setToken] = useState<string>("");
   useEffect(() => {
@@ -46,6 +48,7 @@ const Basket = () => {
   }, [productsInBasket]);
   return (
     <div className="w-full flex flex-col items-center pt-16 min-h-screen">
+      {qrcode && <Qr qrcode={qrcode} setQrcode={setQrcode} />}
       <div className="flex gap-6">
         {productsInBasket.map((product) => {
           return (
@@ -188,7 +191,15 @@ const Basket = () => {
             </div>
             <div className="mt-4">
               <button
-                onClick={() => createOrder(productsInBasket, token, total)}
+                onClick={() =>
+                  createOrder(
+                    productsInBasket,
+                    token,
+                    total,
+                    setQrcode,
+                    setProductsInBasket
+                  )
+                }
                 className="bg-black text-white w-full h-[54px] rounded-lg"
               >
                 Create Order

@@ -6,8 +6,6 @@ export default function RecommendedItems({
 }: {
   ProductData: ProductType[];
 }) {
-  console.log(ProductData);
-
   return (
     <div className=" w-full flex flex-col items-center gap-16">
       <h1 className=" font-extrabold text-6xl">Our Bestseller</h1>

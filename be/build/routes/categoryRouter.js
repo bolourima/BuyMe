@@ -5,3 +5,4 @@ const express_1 = require("express");
 const categoryController_1 = require("../controllers/categoryController");
 exports.categoryRouter = (0, express_1.Router)();
 exports.categoryRouter.route("/getCategories").get(categoryController_1.getCategories);
+exports.categoryRouter.route("/createCategory").post(categoryController_1.createCategory);
