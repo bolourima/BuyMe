@@ -64,15 +64,26 @@ export const Header = () => {
         </div>
 
         <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center  ">
-          <h1
-            className={`font-semibold text-xl ${
-              router.asPath === "/" ? "font-bold" : "font-normal text-zinc-500"
-            }`}
-          >
-            Home
-          </h1>
+          <Link href={"/"}>
+            <h1
+              className={`font-semibold text-xl ${
+                router.asPath === "/"
+                  ? "font-bold"
+                  : "font-normal text-zinc-500"
+              }`}
+            >
+              Home
+            </h1>
+          </Link>
+
           <Link href={"/productlist"}>
-            <h1 className=" lg:content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">
+            <h1
+              className={`lg:content-center text-xl flex items-center font-semibold gap-2 hover:border p-2 rounded-md ${
+                router.asPath === "/productlist"
+                  ? "font-bold"
+                  : "font-normal text-zinc-500"
+              }`}
+            >
               Categories
               <DownIcon />
             </h1>
