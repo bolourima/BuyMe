@@ -8,8 +8,6 @@ import { userRouter } from "./routes/userRouter";
 import { signInRouter } from "./routes/signInRouter";
 import { signUpRouter } from "./routes/signUpRouter";
 import { orderRouter } from "./routes/orderRouter";
-import { Request, Response } from "express";
-import upload from "./middlewares/multer";
 import { basketRouter } from "./routes/basketRouter";
 import { adminRouter } from "./routes/adminRouter";
 import { addressRouter } from "./routes/addressRouter";
