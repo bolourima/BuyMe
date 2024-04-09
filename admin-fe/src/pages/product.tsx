@@ -3,7 +3,7 @@ import { TokenContext } from "@/contexts/TokenContext";
 import { instance } from "@/instance";
 import { Category } from "@/types/categoryType";
 import { GetProductType } from "@/types/getProductType";
-import { OrderType, productTypeForShop } from "@/types/orderType";
+import { productTypeForShop } from "@/types/orderType";
 import { getOrders } from "@/utilities/getOrders";
 import { getProducts } from "@/utilities/getProducts";
 import React, { useContext, useEffect, useState } from "react";

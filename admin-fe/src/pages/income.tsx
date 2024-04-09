@@ -1,6 +1,4 @@
 import React from "react";
-import { NavBar } from "@/components/NavBar";
-import { LeftBar } from "@/components/LeftBar";
 import DownloadIcon from "@/icon/DownloadIcon";
 import { IconMonthly } from "@/svg/IconMonthly";
 
@@ -59,8 +57,7 @@ export default function Income() {
     <>
       <div className="flex flex-col">
         <div className="flex gap-20">
-          <div className="w-[222px]">
-          </div>
+          <div className="w-[222px]"></div>
           <div className="flex flex-col gap-3 bg-[#ECEDF0] w-full">
             <div className="flex flex-col bg-white w-[724px] h-[160px] rounded-lg  m-auto">
               <div className="flex  justify-between items-center   border-b-2 p-6">
