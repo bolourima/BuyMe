@@ -151,7 +151,7 @@ export default function SignUp() {
                 <div>{formik.errors.confirmPassword}</div>
               ) : null}
               <button
-                className="border-gray-500 rounded-lg bg-gray-500 text-white w-[300px] h-[40px]  mt-5"
+                className="bg-black hover:bg-gray-400 hover:text-black hover:font-bold rounded-lg text-white w-[300px] h-[40px]  mt-5"
                 onClick={() => CreateUserBtn()}
                 type="submit"
               >

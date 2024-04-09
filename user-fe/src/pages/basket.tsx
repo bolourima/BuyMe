@@ -60,7 +60,7 @@ const Basket = () => {
             Your cart is empty
           </p>
           <a href="/order">
-            <button className="rounded-lg bg-black text-white w-[300px] h-[40px]  mt-5">
+            <button className="rounded-lg bg-black text-white w-[300px] h-[40px] mt-5 ">
               My orders
             </button>
           </a>

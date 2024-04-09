@@ -87,18 +87,18 @@ export default function SignIn() {
                 <div>{formik.errors.password}</div>
               ) : null}
               <button
-                className="border-gray-500 rounded-lg bg-gray-500 text-white w-[300px] h-[40px]  mt-5"
+                className="rounded-lg bg-black hover:bg-gray-400 hover:text-black hover:font-bold text-white w-[300px] h-[40px]  mt-5"
                 type="submit"
               >
                 Signin
               </button>
             </form>
             <div className=" lg:flex gap-4 sm:flex justify-center ">
-              <p className="text-slate-900 text-base font-normal dark:text-slate-300">
+              <p className="text-black text-base font-normal dark:text-slate-300">
                 Don’t have account?
               </p>
               <Link href={"./signup"}>
-                <p className=" text-base font-normal cursor-pointer hover:text-blue-400 justify-center">
+                <p className=" text-base font-normal cursor-pointer hover:text-black justify-center">
                   Sign up
                 </p>
               </Link>

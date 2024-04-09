@@ -94,11 +94,11 @@ export default function ProductId({
               onClick={() => {
                 setProductData(data);
               }}
-              className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm sm:w-[180px] lg:w-[270px]"
+              className="bg-black text-white hover:bg-gray-400 hover:text-black hover:font-bold h-8 rounded-lg px-4 text-center text-sm sm:w-[180px] lg:w-[270px]"
             >
               ADD TO CART
             </button>
-            <div className=" p-2 rounded-lg bg-black w-14 flex justify-center items-center h-8">
+            <div className="bbtn p-2 rounded-lg bg-black w-14  hover:bg-gray-400 flex justify-center items-center h-8">
               <LoveIcon />
             </div>
           </div>

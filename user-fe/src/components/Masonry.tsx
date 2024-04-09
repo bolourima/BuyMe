@@ -56,7 +56,7 @@ export const Masonry = ({
           className={`p-1 lg:p-2 rounded-lg ${
             isFav
               ? "bg-white border-[1px] border-solid border-red-800"
-              : "bg-black"
+              : "bg-black hover:bg-gray-400 bbtn"
           } w-11  flex justify-center items-center h-7`}
         >
           {isFav ? (
@@ -72,7 +72,7 @@ export const Masonry = ({
             setProductData(data, false);
           }}
           onDoubleClick={() => setProductData(data, true)}
-          className="bg-black text-white h-7 rounded-lg px-2 text-center text-sm font-semibold "
+          className="bg-black text-white h-7 rounded-lg px-2 text-center text-sm font-semibold hover:bg-gray-400 hover:font-bold hover:text-black "
         >
           ADD TO CART
         </button>

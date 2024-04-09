@@ -95,7 +95,7 @@ export const Header = () => {
               {showImput && (
                 <input
                   type="search"
-                  className="border p-2 rounded absolute right-40"
+                  className="border p-2 rounded absolute right-40 btnn"
                 />
               )}
 
@@ -104,11 +104,12 @@ export const Header = () => {
               </div>
               <button
                 onClick={() => router.push("/favorites")}
-                className="w-4 h-4"
+                className="w-4 h-4 btnn"
               >
                 <OrderIcon />
               </button>
               <button
+                className="btnn"
                 onClick={() => {
                   if (!token) toastifyWarning("Please sign in");
                   else router.push("/basket");
@@ -119,6 +120,7 @@ export const Header = () => {
             </div>
             <div className=" flex ">
               <button
+                className="btnn"
                 onClick={() => {
                   if (!token) {
                     toastifyWarning("Please sign in"), router.push("/signin");

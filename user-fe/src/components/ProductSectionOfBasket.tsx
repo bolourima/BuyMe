@@ -88,7 +88,7 @@ export const ProductSectionOfBasket = ({
                     onClick={() => {
                       clickMinus(product);
                     }}
-                    className="h-10 w-10 rounded-lg bg-black text-white flex justify-center items-center"
+                    className="h-10 w-10 rounded-lg bg-black text-white flex justify-center items-center hover:bg-gray-400 hover:text-black hover:font-bold"
                   >
                     -
                   </button>
@@ -105,7 +105,7 @@ export const ProductSectionOfBasket = ({
                         token
                       )
                     }
-                    className="h-10 w-10 rounded-lg bg-black text-white flex justify-center items-center"
+                    className="h-10 w-10 rounded-lg bg-black text-white flex justify-center items-center hover:bg-gray-400 hover:text-black hover:font-bold"
                   >
                     +
                   </button>
