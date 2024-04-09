@@ -29,7 +29,7 @@ export const PaymentSection = ({
   return (
     <div className="w-[400px]">
       <div className=" static flex flex-col border-[#DEE2E7] border-[1px] rounded-md p-5 gap-2 bg-[#FBFBFB] shadow-md">
-        <div className="flex justify-center border-b-[1px] pb-4 text-xl font-sans font-semibold">
+        <div className="flex justify-center border-b-[1px] pb-4 text-xl font-sans font-semibold ">
           PAYMENT DETAIL
         </div>
         <div className="flex justify-between my-4">
@@ -43,7 +43,7 @@ export const PaymentSection = ({
         <div className="mt-4 ">
           <div>
             <button
-              className="bg-black text-white w-full h-[54px] rounded-lg"
+              className="bg-black text-white w-full h-[54px] rounded-lg hover:bg-gray-400 hover:text-black hover:font-bold"
               onClick={openModal}
             >
               Create order
