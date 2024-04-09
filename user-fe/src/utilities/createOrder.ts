@@ -57,5 +57,6 @@ export const createOrder = async (
     return toastifySuccess("Order created");
   } catch (error) {
     toastifyError("Failed to order");
+    console.error("error: ", error);
   }
 };
