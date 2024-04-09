@@ -72,14 +72,6 @@ export const PaymentSection = ({
               </div>
             )}
           </div>
-          <div className="bg-gray-500">
-            <div
-              className="w-full"
-              style={{
-                backgroundImage: `url(https://play-lh.googleusercontent.com/Jg_jjsNezlkTuxWT5ADzfqhjwHVvqZEDqQGbXJlkplNrYPyyMGXtmLA6dGrH37_paOY`,
-              }}
-            ></div>
-          </div>
         </div>
       </div>
     </div>

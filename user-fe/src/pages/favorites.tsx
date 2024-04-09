@@ -1,15 +1,24 @@
 import { TokenContext } from "@/context/TokenContext";
 import { getFavProducts } from "@/helper/getFavProducts";
 import { removeFromFavs } from "@/helper/removeFromBasket";
+import DeleteIcon from "@/icon/DeleteIcon";
 import { ProductType } from "@/types/productType";
 import { toastifyWarning } from "@/utilities/toastify";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { ClickHandler } from "@/types/handlerType";
 
-const favorites = () => {
+const favorites = ({
+  data,
+  setProductData,
+}: {
+  data: ProductType;
+  setProductData: ClickHandler;
+}) => {
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
   const [products, setProducts] = useState<ProductType[]>([]);
+
   const setFavs = (products: ProductType[]) => {
     setProducts(products);
   };
@@ -27,49 +36,72 @@ const favorites = () => {
     <div>
       {products.map((product, i) => {
         return (
-          <div
-            key={i}
-            className=" flex flex-col lg:flex lg:flex-row gap-2 w-full h-[300px] items-center px-4 my-4"
-          >
-            <img src={product?.images[0]} className="w-1/4 h-full" />
-            <div className="lg:flex flex-col w-1/2 pl-4 h-full">
-              <p>Name: {product?.name}</p>
-              <p>Category: {product?.categoryId.name}</p>
-              <p>SubCategory: {product?.subCategoryName}</p>
-              <p>Brand: {product?.brandName}</p>
-              <div>
-                Price:
-                {product?.disCount.isSale ? (
-                  <p>
-                    <p className="line-through">
-                      {product?.price.toLocaleString()}
-                    </p>
-                    {(
-                      product.price *
-                      ((100 - product.disCount.salePercent) / 100)
-                    ).toLocaleString()}
-                    ₮
-                  </p>
-                ) : (
-                  product?.price.toLocaleString()
-                )}
-              </div>
-              <p>
-                Discount:
-                {product?.disCount.isSale
-                  ? "   " + product?.disCount.salePercent + "%"
-                  : "   Хямдралгүй"}
-              </p>
-              <p>Tags: {product?.tag}</p>
-            </div>
-            <button
-              onClick={() => {
-                removeFromFavs(token, product._id);
-              }}
-              className="w-full bg-black h-12 rounded-lg text-white flex justify-center items-center"
+          <div className="flex justify-center h-[200px] lg:h-[300px]">
+            <div
+              key={i}
+              className="gap-2 w-[700px] border-2 items-center justify-center px-4 my-4 shadow-lg bg-[#FBFBFB] rounded-xl"
             >
-              Delete from favorites
-            </button>
+              <button
+                onClick={() => {
+                  removeFromFavs(token, product._id);
+                }}
+                className="w-full rounded-lg flex justify-end items-center mt-3"
+              >
+                <DeleteIcon />
+              </button>
+              <div className="flex">
+                <div className="w-1/4 lg:w-[150px] h-full flex justify-center items-center">
+                  <img src={product?.images[0]} className="" />
+                </div>
+
+                <div className="w-3/4 pl-4 h-full items-center">
+                  <div>
+                    <p className="text-lg font-sans font-semibold">
+                      {product?.name}
+                    </p>
+                    <div className="hidden lg:block">
+                      <div className="flex gap-2 mt-3">
+                        <p className="font-sans font-semibold">Description</p>
+                        <p className="overflow-x-scroll h-24 border-y-2 border-y-gray-300 rounded-sm font-sans">
+                          {product?.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ml-1">
+                    {product?.disCount.isSale ? (
+                      <div className="flex gap-2">
+                        <p className="line-through text-xl font-sans text-red-700 ">
+                          {product?.price.toLocaleString()} ₮
+                        </p>
+                        <p className="text-xl font-sans text-green-500">
+                          {(
+                            product.price *
+                            ((100 - product.disCount.salePercent) / 100)
+                          ).toLocaleString()}
+                          ₮
+                        </p>
+                      </div>
+                    ) : (
+                      <p className="text-xl font-sans text-green-500">
+                        {product?.price.toLocaleString()} ₮
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      onClick={() => {
+                        setProductData(data, false);
+                      }}
+                      onDoubleClick={() => setProductData(data, true)}
+                      className="bg-black hover:bg-gray-400 text-white hover:text-black h-7 rounded-lg px-2 text-center text-sm font-semibold hover:font-bold"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         );
       })}

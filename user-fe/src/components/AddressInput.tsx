@@ -91,13 +91,14 @@ export const AddressInput = ({
         deliveryNote: formik.values.deliveryNote,
       };
       await createAddress(addressInfo, token, router.push);
-      await createOrder(
-        productsInBasket,
-        token,
-        total,
-        setQrcode,
-        setProductsInBasket
-      );
+      console.log(productsInBasket, token, total);
+      // await createOrder(
+      //   productsInBasket,
+      //   token,
+      //   total,
+      //   setQrcode,
+      //   setProductsInBasket
+      // );
     },
   });
   return (
