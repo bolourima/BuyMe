@@ -61,7 +61,7 @@ export default function MyProfile() {
               <div className="flex flex-col gap-5">
                 <button
                   onClick={() => setEditUser(!editUser)}
-                  className="flex bg-black text-white w-[250px] h-[30px] justify-center items-center rounded-md "
+                  className="bbtn flex bg-black text-white w-[250px] h-[30px] justify-center items-center rounded-md hover:bg-gray-400 hover:font-bold hover:text-black "
                 >
                   <div className="w-5 h-5 mx-4">
                     <EditIconWhite />
@@ -75,7 +75,7 @@ export default function MyProfile() {
                     router.push("/signin");
                     toastifySuccess("Successfully signed out");
                   }}
-                  className="bttn flex bg-black text-white w-[250px] h-[30px] justify-center items-center rounded-md "
+                  className="flex bg-black text-white w-[250px] h-[30px] justify-center items-center rounded-md hover:bg-gray-400 hover:font-bold hover:text-black"
                 >
                   <p>Sign out</p>
                 </button>
