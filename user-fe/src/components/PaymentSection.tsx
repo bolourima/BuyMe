@@ -28,7 +28,7 @@ export const PaymentSection = ({
   };
   return (
     <div className="w-[400px]">
-      <div className=" static flex flex-col border-[#DEE2E7] border-[1px] rounded-md p-5 gap-2 bg-white shadow-md">
+      <div className=" static flex flex-col border-[#DEE2E7] border-[1px] rounded-md p-5 gap-2 bg-[#FBFBFB] shadow-md">
         <div className="flex justify-center border-b-[1px] pb-4 text-xl font-sans font-semibold">
           PAYMENT DETAIL
         </div>

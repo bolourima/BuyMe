@@ -138,6 +138,7 @@ export const AddProductForm = ({
     <form
       onSubmit={(e) => {
         handleSubmit(e);
+        window.location.reload();
       }}
       className="flex flex-col bg-[#F7F7F8] p-6 gap-6"
     >

@@ -37,24 +37,16 @@ export const MainProducts = ({
     setToken(token);
   }, []);
   return (
-    <div className="flex flex-col w-5/6">
-      {!isAddProductVisible && (
-        <ProductsController
-          setIsAddProductVisible={setIsAddProductVisible}
-          productData={productData}
-          setOnEdit={setOnEdit}
-          setEditableProduct={setEditableProduct}
-        />
-      )}
+    <div className="flex flex-col">
       {!isAddProductVisible && (
         <DataTable
-          setIsAddProductVisible={setIsAddProductVisible}
           productData={productData}
+          token={token}
+          setIsAddProductVisible={setIsAddProductVisible}
           setOnEdit={setOnEdit}
           setEditableProduct={setEditableProduct}
         />
       )}
-
       {isAddProductVisible && (
         <AddProductBar
           categoryData={categoryData}

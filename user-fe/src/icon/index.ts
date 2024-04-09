@@ -7,7 +7,7 @@ export * from "./BrandIcon";
 export * from "./CartIcon";
 export * from "./CheckSvg";
 export * from "./CloseIcon";
-export * from "./DelletIcon";
+export * from "./DeleteIcon";
 export * from "./DotSvg";
 export * from "./DownIcon";
 export * from "./EditIcon";
@@ -21,7 +21,7 @@ export * from "./InstIcon";
 export * from "./LeftArrowIcon";
 export * from "./LikeIcon";
 export * from "./LinkitIcon";
-export * from "./ListIcon"; 
+export * from "./ListIcon";
 export * from "./LocationIcon";
 export * from "./LoveIcon";
 
@@ -43,4 +43,3 @@ export * from "./UserIcon";
 export * from "./VisaIcon";
 export * from "./XIcon";
 export * from "./YoutubeIcon";
-

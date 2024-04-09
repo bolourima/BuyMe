@@ -48,9 +48,7 @@ export const ProductsController = ({
           <a
             className="font-normal hover:font-bold hover:underline hover:decoration-slice decoration-inherit"
             href=""
-          >
-            Бүтээгдэхүүн
-          </a>
+          ></a>
         </div>
         <div>
           <a
@@ -64,15 +62,6 @@ export const ProductsController = ({
       <div className="flex w-full">
         <div className="bg-[#ECEDF0] w-full">
           <div className="flex flex-col p-6 gap-6">
-            <div className="flex items-center">
-              <button
-                onClick={() => setIsAddProductVisible(true)}
-                className="flex w-[280px] h-12 bg-black text-white rounded-lg items-center justify-center gap-3"
-              >
-                <span className="text-2xl">+</span>
-                <span>Бүтээгдэхүүн нэмэх</span>
-              </button>
-            </div>
             <div className="flex flex-col">
               <div className="flex h-10 justify-between">
                 <div className="flex gap-[13px]">

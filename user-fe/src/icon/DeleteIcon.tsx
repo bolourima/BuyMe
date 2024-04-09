@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function DelletIcon() {
+export default function DeleteIcon() {
   return (
     <svg
       width="12"

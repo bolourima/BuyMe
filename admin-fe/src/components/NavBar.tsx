@@ -2,27 +2,30 @@ import React from "react";
 import { IconBell } from "@/svg/IconBell";
 import { IconPinecon } from "@/svg/IconPinecon";
 import { IconUser } from "@/svg/IconUser";
+import Link from "next/link";
 
 export const NavBar = () => {
   return (
     <div className="flex bg-black py-1 px-6 justify-between h-12 items-center">
-      <div>
-        <a href="">
-          <IconPinecon />
-        </a>
-      </div>
-      <div className="flex items-center gap-5">
+      <Link href={"/"}>
         <div>
-          <a href="">
+          <IconPinecon />
+        </div>
+      </Link>
+      <div className="flex items-center gap-5">
+        <Link href={"/"}>
+          <div>
             <IconBell />
-          </a>
-        </div>
-        <div className="flex gap-4 items-center">
-          <a href="">
+          </div>
+        </Link>
+
+        <Link href={"/signin"}>
+          <div className="flex gap-4 items-center">
             <IconUser />
-          </a>
-          <button className="text-white">Username</button>
-        </div>
+
+            <button className="text-white">Username</button>
+          </div>
+        </Link>
       </div>
     </div>
   );
