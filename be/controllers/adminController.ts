@@ -59,9 +59,13 @@ export const adminSignin = async (req: Request, res: Response) => {
     const adminPassword: string = admin.password || "";
     const result = await bcrypt.compare(password, adminPassword);
     if (!result) return res.status(400).json({ message: "Wrong Password" });
-    const accessToken = jwt.sign({ id: admin._id }, jwtPrivateKey as string, {
-      expiresIn: "10d",
-    });
+    const accessToken = jwt.sign(
+      { id: admin._id, subAdmin: admin.subAdmin },
+      jwtPrivateKey as string,
+      {
+        expiresIn: "10d",
+      }
+    );
     const refreshToken = jwt.sign({ id: admin._id }, jwtPrivateKey as string, {
       expiresIn: "10d",
     });
