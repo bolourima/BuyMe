@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Sheet,
@@ -9,12 +9,40 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Bar from "@/icon/Bar";
-import Link from "next/link";
 import CartIcon from "@/icon/CartIcon";
-import LocationIcon from "@/icon/LocationIcon";
-import NotificationIcon from "@/icon/NotificationIcon";
+import { userInitial } from "@/types/userInitial";
+import { toastifyWarning } from "@/utilities/toastify";
+import { jwtDecode } from "jwt-decode";
+import { refresh } from "@/utilities/refreshToken";
+import { UserType } from "@/types/userType";
+import { getUserInfo } from "@/utilities/getUserInfo";
+
+import { useRouter } from "next/router";
+import { LoveMb } from "@/icon/LoveMb";
+import { MyCartIcon } from "@/icon";
+import { CheckIcon } from "@/icon/CheckIcon";
 
 export default function MobileBareTest() {
+  const [user, setUser] = useState<UserType>(userInitial);
+
+  const getUser = (data: UserType) => {
+    setUser(data);
+  };
+  const router = useRouter();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      router.push("/signin");
+      return toastifyWarning("Please sign in");
+    }
+    const exp = jwtDecode(accessToken).exp;
+    if (!exp) return;
+    if (exp < Date.now() / 1000) {
+      refresh();
+    }
+    getUserInfo(accessToken, getUser);
+  }, []);
   return (
     <Sheet>
       <SheetTrigger>
@@ -25,44 +53,76 @@ export default function MobileBareTest() {
       <SheetContent>
         <SheetHeader>
           <div className=" w-full flex flex-col gap-6">
-            <div className=" flex flex-col items-start gap-2">
-              <div className="flex w-20 h-20">
-                <img className="rounded-full" src="./IconPicture.jpeg" alt="" />
+            <div className="flex flex-col items-start gap-3 ">
+              <div
+                className="flex  items-center w-full gap-2 "
+                onClick={() => router.push("/myprofile")}
+              >
+                <div className="flex w-20 h-20 items-center ">
+                  <img
+                    className="rounded-full w-16 h-16 "
+                    src={user.avatarImg}
+                    alt=""
+                  />
+                </div>
+                <h1 className=" font-semibold text-xl">{user.name}</h1>
               </div>
-              <h1 className=" text-2xl font-semibold">User name her</h1>
-            </div>
 
-            <div className="  border-y-2 py-9 flex flex-col gap-4">
-              <Link href={"/basket"}>
-                <div className=" flex items-center gap-5 ">
-                  <div className=" w-7  h-7">
+              <div className="  w-full border-y-2 py-9 flex flex-col gap-4">
+                <div
+                  onClick={() => router.push("/basket")}
+                  className=" flex items-center gap-5 "
+                >
+                  <div className="  w-7  h-7">
                     <CartIcon />
                   </div>
-                  <h1 className="  text-xl font-semibold ">My order</h1>
+                  <h1 className="  text-lg font-semibold ">Cart</h1>
                 </div>
-              </Link>
-
-              <div className=" flex items-center gap-6 px-1 ">
-                <div className=" w-5  h-5">
-                  <LocationIcon />
+                <div
+                  onClick={() => router.push("/favorites")}
+                  className=" flex items-center gap-5 "
+                >
+                  <div className=" ml-1">
+                    <LoveMb />
+                  </div>
+                  <h1 className="  text-lg font-semibold ">favorites</h1>
                 </div>
-                <h1 className="  text-xl font-semibold ">Manage Addresses</h1>
+                <div
+                  onClick={() => router.push("/order")}
+                  className=" flex items-center gap-5 "
+                >
+                  <div className="ml-2 ">
+                    <CheckIcon />
+                  </div>
+                  <h1 className="  text-xl font-semibold ">order</h1>
+                </div>
               </div>
-              <div className=" flex items-center gap-5 px-1 ">
-                <div className=" w-6  h-6">
-                  <NotificationIcon />
-                </div>
-                <h1 className="  text-xl font-semibold ">Notification</h1>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-start gap-3">
-              <h1 className=" text-xl font-bold">Categories</h1>
+              <h1
+                className=" text-xl font-bold"
+                onClick={() => router.push("/productlist")}
+              >
+                All products
+              </h1>
 
               <div className=" flex flex-col items-start gap-3 pl-1 ">
-                <h1 className=" text-lg font-semibold">Clothing</h1>
-                <h1 className=" text-lg font-semibold">Electronics</h1>
-                <h1 className=" text-lg font-semibold">Books</h1>
+                <h1
+                  className=" text-lg font-semibold"
+                  onClick={() => router.push("/productlist/clothing")}
+                >
+                  Clothing
+                </h1>
+                <h1
+                  className=" text-lg font-semibold"
+                  onClick={() => router.push("/productlist/electronics")}
+                >
+                  Electronics
+                </h1>
+                <h1
+                  className=" text-lg font-semibold"
+                  onClick={() => router.push("/productlist/books")}
+                >
+                  Books
+                </h1>
               </div>
             </div>
           </div>
