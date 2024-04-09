@@ -1,9 +1,10 @@
 import { instance } from "@/instance";
 import { GetProductType } from "@/types/getProductType";
+import { Dispatch, SetStateAction } from "react";
 
 export const getProducts = async (
   token: string,
-  setProduct: (data: GetProductType[]) => void
+  setProduct: Dispatch<SetStateAction<GetProductType[]>>
 ) => {
   try {
     const productRes = await instance.get("/getSelectedProducts", {

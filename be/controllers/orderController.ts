@@ -35,55 +35,63 @@ export const getOrdersInAdmin = async (
   res: Response
 ) => {
   try {
-    const pipeline = [
-      {
-        $match: {
-          "products.product.shopId": new Types.ObjectId(req.user.id),
+    if (req.user.subAdmin === true) {
+      const pipeline = [
+        {
+          $match: {
+            "products.product.shopId": new Types.ObjectId(req.user.id),
+          },
         },
-      },
-      {
-        $unwind: "$products",
-      },
-      {
-        $match: {
-          "products.product.shopId": new Types.ObjectId(req.user.id),
+        {
+          $unwind: "$products",
         },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          products: { $push: "$products" },
-          orderNumber: { $first: "$orderNumber" },
-          user: { $first: "$user" },
-          total: { $first: "$total" },
-          createdAt: { $first: "$createdAt" },
-          updatedAt: { $first: "$updatedAt" },
-          invoiceId: { $first: "$invoiceId" },
-          paymentStatus: { $first: "$paymentStatus" },
-          deliveryStatus: { $first: "$deliveryStatus" },
+        {
+          $match: {
+            "products.product.shopId": new Types.ObjectId(req.user.id),
+          },
         },
-      },
-    ];
-
-    const result = await Order.aggregate(pipeline);
-    result.sort(function (a, b) {
-      return a.createdAt - b.createdAt;
-    });
-    const shopIdMatchedProductsOfOrder: any = [];
-    result.map((el) => {
-      return shopIdMatchedProductsOfOrder.push(
-        el.products.map((ele: any) => {
-          return {
-            orderNumber: el.orderNumber,
-            user: el.user,
-            createdAt: el.createdAt,
-            product: ele.product,
-            selectedProductQuantity: ele.selectedProductQuantity,
-          };
-        })
-      );
-    });
-    return res.status(200).json({ order: shopIdMatchedProductsOfOrder });
+        {
+          $group: {
+            _id: "$_id",
+            products: { $push: "$products" },
+            orderNumber: { $first: "$orderNumber" },
+            user: { $first: "$user" },
+            total: { $first: "$total" },
+            createdAt: { $first: "$createdAt" },
+            updatedAt: { $first: "$updatedAt" },
+            invoiceId: { $first: "$invoiceId" },
+            paymentStatus: { $first: "$paymentStatus" },
+            deliveryStatus: { $first: "$deliveryStatus" },
+          },
+        },
+      ];
+      const result = await Order.aggregate(pipeline);
+      result.sort(function (a, b) {
+        return a.createdAt - b.createdAt;
+      });
+      const shopIdMatchedProductsOfOrder: any = [];
+      result.map((el) => {
+        return shopIdMatchedProductsOfOrder.push(
+          el.products.map((ele: any) => {
+            return {
+              orderNumber: el.orderNumber,
+              user: el.user,
+              createdAt: el.createdAt,
+              product: ele.product,
+              selectedProductQuantity: ele.selectedProductQuantity,
+            };
+          })
+        );
+      });
+      return res
+        .status(200)
+        .json({ order: shopIdMatchedProductsOfOrder, subAdmin: true });
+    } else {
+      const orders = await Order.find({})
+        .populate("user")
+        .populate("products.product.shopId");
+      return res.status(200).json({ order: orders, subAdmin: false });
+    }
   } catch (error) {
     console.error("error in getOrdersInAdmin", error);
     return res.status(400).send("Failed to get orders");
