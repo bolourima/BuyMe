@@ -31,9 +31,6 @@ export const newAddress = async (req: AuthenticatedRequest, res: Response) => {
         new: true,
       }
     );
-
-    console.log({ updatedUser });
-
     return res.status(201).json({
       message: `New address created for ${user}, Address id:${newAddresId}`,
     });

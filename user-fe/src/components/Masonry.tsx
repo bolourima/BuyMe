@@ -9,7 +9,6 @@ import { addToFavs } from "@/helper/addToFavs";
 import { useContext, useEffect, useState } from "react";
 import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
-import { getFavProducts } from "@/helper/getFavProducts";
 import { removeFromFavs } from "@/helper/removeFromBasket";
 import { RedLoveIcon } from "@/icon/RedLoveIcon";
 
@@ -38,12 +37,12 @@ export const Masonry = ({
     setToken(accessToken);
   }, []);
   return (
-    <ImageListItem className="rounded-lg border-2 border-gray-300">
+    <ImageListItem className="rounded-lg border-2 border-gray-300 w-[320px] sm:w-[180px] lg:w-[240px] md:w-[200px]">
       <Link as={`/productdetail/${_id}`} href={`/productdetail/[id]`}>
         <img src={images[imgFirstFix]} className="rounded-t-lg" />
       </Link>
       <div className="p-5 gap-1">
-        <p className="text-xl">{name}</p>
+        <p className="text-lg">{name}</p>
         <p className="text-lg font-bold">{price.toLocaleString()}</p>
       </div>
       <div className="flex gap-2 justify-center items-center mb-4">
@@ -54,14 +53,14 @@ export const Masonry = ({
             }
             removeFromFavs(token, _id);
           }}
-          className={`p-2 rounded-lg ${
+          className={`p-1 lg:p-2 rounded-lg ${
             isFav
               ? "bg-white border-[1px] border-solid border-red-800"
               : "bg-black"
-          } w-14 flex justify-center items-center h-8`}
+          } w-11  flex justify-center items-center h-7`}
         >
           {isFav ? (
-            <div className="w-6 h-6">
+            <div className="w-4 h-4">
               <RedLoveIcon />
             </div>
           ) : (
@@ -73,7 +72,7 @@ export const Masonry = ({
             setProductData(data, false);
           }}
           onDoubleClick={() => setProductData(data, true)}
-          className="bg-black text-white h-8 rounded-lg px-4 text-center text-sm font-semibold "
+          className="bg-black text-white h-7 rounded-lg px-2 text-center text-sm font-semibold "
         >
           ADD TO CART
         </button>

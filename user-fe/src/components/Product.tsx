@@ -4,9 +4,10 @@ import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import { ClickHandler } from "@/types/handlerType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
 import ImageList from "@mui/material/ImageList";
-
 import { Masonry } from "./Masonry";
 import Box from "@mui/material/Box";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 export const Product = ({
   productData,
@@ -18,16 +19,19 @@ export const Product = ({
   const [token, setToken] = useState("");
   const maxDatasToShow = 50;
   const [renderedDataindex, setDataIndex] = useState(0);
+
   const handleChangeBundling = () =>
     setDataIndex(renderedDataindex + maxDatasToShow);
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) return;
     setToken(token);
   }, []);
+
   const setProductData: ClickHandler = (
     product: ProductType,
     onDouble: boolean
@@ -40,11 +44,28 @@ export const Product = ({
       onDouble
     );
   };
+
+  const getCols = () => {
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+    const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+
+    if (isSmallScreen) {
+      return 1;
+    } else if (isMediumScreen) {
+      return 3;
+    } else if (isLargeScreen) {
+      return 4;
+    } else {
+      return 4;
+    }
+  };
   return (
-    <div>
-      <div>
-        <Box sx={{ width: 1000, height: 1000, overflowY: "scroll" }}>
-          <ImageList variant="masonry" cols={3} gap={24}>
+    <div className="flex justify-center items-center w-full ">
+      <div className="xl:w-full">
+        <Box sx={{ overflowY: "scroll" }}>
+          <ImageList variant="masonry" cols={getCols()} gap={24}>
             {productData.map((Data, i) => {
               const test = favProducts.filter((prod) => {
                 return prod._id === Data._id;
@@ -62,7 +83,6 @@ export const Product = ({
           </ImageList>
         </Box>
       </div>
-      {/* <button onChange={handleChangeBundling}>next page</button> */}
     </div>
   );
 };

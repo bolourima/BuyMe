@@ -11,9 +11,9 @@ function valuetext(value: number): string {
 }
 export const SubCategory = ({
   subCategoryData,
-  categoryData
+  categoryData,
 }: {
-  categoryData:categoryType[]
+  categoryData: categoryType[];
   subCategoryData: TypeSubCategory[];
 }) => {
   const [value2, setValue2] = useState<number[]>([MIN, MAX]);
@@ -58,7 +58,7 @@ export const SubCategory = ({
   };
 
   return (
-    <div className="hidden lg:text-black w-[300px] rounded-lg p-4 lg:flex flex-col gap-5 border-2">
+    <div className="hidden lg:text-black w-[250px] rounded-lg p-4 lg:flex flex-col gap-5 border-2">
       <div className="">
         <div className="flex justify-between" onClick={handleOpenCategory}>
           <button className="font-bold uppercase">Category</button>
@@ -67,21 +67,17 @@ export const SubCategory = ({
         <div className={`uppercase ml-1 pl-1 mt-3`}>
           {categoryData.map((subCategory, index) => (
             <Link href={`/productlist/${subCategory.name}`}>
-                  <div
-              key={index}
-              className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
-                isOpenCategory ? "block" : "hidden"
-              }`}
-            >
-              <button
-                className={`transition-all uppercase `}
-                
+              <div
+                key={index}
+                className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
+                  isOpenCategory ? "block" : "hidden"
+                }`}
               >
-                {subCategory.name}
-              </button>
-            </div>
+                <button className={`transition-all uppercase `}>
+                  {subCategory.name}
+                </button>
+              </div>
             </Link>
-      
           ))}
         </div>
       </div>
@@ -99,17 +95,14 @@ export const SubCategory = ({
               }`}
               onClick={() => handlerSubCategory(index)}
             >
-              <button
-                className={`transition-all uppercase `}
-                
-              >
+              <button className={`transition-all uppercase `}>
                 {subCategory.name}
               </button>
             </div>
           ))}
         </div>
       </div>
-      
+
       <div className="">
         <div className="flex justify-between" onClick={handleOpenBrands}>
           <button className="font-bold uppercase">Brands</button>
