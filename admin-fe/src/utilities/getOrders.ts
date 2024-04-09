@@ -1,15 +1,15 @@
 import { instance } from "@/instance";
-import { OrderType } from "@/types/orderType";
+import { OrderType, productTypeForShop } from "@/types/orderType";
 
 export const getOrders = async (
   token: string,
-  setOrder: (data: OrderType[]) => void
+  setOrder: (data: productTypeForShop[]) => void
 ) => {
   try {
     const res = await instance.get("/getOrdersInAdmin", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    setOrder(res.data);
+    setOrder(res.data.order);
   } catch (error) {
     console.error("error in getOrders", error);
   }

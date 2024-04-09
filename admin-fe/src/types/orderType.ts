@@ -33,3 +33,10 @@ export type OrderType = {
   createdAt: Date;
   updatedAt: Date;
 };
+export type productTypeForShop = {
+  product: ProductsFromOrder;
+  selectedProductQuantity: number;
+  user: string;
+  orderNumber: number;
+  createdAt: Date;
+}[];

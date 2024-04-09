@@ -1,6 +1,7 @@
 import { Response, Request, NextFunction } from "express";
 import Order from "../models/orderModel";
 import Basket from "../models/basketModel";
+import { Types } from "mongoose";
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
@@ -34,25 +35,58 @@ export const getOrdersInAdmin = async (
   res: Response
 ) => {
   try {
-    const orders = await Order.find({ shopId: req.user.id })
-      .populate("user")
-      .populate("products.product");
-    return res.status(200).send(orders);
+    const pipeline = [
+      {
+        $match: {
+          "products.product.shopId": new Types.ObjectId(req.user.id),
+        },
+      },
+      {
+        $unwind: "$products",
+      },
+      {
+        $match: {
+          "products.product.shopId": new Types.ObjectId(req.user.id),
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          products: { $push: "$products" },
+          orderNumber: { $first: "$orderNumber" },
+          user: { $first: "$user" },
+          total: { $first: "$total" },
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" },
+          invoiceId: { $first: "$invoiceId" },
+          paymentStatus: { $first: "$paymentStatus" },
+          deliveryStatus: { $first: "$deliveryStatus" },
+        },
+      },
+    ];
+
+    const result = await Order.aggregate(pipeline);
+    result.sort(function (a, b) {
+      return a.createdAt - b.createdAt;
+    });
+    const shopIdMatchedProductsOfOrder: any = [];
+    result.map((el) => {
+      return shopIdMatchedProductsOfOrder.push(
+        el.products.map((ele: any) => {
+          return {
+            orderNumber: el.orderNumber,
+            user: el.user,
+            createdAt: el.createdAt,
+            product: ele.product,
+            selectedProductQuantity: ele.selectedProductQuantity,
+          };
+        })
+      );
+    });
+    return res.status(200).json({ order: shopIdMatchedProductsOfOrder });
   } catch (error) {
     console.error("error in getOrdersInAdmin", error);
     return res.status(400).send("Failed to get orders");
-  }
-};
-export const getSelectedOrders = async (
-  req: AuthenticatedRequest,
-  res: Response
-) => {
-  try {
-    const orders = await Order.find({ shopId: req.user.id })
-      .populate("user")
-      .populate("products.product");
-  } catch (error) {
-    console.error("error in getSelectedOrder", error);
   }
 };
 export const getOrdersOfUser = async (

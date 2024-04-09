@@ -8,7 +8,7 @@ import { GetProductType } from "@/types/getProductType";
 import DataTable from "@/components/DataTable";
 import { string } from "yup";
 import { Orders } from "@/components/Orders";
-import { OrderType } from "@/types/orderType";
+import { OrderType, productTypeForShop } from "@/types/orderType";
 import { getOrders } from "@/utilities/getOrders";
 import { getProducts } from "@/utilities/getProducts";
 import { Product } from "@/types/productType";
@@ -24,13 +24,13 @@ export default function Home({
   // orderData: OrderType[];
 }) {
   const [visibleComponent, setVisibleComponent] = useState("");
-  const [orderData, setOrderData] = useState<OrderType[]>([]);
+  const [orderData, setOrderData] = useState<productTypeForShop[]>([]);
   const { token, setToken } = useContext(TokenContext);
   const [productData, setProductData] = useState<GetProductType[]>([]);
   const setProduct = (data: GetProductType[]) => {
     setProductData(data);
   };
-  const setOrder = (data: OrderType[]) => {
+  const setOrder = (data: productTypeForShop[]) => {
     setOrderData(data);
   };
   useEffect(() => {
