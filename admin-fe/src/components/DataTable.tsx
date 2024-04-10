@@ -1,36 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { GetProductType } from "@/types/getProductType";
 import { instance } from "@/instance";
 import { Trash } from "@/svg/Trash";
-import { idType } from "@/types/idType";
-import { toastifySuccess, toastifyWarning } from "@/utilities/toastify";
 import { Edit } from "@/svg/Edit";
+import { toastifySuccess, toastifyWarning } from "@/utilities/toastify";
 
 const DataTable = ({
-  productData,
+  productRawData,
   token,
   setIsAddProductVisible,
   setEditableProduct,
   setOnEdit,
 }: {
+  productRawData: GetProductType[];
+  token: string;
+  setIsAddProductVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setEditableProduct: React.Dispatch<React.SetStateAction<GetProductType>>;
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsAddProductVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  productData: GetProductType[];
-  token: string;
 }) => {
-  const handleDelete = async (id: idType) => {
+  console.log("raw", productRawData);
+  const [productData, setProductData] = useState<GetProductType[]>(
+    productRawData.length != 0 ? productRawData : []
+  );
+  console.log("productdata", productData);
+
+  const [filterText, setFilterText] = useState<string>("");
+
+  const handleDelete = async (id: string) => {
     try {
-      const res = await instance.delete(`/deleteProduct/${id}`, {
+      await instance.delete(`/deleteProduct/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      window.location.reload();
-      if (res.status === 200) {
-        toastifySuccess("Product successfully deleted");
-      } else {
-        toastifyWarning("Unexpected error");
-      }
+      const updatedProducts = productData.filter(
+        (product) => product._id !== id
+      );
+      toastifySuccess("Product successfully deleted");
+      setProductData(updatedProducts);
     } catch (error) {
       console.error("Error deleting product:", error);
       toastifyWarning("Unexpected error");
@@ -38,7 +44,9 @@ const DataTable = ({
   };
 
   const handleEdit = (product: GetProductType) => {
-    setOnEdit(true), setIsAddProductVisible(true), setEditableProduct(product);
+    setIsAddProductVisible(true);
+    setOnEdit(true);
+    setEditableProduct(product);
   };
 
   const columns: GridColDef[] = [
@@ -89,10 +97,24 @@ const DataTable = ({
       },
     },
   ];
+  useEffect(() => {
+    setProductData(productRawData);
+  }, [productRawData]);
+  const filteredProductData = productData.filter((product) => {
+    const productValues = Object.values(product).join("").toLowerCase();
+    return productValues.includes(filterText.toLowerCase());
+  });
 
   return (
     <div>
       <div className="flex items-center pt-3">
+        <input
+          type="text"
+          placeholder="Хайх..."
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+          className="w-[280px] h-12 bg-white rounded-lg items-center justify-center gap-3 mb-5"
+        />
         <button
           onClick={() => setIsAddProductVisible(true)}
           className="flex w-[280px] h-12 bg-black text-white rounded-lg items-center justify-center gap-3 mb-5"
@@ -104,16 +126,12 @@ const DataTable = ({
       <div style={{ height: 800, width: "100%" }}>
         <DataGrid
           getRowId={(row) => row._id}
-          rows={productData}
+          disableColumnSelector
+          rows={filteredProductData}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
           pageSizeOptions={[10, 15]}
           disableRowSelectionOnClick
-          onRowSelectionModelChange={(_id) => {}}
+          onRowSelectionModelChange={() => {}}
         />
       </div>
     </div>

@@ -40,7 +40,7 @@ export const MainProducts = ({
     <div className="flex flex-col">
       {!isAddProductVisible && (
         <DataTable
-          productData={productData}
+          productRawData={productData}
           token={token}
           setIsAddProductVisible={setIsAddProductVisible}
           setOnEdit={setOnEdit}
