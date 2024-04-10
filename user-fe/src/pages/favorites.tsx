@@ -7,6 +7,7 @@ import { toastifyWarning } from "@/utilities/toastify";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { ClickHandler } from "@/types/handlerType";
+import { putIntoBasket } from "@/utilities/putIntoBasket";
 
 const favorites = ({
   data,
@@ -91,9 +92,8 @@ const favorites = ({
                   <div className="flex gap-2 mt-2">
                     <button
                       onClick={() => {
-                        setProductData(data, false);
+                        putIntoBasket(product, token);
                       }}
-                      onDoubleClick={() => setProductData(data, true)}
                       className="bg-black hover:bg-gray-400 text-white hover:text-black h-7 rounded-lg px-2 text-center text-sm font-semibold hover:font-bold"
                     >
                       Add to Cart
