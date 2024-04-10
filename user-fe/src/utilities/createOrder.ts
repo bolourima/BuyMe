@@ -4,6 +4,7 @@ import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { toastifyError, toastifySuccess } from "./toastify";
 import { emptyBasket } from "@/helper/emptyBasket";
 import { Dispatch, SetStateAction } from "react";
+import { InvoiceType } from "@/types/invoiceType";
 type Order = {
   product: ProductType;
   selectedProductQuantity: number;
@@ -15,7 +16,7 @@ export const createOrder = async (
   products: ProductTypeWithQuantity[],
   token: string,
   total: number,
-  setQrcode: React.Dispatch<React.SetStateAction<string>>,
+  setInvoice: React.Dispatch<React.SetStateAction<InvoiceType>>,
   setProductsInBasket: Dispatch<SetStateAction<ProductTypeWithQuantity[]>>,
   addressId: string
 ) => {
@@ -27,6 +28,19 @@ export const createOrder = async (
         selectedProductQuantity: products[i].selectedProductQuantity,
       });
     }
+    const res = await instance.post(
+      "/createOrder",
+      {
+        products: selectedProductContainer,
+        total: total,
+        invoiceId: "",
+        orderNumber: orderNumberGenerator(),
+        addressId: addressId,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    emptyBasket(setProductsInBasket);
+    toastifySuccess("Order created");
     const tokenRes = await instance.post(
       "https://merchant.qpay.mn/v2/auth/token",
       null,
@@ -39,24 +53,20 @@ export const createOrder = async (
       "/createInvoice",
       {
         token: tokenRes.data.access_token,
+        amount: total,
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
     localStorage.setItem("invoiceId", invoiceRes.data.invoice_id);
-    setQrcode(invoiceRes.data.qPay_shortUrl);
-    const res = await instance.post(
-      "/createOrder",
+    console.log(invoiceRes.data);
+    setInvoice(invoiceRes.data);
+    await instance.put(
+      `/changeOrderInvoice/${res.data.id}`,
       {
-        products: selectedProductContainer,
-        total: total,
         invoiceId: invoiceRes.data.invoice_id,
-        orderNumber: orderNumberGenerator(),
-        addressId: addressId,
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    emptyBasket(setProductsInBasket);
-    return toastifySuccess("Order created");
   } catch (error) {
     toastifyError("Failed to order");
     console.error("error: ", error);

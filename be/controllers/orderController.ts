@@ -23,9 +23,11 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
       { user: req.user.id },
       { $set: { products: [] } }
     );
-    return res
-      .status(201)
-      .json({ msg: "Order successfully created", invoiceId: order.invoiceId });
+    return res.status(201).json({
+      msg: "Order successfully created",
+      invoiceId: order.invoiceId,
+      id: order._id,
+    });
   } catch (error) {
     console.error("error in creating order", error);
     return res.status(400).json({ msg: "Failed to create order" });

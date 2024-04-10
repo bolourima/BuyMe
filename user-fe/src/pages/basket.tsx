@@ -8,12 +8,14 @@ import { toastifyWarning } from "@/utilities/toastify";
 import { Qr } from "@/components/Qr";
 import { PaymentSection } from "@/components/PaymentSection";
 import { ProductSectionOfBasket } from "@/components/ProductSectionOfBasket";
+import { InvoiceType } from "@/types/invoiceType";
+import { invoiceInitial } from "@/types/invoiceInitial";
 const Basket = () => {
   const router = useRouter();
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
   );
-  const [qrcode, setQrcode] = useState("");
+  const [invoice, setInvoice] = useState<InvoiceType>(invoiceInitial);
   let total: number = 0;
   const { token, setToken } = useContext(TokenContext);
   const setBasket = async (accessToken: string) => {
@@ -44,7 +46,7 @@ const Basket = () => {
   }, [productsInBasket]);
   return (
     <div className="lg:w-full min-h-screen flex justify-center">
-      {qrcode && <Qr qrcode={qrcode} setQrcode={setQrcode} />}
+      {invoice.invoice_id && <Qr invoice={invoice} setInvoice={setInvoice} />}
       {productsInBasket.length ? (
         <div className="flex flex-col lg:w-full lg:flex lg:flex-row justify-center pt-16 lg:gap-16">
           <ProductSectionOfBasket
@@ -52,7 +54,7 @@ const Basket = () => {
             setProductsInBasket={setProductsInBasket}
             token={token}
           />
-          <PaymentSection total={total} token={token} setQrcode={setQrcode} />
+          <PaymentSection total={total} token={token} setInvoice={setInvoice} />
         </div>
       ) : (
         <div className="flex flex-col mt-32 items-center">

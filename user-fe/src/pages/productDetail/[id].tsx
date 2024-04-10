@@ -7,6 +7,8 @@ import { ProductInitial } from "@/types/productInitial";
 import { LoveIcon } from "@/icon/LoveIcon";
 import { ClickHandler } from "@/types/handlerType";
 import { toastifyError } from "@/utilities/toastify";
+import { ShopIcon } from "@/icon/ShopIcon";
+import Link from "next/link";
 
 export default function ProductId({
   data,
@@ -14,49 +16,28 @@ export default function ProductId({
   data: ProductType;
   setProductData: ClickHandler;
 }) {
-  console.log("first");
   const router = useRouter();
-  console.log("first2");
-  const ID = router.query.id;
-  console.log("first3");
+  const id = router.query.id;
   const [productData, setProductData] = useState<ProductType>(ProductInitial);
-  console.log("first4");
   const [selectedImg, setSelectedImg] = useState<string>("");
-  console.log("first5");
   const [onDescription, setOnDescription] = useState(true);
-  console.log("first6");
   const [onReviews, setOnReviews] = useState(false);
-  console.log("first7");
-  const getProduct = async (ID: idType) => {
-    if (!ID) {
-      console.log("two");
-      return;
-    }
+  const getProduct = async (productId: idType) => {
     try {
-      const productRes = await instance.post(`/getProducts/${ID}`);
-      console.log("three");
-      const productData = productRes.data;
-      console.log("productdata", productData);
-      setSelectedImg(productData.images[0]);
-      console.log("setselectedImg", setSelectedImg);
-      setProductData(productData);
-      console.log("setproductdata", setProductData);
+      const productRes = await instance.get(`/productDetail/${productId}`);
+      setSelectedImg(productRes.data.images[0]);
+      setProductData(productRes.data);
     } catch (error) {
-      console.log("errooor", error);
+      console.error("errooor", error);
       toastifyError("id error");
     }
   };
   useEffect(() => {
-    console.log("useeffect");
-
-    if (!ID) return;
-    console.log("useeffect");
-    getProduct(ID);
-    console.log("getproductID", getProduct(ID));
-  }, [ID]);
+    if (!id) return;
+    getProduct(id);
+  }, [id]);
   const ChangeBtn = (event: React.MouseEvent<HTMLButtonElement>) => {
     const buttonText = (event.target as HTMLButtonElement).innerText;
-    console.log("changeBtn");
     setOnDescription(false);
     setOnReviews(false);
 
@@ -85,6 +66,18 @@ export default function ProductId({
           </div>
         </div>
         <div className="flex flex-col items-center lg:flex-col lg:w-1/2 justify-center gap-5">
+          <Link
+            className="flex gap-4 w-full cursor-pointer"
+            as={`/shop/${productData.shopId._id}`}
+            href={`/shop/[id]`}
+          >
+            <button className="w-8 h-8">
+              <ShopIcon />
+            </button>
+            <p className="text-2xl font-semibold text-green-500">
+              {productData.shopId.shopName}
+            </p>
+          </Link>
           <p className="text-2xl font-semibold">{productData?.name}</p>
           <p className="text-green-600">
             {productData?.price.toLocaleString()}₮
@@ -137,4 +130,3 @@ export default function ProductId({
     </div>
   );
 }
-// }

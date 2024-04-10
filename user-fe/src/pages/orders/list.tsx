@@ -2,35 +2,21 @@ import { Qr } from "@/components/Qr";
 import { TokenContext } from "@/context/TokenContext";
 import { getOrders } from "@/helper/getOrders";
 import { payPayment } from "@/helper/payPayment";
+import { invoiceInitial } from "@/types/invoiceInitial";
+import { InvoiceType } from "@/types/invoiceType";
 import { OrderType } from "@/types/orderType";
 import { toastifyError } from "@/utilities/toastify";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 const Order = () => {
   const router = useRouter();
   const [orderData, setOrderData] = useState<OrderType[]>([]);
-  const [qrcode, setQrcode] = useState("");
+  const [invoice, setInvoice] = useState<InvoiceType>(invoiceInitial);
   const setOrder = (orderData: OrderType[]) => {
     setOrderData(orderData);
   };
   const { token, setToken } = useContext(TokenContext);
-
-  const columns: GridColDef[] = [
-    { field: "orderNumber", headerName: "Order number", width: 120 },
-    { field: "total", headerName: "Total price", width: 120 },
-    {
-      field: "action",
-      headerName: "Products",
-      width: 120,
-      renderCell: (params) => {
-        const rowId = params.row._id;
-        const product = params.row;
-        return <div></div>;
-      },
-    },
-  ];
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -45,7 +31,7 @@ const Order = () => {
 
   return (
     <div className="flex flex-col overflow-scroll px-32 h-fit">
-      {qrcode && <Qr qrcode={qrcode} setQrcode={setQrcode} />}
+      {invoice.invoice_id && <Qr invoice={invoice} setInvoice={setInvoice} />}
       {orderData.map((order) => {
         return (
           <div className="flex justify-between w-full h-fit items-center">
@@ -82,7 +68,7 @@ const Order = () => {
             ) : (
               <button
                 onClick={() => {
-                  payPayment(setQrcode, order._id, token);
+                  payPayment(setInvoice, order, token);
                 }}
               >
                 Төлбөр төлөх
@@ -91,17 +77,6 @@ const Order = () => {
           </div>
         );
       })}
-      <div style={{ height: 800, width: "100%" }}>
-        <DataGrid
-          getRowId={(row) => row._id}
-          disableColumnSelector
-          rows={orderData}
-          columns={columns}
-          pageSizeOptions={[10, 15]}
-          disableRowSelectionOnClick
-          onRowSelectionModelChange={() => {}}
-        />
-      </div>
     </div>
   );
 };

@@ -1,9 +1,11 @@
 import { instance } from "@/instance";
+import { InvoiceType } from "@/types/invoiceType";
+import { OrderType } from "@/types/orderType";
 import { toastifyError } from "@/utilities/toastify";
 import { Dispatch, SetStateAction } from "react";
 export const payPayment = async (
-  setQrcode: Dispatch<SetStateAction<string>>,
-  orderId: string,
+  setInvoice: Dispatch<SetStateAction<InvoiceType>>,
+  order: OrderType,
   token: string
 ) => {
   try {
@@ -19,19 +21,21 @@ export const payPayment = async (
       "/createInvoice",
       {
         token: tokenRes.data.access_token,
+        amount: order.total,
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
     await instance.put(
-      `/changeOrderInvoice/${orderId}`,
+      `/changeOrderInvoice/${order._id}`,
       {
         invoiceId: invoiceRes.data.invoice_id,
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
     localStorage.setItem("invoiceId", invoiceRes.data.invoice_id);
-    setQrcode(invoiceRes.data.qPay_shortUrl);
+    setInvoice(invoiceRes.data);
   } catch (error) {
     toastifyError("Failed to pay");
+    console.error("error in pay payment", error);
   }
 };
