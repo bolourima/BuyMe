@@ -2,6 +2,8 @@ import { Qr } from "@/components/Qr";
 import { TokenContext } from "@/context/TokenContext";
 import { getOrders } from "@/helper/getOrders";
 import { payPayment } from "@/helper/payPayment";
+import { invoiceInitial } from "@/types/invoiceInitial";
+import { InvoiceType } from "@/types/invoiceType";
 import { OrderType } from "@/types/orderType";
 import { toastifyError } from "@/utilities/toastify";
 import { useRouter } from "next/router";
@@ -9,7 +11,7 @@ import { useContext, useEffect, useState } from "react";
 const Order = () => {
   const router = useRouter();
   const [orderData, setOrderData] = useState<OrderType[]>([]);
-  const [qrcode, setQrcode] = useState("");
+  const [invoice, setInvoice] = useState<InvoiceType>(invoiceInitial);
   const setOrder = (orderData: OrderType[]) => {
     setOrderData(orderData);
   };
@@ -26,7 +28,7 @@ const Order = () => {
   }, []);
   return (
     <div className="flex flex-col overflow-scroll px-32 h-fit">
-      {qrcode && <Qr qrcode={qrcode} setQrcode={setQrcode} />}
+      {invoice.invoice_id && <Qr invoice={invoice} setInvoice={setInvoice} />}
       {orderData.map((order) => {
         return (
           <div className="flex justify-between w-full h-fit items-center">
@@ -63,7 +65,7 @@ const Order = () => {
             ) : (
               <button
                 onClick={() => {
-                  payPayment(setQrcode, order._id, token);
+                  payPayment(setInvoice, order, token);
                 }}
               >
                 Төлбөр төлөх

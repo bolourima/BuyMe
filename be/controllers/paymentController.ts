@@ -16,8 +16,8 @@ export const createInvoice = async (
         invoice_code: "POWER_EXPO_INVOICE",
         sender_invoice_no: "1234567",
         invoice_receiver_code: "terminal",
-        invoice_description: "test",
-        amount: 10,
+        invoice_description: "BuyMe",
+        amount: req.body.amount,
         callback_url:
           "https://buymeuserfe-ofjixqgcj-bolormaas-projects.vercel.app",
       },
