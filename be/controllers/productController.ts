@@ -5,6 +5,17 @@ import Category from "../models/categoryModel";
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
+export const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find({})
+      .limit(10)
+      .skip(Number(req.params.page) * 10);
+    return res.status(200).send(products);
+  } catch (error) {
+    console.error("error in get all product", error);
+    return res.status(400).json({ err: error });
+  }
+};
 export const getFilteredProducts = async (req: Request, res: Response) => {
   try {
     const name = req.params.category;
@@ -169,5 +180,14 @@ export const getProductsFromShop = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("errorin get products from shop", error);
     return res.status(400).json({ err: error });
+  }
+};
+export const getQuantityOfProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find({});
+    const qty = products.length;
+    return res.status(200).json({ qty: qty });
+  } catch (error) {
+    console.error("error in getQuantityOfProducts", error);
   }
 };

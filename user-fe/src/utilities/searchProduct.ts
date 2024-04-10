@@ -10,7 +10,6 @@ export const SearchProduct = async (
     if (!searchInput) {
       return toastifyError("noting to search");
     }
-    console.log("search", searchInput);
     const response = await instance.post("getProducts", { input: searchInput });
     setSearchedProduct(response.data);
   } catch (error) {

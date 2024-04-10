@@ -37,7 +37,6 @@ export const Header = () => {
     if (showInput === true) {
       router.push("/productlist");
       SearchProduct(searchInput, setSearchedProduct);
-      console.log("awdawdaw", searchInput);
     }
   };
 
