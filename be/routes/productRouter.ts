@@ -11,14 +11,18 @@ import {
 } from "../controllers/productController";
 import upload from "../middlewares/multer";
 import { accessTokenAuth } from "../middlewares/accessTokenAuth";
+import { searchProduct } from "../controllers/searchController";
 export const productRouter = Router();
 productRouter.route("/createProduct").post(accessTokenAuth, createProduct);
 productRouter.route("/editProduct").put(accessTokenAuth, editProduct);
 productRouter
   .route("/selectImage")
   .post(upload.single("img"), accessTokenAuth, uploadSingleImage);
-productRouter.route("/getProducts").get(getProducts)
-productRouter.route("/getProducts/:category").get(getFilteredProducts);
+productRouter.route("/getProducts").get(getProducts).post(searchProduct);
+productRouter
+  .route("/getProducts/:category")
+  .get(getFilteredProducts)
+  .post(searchProduct);
 productRouter
   .route("/deleteProduct/:id")
   .delete(accessTokenAuth, deleteProduct);
