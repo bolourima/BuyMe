@@ -1,45 +1,41 @@
-import Bar from "@/icon/Bar";
-
-import {
-  DownIcon,
-  MyCartIcon,
-  OrderIcon,
-  ProfileIcon,
-  SearchIcon,
-} from "@/icon";
+import { MyCartIcon, OrderIcon, ProfileIcon, SearchIcon } from "@/icon";
 
 import { useRouter } from "next/router";
 
 import Link from "next/link";
 
-import React, { useContext, useEffect, useState, useRef } from "react";
-import { tree } from "next/dist/build/templates/app-page";
-import CloseIcon from "@/icon/CloseIcon";
+import { useContext, useEffect, useState } from "react";
 import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "@/utilities/refreshToken";
 import { MobileBar } from "./MobileBar";
-import { SearchProduct } from "@/utilities/searchProduct";
 import { SearchInputContext } from "@/context/searchContext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { instance } from "@/instance";
 
 export const Header = () => {
-  const [searchInput, setSearchInput] = useState<string>("");
   const { searchedProduct, setSearchedProduct } =
     useContext(SearchInputContext);
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
-
   const [showInput, setShowInput] = useState(false);
-
-  const clickSearch = () => {
-    setShowInput(!showInput);
-    if (showInput === true) {
+  const formik = useFormik({
+    initialValues: {
+      input: "",
+    },
+    validationSchema: Yup.object({
+      input: Yup.string().max(20).required(),
+    }),
+    onSubmit: async () => {
+      const response = await instance.post("getProducts", {
+        input: formik.values.input,
+      });
       router.push("/productlist");
-      SearchProduct(searchInput, setSearchedProduct);
-    }
-  };
-
+      setSearchedProduct(response.data);
+    },
+  });
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) return;
@@ -58,7 +54,6 @@ export const Header = () => {
         <div className=" block  lg:hidden">
           <MobileBar />
         </div>
-
         <div>
           <Link href={"/"}>
             <div className="flex hover:shadow-sm">
@@ -67,7 +62,6 @@ export const Header = () => {
             </div>
           </Link>
         </div>
-
         <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center  ">
           <Link href={"/"}>
             <h1
@@ -80,7 +74,6 @@ export const Header = () => {
               Home
             </h1>
           </Link>
-
           <Link href={"/productlist"}>
             <h1
               className={`lg:content-center text-xl flex items-center font-semibold gap-2 hover:border p-2 rounded-md ${
@@ -89,27 +82,33 @@ export const Header = () => {
                   : "font-normal text-zinc-500"
               }`}
             >
-              Categories
-              <DownIcon />
+              All products
             </h1>
           </Link>
         </div>
         <div>
           <div className=" relative lg:flex gap-6 items-center">
             <div className=" hidden lg:flex gap-6 items-center">
-              <input
-                type="text"
-                placeholder="Хайх"
-                className={`border p-2 rounded absolute right-40 btnn ${
-                  showInput ? "block" : "hidden"
-                }`}
-                onChange={(e) => {
-                  setSearchInput(e.target.value);
-                }}
-              />
-              <div className=" cursor-pointer" onClick={clickSearch}>
-                <SearchIcon />
-              </div>
+              <form
+                className="flex justify-center items-center"
+                onSubmit={formik.handleSubmit}
+              >
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className={`border p-2 rounded absolute right-40 btnn ${
+                    showInput ? "block" : "hidden"
+                  }`}
+                  {...formik.getFieldProps("input")}
+                />
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setShowInput(!showInput)}
+                  type="submit"
+                >
+                  <SearchIcon />
+                </button>
+              </form>
               <button
                 onClick={() => router.push("/favorites")}
                 className="w-4 h-4 btnn"

@@ -1,38 +1,24 @@
-import { SearchInputContext } from "@/context/searchContext";
-import { SearchProduct } from "@/utilities/searchProduct";
-import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import { TokenContext } from "@/context/TokenContext";
+import { refresh } from "@/utilities/refreshToken";
 
 export const MobileHero = () => {
   const router = useRouter();
-  const [searchInput, setSearchInput] = useState<string>("");
-  const { searchedProduct, setSearchedProduct } =
-    useContext(SearchInputContext);
-  const clickSearch = () => {
-    router.push("/productlist");
-    SearchProduct(searchInput, setSearchedProduct);
-  };
+  const { token, setToken } = useContext(TokenContext);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    const exp = jwtDecode(accessToken).exp;
+    if (!exp) return;
+    if (exp < Date.now() / 1000) refresh();
+    setToken(accessToken);
+  }, []);
   return (
     <div className="lg:hidden block">
-      <div className="flex justify-center items-center w-full gap-2 px-4 my-5">
-        <input
-          type="text"
-          placeholder="Хайх"
-          className="border p-2 rounded w-5/6"
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-          }}
-        />
-        <button
-          className="w-1/6 flex justify-center items-center"
-          onClick={clickSearch}
-        >
-          <SearchIcon />
-        </button>
-      </div>
       <div
-        className="h-[250px] bg-center rounded-md mx-3"
+        className="h-[250px] bg-center rounded-md mx-3 mt-7"
         style={{
           backgroundImage: `url(https://img.freepik.com/premium-photo/fashion-model-outdoor-portrait-tourist-woman-enjoying-sightseeing-lviv-girl-looking-ancient-atchitecture_106029-855.jpg`,
         }}

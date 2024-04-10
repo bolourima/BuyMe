@@ -3,10 +3,12 @@ import {
   createProduct,
   deleteProduct,
   editProduct,
+  getAllProducts,
   getFilteredProducts,
   getProductDetail,
   getProducts,
   getProductsFromShop,
+  getQuantityOfProducts,
   getSelectedProductsInAdmin,
   uploadSingleImage,
 } from "../controllers/productController";
@@ -19,7 +21,9 @@ productRouter.route("/editProduct").put(accessTokenAuth, editProduct);
 productRouter
   .route("/selectImage")
   .post(upload.single("img"), accessTokenAuth, uploadSingleImage);
-productRouter.route("/getProducts").get(getProducts).post(searchProduct);
+productRouter.route("/getAllProducts/:page").get(getAllProducts);
+productRouter.route("/getProducts").post(searchProduct);
+productRouter.route("/getQuantityOfProducts").get(getQuantityOfProducts);
 productRouter
   .route("/getProducts/:category")
   .get(getFilteredProducts)

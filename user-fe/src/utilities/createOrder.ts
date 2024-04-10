@@ -58,7 +58,6 @@ export const createOrder = async (
       { headers: { Authorization: `Bearer ${token}` } }
     );
     localStorage.setItem("invoiceId", invoiceRes.data.invoice_id);
-    console.log(invoiceRes.data);
     setInvoice(invoiceRes.data);
     await instance.put(
       `/changeOrderInvoice/${res.data.id}`,

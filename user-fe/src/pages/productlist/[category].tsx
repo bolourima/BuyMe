@@ -10,6 +10,7 @@ import { toastifyWarning } from "@/utilities/toastify";
 import { useRouter } from "next/router";
 import { getFavProducts } from "@/helper/getFavProducts";
 import { ProductsInFavContext } from "@/context/ProductsInFavContext";
+import { MobileBar } from "@/components/MobileBar";
 type Params = {
   category: string;
 };
