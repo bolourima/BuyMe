@@ -49,7 +49,7 @@ export const MobileBar = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <div className="w-7">
+        <div className="w-5 mt-[8px]">
           <Bar />
         </div>
       </SheetTrigger>
