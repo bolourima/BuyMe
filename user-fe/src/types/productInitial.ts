@@ -14,5 +14,5 @@ export const ProductInitial = {
   createdAt: "",
   updatedAt: "",
   selectedQuantity: 0,
-  shopId: "",
+  shopId: { shopName: "", _id: "" },
 };
