@@ -19,11 +19,7 @@ const favorites = ({
 }) => {
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
-  const [products, setProducts] = useState<ProductType[]>([]);
   const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
-  const setFavs = (products: ProductType[]) => {
-    setProducts(products);
-  };
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
@@ -36,7 +32,7 @@ const favorites = ({
   }, []);
   return (
     <div>
-      {products.map((product, i) => {
+      {productsInFav.map((product, i) => {
         return (
           <div className="flex justify-center h-[200px] lg:h-[300px]">
             <div
