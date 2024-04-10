@@ -2,10 +2,11 @@ import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
-import React, { useState } from "react";
-import { GetServerSideProps } from "next";
+import { useContext, useEffect } from "react";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
+import { getFavProducts } from "@/helper/getFavProducts";
+import { ProductsInFavContext } from "@/context/ProductsInFavContext";
 
 function productList({
   productData,
@@ -16,6 +17,12 @@ function productList({
   productData: ProductType[];
   subCategoryBackendData: TypeSubCategory[];
 }) {
+  const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    getFavProducts(accessToken, setProductsInFav);
+  }, []);
   return (
     <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
@@ -23,7 +30,7 @@ function productList({
           subCategoryData={subCategoryBackendData}
           categoryData={categoryData}
         />
-        <Product productData={productData} favProducts={[]} />
+        <Product productData={productData} favProducts={productsInFav} />
       </div>
     </div>
   );
