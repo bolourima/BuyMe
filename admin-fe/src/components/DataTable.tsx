@@ -23,7 +23,6 @@ const DataTable = ({
   const [productData, setProductData] = useState<GetProductType[]>(
     productRawData.length != 0 ? productRawData : []
   );
-  console.log("productdata", productData);
 
   const [filterText, setFilterText] = useState<string>("");
 
