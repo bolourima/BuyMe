@@ -2,11 +2,13 @@ import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
 import { SearchInputContext } from "@/context/searchContext";
+import { getFavProducts } from "@/helper/getFavProducts";
+import { ProductsInFavContext } from "@/context/ProductsInFavContext";
 
 function productList({
   productData,
@@ -19,6 +21,12 @@ function productList({
 }) {
   const { searchedProduct, setSearchedProduct } =
     useContext(SearchInputContext);
+  const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return;
+    getFavProducts(accessToken, setProductsInFav);
+  }, []);
   return (
     <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
@@ -30,7 +38,7 @@ function productList({
           productData={
             searchedProduct.length == 0 ? productData : searchedProduct
           }
-          favProducts={[]}
+          favProducts={productsInFav}
         />
       </div>
     </div>

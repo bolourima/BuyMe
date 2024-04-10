@@ -6,11 +6,12 @@ import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { addToFavs } from "@/helper/addToFavs";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
 import { removeFromFavs } from "@/helper/removeFromBasket";
 import { RedLoveIcon } from "@/icon/RedLoveIcon";
+import { ProductsInFavContext } from "@/context/ProductsInFavContext";
 
 export const Masonry = ({
   data,
@@ -23,6 +24,7 @@ export const Masonry = ({
 }) => {
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
+  const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
   const { _id, images = "", name, price = 0, disCount } = data || {};
   const { isSale = 0, salePercent = 0 } = disCount || {};
   const sale = (price * 100) / salePercent;
@@ -49,9 +51,10 @@ export const Masonry = ({
         <button
           onClick={() => {
             if (!isFav) {
+              setProductsInFav([...productsInFav, data]);
               return addToFavs(_id, token);
             }
-            removeFromFavs(token, _id);
+            removeFromFavs(token, _id, productsInFav, setProductsInFav);
           }}
           className={`p-1 lg:p-2 rounded-lg ${
             isFav

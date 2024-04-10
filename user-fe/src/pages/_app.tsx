@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { Router, useRouter } from "next/router";
 import { Token } from "@/context/TokenContext";
 import { SearchedProducts } from "@/context/searchContext";
+import { ProductsInFav } from "@/context/ProductsInFavContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -22,21 +23,23 @@ export default function App({ Component, pageProps }: AppProps) {
       <Token>
         <SearchedProducts>
           <ProductsInBasket>
-            <ToastContainer
-              position="top-center"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-            />
-            {isVisibleHF && <Header />}
-            <Component {...pageProps} />
-            {isVisibleHF && <Footer />}
+            <ProductsInFav>
+              <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+              />
+              {isVisibleHF && <Header />}
+              <Component {...pageProps} />
+              {isVisibleHF && <Footer />}
+            </ProductsInFav>
           </ProductsInBasket>
         </SearchedProducts>
       </Token>

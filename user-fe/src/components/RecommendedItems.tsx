@@ -1,11 +1,11 @@
 import React from "react";
 import { ProductCardOne } from "./ProductCardOne";
 import { ProductType } from "@/types/productType";
-export default function RecommendedItems({
+export const RecommendedItems = ({
   ProductData,
 }: {
   ProductData: ProductType[];
-}) {
+}) => {
   return (
     <div className=" w-full flex flex-col items-center gap-16">
       <h1 className=" font-extrabold text-6xl">Our Bestseller</h1>
@@ -16,4 +16,4 @@ export default function RecommendedItems({
       </div>
     </div>
   );
-}
+};

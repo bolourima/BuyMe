@@ -61,10 +61,10 @@ export const Product = ({
         <Box sx={{ overflowY: "scroll" }}>
           <ImageList variant="masonry" cols={getCols()} gap={24}>
             {productData.map((Data, i) => {
-              const test = favProducts.filter((prod) => {
+              const favs = favProducts.filter((prod) => {
                 return prod._id === Data._id;
               });
-              const isFav = test.length == 0 ? false : true;
+              const isFav = favs.length == 0 ? false : true;
               return (
                 <Masonry
                   key={i}

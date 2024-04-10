@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Sheet,
@@ -21,9 +21,11 @@ import { useRouter } from "next/router";
 import { LoveMb } from "@/icon/LoveMb";
 import { MyCartIcon } from "@/icon";
 import { CheckIcon } from "@/icon/CheckIcon";
+import { TokenContext } from "@/context/TokenContext";
 
-export default function MobileBareTest() {
+export const MobileBareTest = () => {
   const [user, setUser] = useState<UserType>(userInitial);
+  const { token, setToken } = useContext(TokenContext);
 
   const getUser = (data: UserType) => {
     setUser(data);
@@ -42,6 +44,7 @@ export default function MobileBareTest() {
       refresh();
     }
     getUserInfo(accessToken, getUser);
+    setToken(accessToken);
   }, []);
   return (
     <Sheet>
@@ -130,4 +133,4 @@ export default function MobileBareTest() {
       </SheetContent>
     </Sheet>
   );
-}
+};

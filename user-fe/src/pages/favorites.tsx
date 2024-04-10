@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { ClickHandler } from "@/types/handlerType";
 import { putIntoBasket } from "@/utilities/putIntoBasket";
+import { ProductsInFavContext } from "@/context/ProductsInFavContext";
 
 const favorites = ({
   data,
@@ -18,11 +19,7 @@ const favorites = ({
 }) => {
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
-  const [products, setProducts] = useState<ProductType[]>([]);
-
-  const setFavs = (products: ProductType[]) => {
-    setProducts(products);
-  };
+  const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
@@ -31,11 +28,11 @@ const favorites = ({
       return;
     }
     setToken(accessToken);
-    getFavProducts(accessToken, setFavs);
+    getFavProducts(accessToken, setProductsInFav);
   }, []);
   return (
     <div>
-      {products.map((product, i) => {
+      {productsInFav.map((product, i) => {
         return (
           <div className="flex justify-center h-[200px] lg:h-[300px]">
             <div
@@ -44,7 +41,12 @@ const favorites = ({
             >
               <button
                 onClick={() => {
-                  removeFromFavs(token, product._id);
+                  removeFromFavs(
+                    token,
+                    product._id,
+                    productsInFav,
+                    setProductsInFav
+                  );
                 }}
                 className="w-full rounded-lg flex justify-end items-center mt-3"
               >

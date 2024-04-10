@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { AddressInput } from "./AddressInput";
+import { InvoiceType } from "@/types/invoiceType";
 
 export const PaymentSection = ({
   total,
   token,
-  setQrcode,
+  setInvoice,
 }: {
   total: number;
   token: string;
-  setQrcode: React.Dispatch<React.SetStateAction<string>>;
+  setInvoice: React.Dispatch<React.SetStateAction<InvoiceType>>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
@@ -40,7 +41,6 @@ export const PaymentSection = ({
             >
               Create order
             </button>
-
             {isOpen && (
               <div className="flex flex-col gap-3 absolute top-[78px] right-0 bottom-0  w-full bg-gray-600 bg-opacity-60  h-full">
                 <dialog
@@ -51,7 +51,7 @@ export const PaymentSection = ({
                   <AddressInput
                     total={total}
                     token={token}
-                    setQrcode={setQrcode}
+                    setInvoice={setInvoice}
                   />
                   <button
                     className="w-full flex justify-center py-4"

@@ -19,7 +19,7 @@ export const getFilteredProducts = async (req: Request, res: Response) => {
 };
 export const getProducts = async (req: Request, res: Response) => {
   try {
-  const products = await Product.find({}).populate("categoryId");
+    const products = await Product.find({}).populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);
@@ -137,7 +137,9 @@ export const deleteProduct = async (req: Request, res: Response) => {
 export const getProductDetail = async (req: Request, res: Response) => {
   try {
     const productId = req.params.id;
-    const product = await Product.findById(productId).populate("categoryId");
+    const product = await Product.findById(productId)
+      .populate("categoryId")
+      .populate("shopId");
     return res.status(200).send(product);
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);
@@ -158,5 +160,14 @@ export const getSelectedProductsInAdmin = async (
     return res
       .status(400)
       .json({ msg: "Failed to get selected products in admin", error });
+  }
+};
+export const getProductsFromShop = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find({ shopId: req.params.id });
+    return res.status(200).send(products);
+  } catch (error) {
+    console.error("errorin get products from shop", error);
+    return res.status(400).json({ err: error });
   }
 };
