@@ -6,6 +6,7 @@ import {
   getFilteredProducts,
   getProductDetail,
   getProducts,
+  getProductsFromShop,
   getSelectedProductsInAdmin,
   uploadSingleImage,
 } from "../controllers/productController";
@@ -26,7 +27,8 @@ productRouter
 productRouter
   .route("/deleteProduct/:id")
   .delete(accessTokenAuth, deleteProduct);
-productRouter.route("/getProducts/:id").post(getProductDetail);
+productRouter.route("/productDetail/:id").get(getProductDetail);
 productRouter
   .route("/getSelectedProducts")
   .get(accessTokenAuth, getSelectedProductsInAdmin);
+productRouter.route("/shop/:id").get(getProductsFromShop);

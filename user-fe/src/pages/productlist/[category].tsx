@@ -2,7 +2,7 @@ import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
@@ -17,7 +17,7 @@ type Props = {
   productData: ProductType[];
 };
 
-function productList({
+const productList = ({
   productData,
   subCategoryBackendData,
   categoryData,
@@ -25,7 +25,7 @@ function productList({
   categoryData: categoryType[];
   productData: ProductType[];
   subCategoryBackendData: TypeSubCategory[];
-}) {
+}) => {
   const router = useRouter();
   const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
   useEffect(() => {
@@ -48,7 +48,7 @@ function productList({
       </div>
     </div>
   );
-}
+};
 export default productList;
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   params

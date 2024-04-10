@@ -13,6 +13,7 @@ import { adminRouter } from "./routes/adminRouter";
 import { addressRouter } from "./routes/addressRouter";
 import { paymentRouter } from "./routes/paymentRouter";
 import { favoritesRouter } from "./routes/favoritesRouter";
+import { Request, Response } from "express";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
