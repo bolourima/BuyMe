@@ -55,7 +55,7 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
     onSubmit: async (values) => {},
   });
   return (
-    <div className="flex h-screen justify-center items-center bg-cover bg-[url('/screenshot2.png')]">
+    <div className="flex h-screen justify-center items-center bg-cover bg-[url('/screenshot3.png')]">
       <div className="flex flex-col bg-gray-100 gap-2 rounded-2xl p-5">
         <div className="flex flex-col items-center  font-bold text-2xl">
           <h2 className="text-black font-bold">Create New Admin Account</h2>
