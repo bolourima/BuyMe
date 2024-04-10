@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import cloudinary from "../utilities/Cloudinary";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
+// import { v2 as cloudinary } from "cloudinary";
+import { url } from "inspector";
+import axios from "axios";
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
@@ -19,7 +22,7 @@ export const getFilteredProducts = async (req: Request, res: Response) => {
 };
 export const getProducts = async (req: Request, res: Response) => {
   try {
-  const products = await Product.find({}).populate("categoryId");
+    const products = await Product.find({}).populate("categoryId");
     return res.status(200).send(products);
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);
@@ -106,24 +109,6 @@ const getDateByString = () => {
     `${new Date().getDate()}`;
   return date;
 };
-const uploadImg = async (img: any) => {
-  try {
-    const uploadedFile = img;
-    if (!uploadedFile) {
-      return false;
-    }
-    try {
-      const newImage = await cloudinary.uploader.upload(uploadedFile.path);
-      const image = new Product({ img: newImage.secure_url });
-      return newImage.secure_url;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  } catch (error) {
-    console.error("error in uploadImg", error);
-  }
-};
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const deletableId = req.params.id;
@@ -158,5 +143,52 @@ export const getSelectedProductsInAdmin = async (
     return res
       .status(400)
       .json({ msg: "Failed to get selected products in admin", error });
+  }
+};
+const uploadImg = async (img: any) => {
+  try {
+    const uploadedFile = img;
+    if (!uploadedFile) {
+      return false;
+    }
+    try {
+      const newImage = await cloudinary.uploader.upload(uploadedFile.path);
+      const image = new Product({ img: newImage.secure_url });
+      return newImage.secure_url;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  } catch (error) {
+    console.error("error in uploadImg", error);
+  }
+};
+export const searchByImage = async (req: Request, res: Response) => {
+  try {
+    const imgUrl: any = await uploadImg(req.file);
+    if (!imgUrl) {
+      return res.status(400).send("Error uploading image");
+    }
+
+    // const cloudinarySearchUrl = `https://api.cloudinary.com/v1_1/dl93ggn7x/resources/search`;
+    // const apiKey = "124231542361645";
+    // const apiSecret = "OoMlk2A5udzAHh665hDgyQ81QPM";
+
+    // const response = await axios.get(cloudinarySearchUrl, {
+    //   params: {
+    //     expression: `filename:${imgUrl}`, // You may need to adjust the expression depending on how you want to search
+    //     max_results: 10, // Adjust max results as needed
+    //     sort_by: "public_id", // Sort results by public ID
+    //     direction: "desc", // Sort direction
+    //     api_key: apiKey,
+    //     api_secret: apiSecret,
+    //   },
+    // });
+
+    // return res.status(200).send(response.data);
+    return res.status(200).send(imgUrl);
+  } catch (error) {
+    console.error("error in search by image", error);
+    return res.status(500).send("Internal server error");
   }
 };

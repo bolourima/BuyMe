@@ -7,6 +7,7 @@ import {
   getProductDetail,
   getProducts,
   getSelectedProductsInAdmin,
+  searchByImage,
   uploadSingleImage,
 } from "../controllers/productController";
 import upload from "../middlewares/multer";
@@ -17,7 +18,7 @@ productRouter.route("/editProduct").put(accessTokenAuth, editProduct);
 productRouter
   .route("/selectImage")
   .post(upload.single("img"), accessTokenAuth, uploadSingleImage);
-productRouter.route("/getProducts").get(getProducts)
+productRouter.route("/getProducts").get(getProducts);
 productRouter.route("/getProducts/:category").get(getFilteredProducts);
 productRouter
   .route("/deleteProduct/:id")
@@ -26,3 +27,4 @@ productRouter.route("/getProducts/:id").post(getProductDetail);
 productRouter
   .route("/getSelectedProducts")
   .get(accessTokenAuth, getSelectedProductsInAdmin);
+productRouter.route("/searchByImage").post(upload.single("img"), searchByImage);
