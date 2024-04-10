@@ -164,7 +164,6 @@ export const getSelectedProductsInAdmin = async (
 };
 export const getProductsFromShop = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id);
     const products = await Product.find({ shopId: req.params.id });
     return res.status(200).send(products);
   } catch (error) {
