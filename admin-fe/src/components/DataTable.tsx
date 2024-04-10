@@ -19,7 +19,6 @@ const DataTable = ({
   setEditableProduct: React.Dispatch<React.SetStateAction<GetProductType>>;
   setOnEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  console.log("raw", productRawData);
   const [productData, setProductData] = useState<GetProductType[]>(
     productRawData.length != 0 ? productRawData : []
   );
