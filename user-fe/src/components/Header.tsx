@@ -19,7 +19,7 @@ import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "@/utilities/refreshToken";
-import MobileBareTest from "./MobileBar";
+import { MobileBar } from "./MobileBar";
 import { SearchProduct } from "@/utilities/searchProduct";
 import { SearchInputContext } from "@/context/searchContext";
 
@@ -57,7 +57,7 @@ export const Header = () => {
     >
       <div className=" SideBar  flex lg:flex items-center w-10/12 place-content-between  ">
         <div className=" block  lg:hidden">
-          <MobileBareTest />
+          <MobileBar />
         </div>
 
         <div>

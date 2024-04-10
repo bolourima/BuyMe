@@ -23,7 +23,7 @@ import { MyCartIcon } from "@/icon";
 import { CheckIcon } from "@/icon/CheckIcon";
 import { TokenContext } from "@/context/TokenContext";
 
-export const MobileBareTest = () => {
+export const MobileBar = () => {
   const [user, setUser] = useState<UserType>(userInitial);
   const { token, setToken } = useContext(TokenContext);
 
