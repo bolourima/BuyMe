@@ -2,9 +2,11 @@ import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
+import { SearchInputContext } from "@/context/searchContext";
 import { getFavProducts } from "@/helper/getFavProducts";
 import { ProductsInFavContext } from "@/context/ProductsInFavContext";
 
@@ -17,6 +19,8 @@ function productList({
   productData: ProductType[];
   subCategoryBackendData: TypeSubCategory[];
 }) {
+  const { searchedProduct, setSearchedProduct } =
+    useContext(SearchInputContext);
   const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -30,7 +34,12 @@ function productList({
           subCategoryData={subCategoryBackendData}
           categoryData={categoryData}
         />
-        <Product productData={productData} favProducts={productsInFav} />
+        <Product
+          productData={
+            searchedProduct.length == 0 ? productData : searchedProduct
+          }
+          favProducts={productsInFav}
+        />
       </div>
     </div>
   );

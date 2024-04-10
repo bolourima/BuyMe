@@ -3,11 +3,10 @@ import Product from "../models/productModel";
 
 export const searchProduct = async (req: Request, res: Response) => {
   try {
-    const searchInput = req.body.searchInput;
+    const searchInput = req.body.input;
     const products = await Product.find({
       $or: [
         { name: { $regex: searchInput, $options: "i" } },
-        { description: { $regex: searchInput, $options: "i" } },
         { brandName: { $regex: searchInput, $options: "i" } },
         { subCategoryName: { $regex: searchInput, $options: "i" } },
       ],
