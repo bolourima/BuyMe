@@ -1,11 +1,9 @@
 import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
-import { ProductType } from "@/types/productType";
 import React, { useContext, useEffect } from "react";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
-import { SearchInputContext } from "@/context/searchContext";
 import { getFavProducts } from "@/helper/getFavProducts";
 import { ProductsInFavContext } from "@/context/ProductsInFavContext";
 
@@ -29,7 +27,7 @@ function productList({
           subCategoryData={subCategoryBackendData}
           categoryData={categoryData}
         />
-        <Product favProducts={productsInFav} />
+        <Product productData={[]} favProducts={productsInFav} />
       </div>
     </div>
   );

@@ -7,9 +7,6 @@ export const SearchProduct = async (
   setSearchedProduct: React.Dispatch<React.SetStateAction<ProductType[]>>
 ) => {
   try {
-    if (!searchInput) {
-      return toastifyError("noting to search");
-    }
     const response = await instance.post("getProducts", { input: searchInput });
     setSearchedProduct(response.data);
   } catch (error) {

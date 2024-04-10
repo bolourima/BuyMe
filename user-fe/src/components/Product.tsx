@@ -10,7 +10,13 @@ import { useTheme } from "@mui/material/styles";
 import { instance } from "@/instance";
 import { SearchInputContext } from "@/context/searchContext";
 
-export const Product = ({ favProducts }: { favProducts: ProductType[] }) => {
+export const Product = ({
+  productData,
+  favProducts,
+}: {
+  productData: ProductType[];
+  favProducts: ProductType[];
+}) => {
   const [token, setToken] = useState("");
   const [selectedPage, setSelectedPage] = useState(0);
   const page: number[] = [];
@@ -69,20 +75,22 @@ export const Product = ({ favProducts }: { favProducts: ProductType[] }) => {
         <Box sx={{ overflowY: "scroll" }}>
           <ImageList variant="masonry" cols={getCols()} gap={24}>
             {searchedProduct.length == 0
-              ? products.map((Data, i) => {
-                  const favs = favProducts.filter((prod) => {
-                    return prod._id === Data._id;
-                  });
-                  const isFav = favs.length == 0 ? false : true;
-                  return (
-                    <Masonry
-                      key={i}
-                      data={Data}
-                      setProductData={setProductData}
-                      isFav={isFav}
-                    />
-                  );
-                })
+              ? (productData.length == 0 ? products : productData).map(
+                  (Data, i) => {
+                    const favs = favProducts.filter((prod) => {
+                      return prod._id === Data._id;
+                    });
+                    const isFav = favs.length == 0 ? false : true;
+                    return (
+                      <Masonry
+                        key={i}
+                        data={Data}
+                        setProductData={setProductData}
+                        isFav={isFav}
+                      />
+                    );
+                  }
+                )
               : searchedProduct.map((Data, i) => {
                   const favs = favProducts.filter((prod) => {
                     return prod._id === Data._id;
@@ -99,20 +107,22 @@ export const Product = ({ favProducts }: { favProducts: ProductType[] }) => {
                 })}
           </ImageList>
         </Box>
-        <div className="flex w-full justify-center gap-8 mt-8">
-          {page.map((el) => {
-            return (
-              <button
-                onClick={() => setSelectedPage(el)}
-                className={`w-8 h-8 border-[1px] border-solid border-black ${
-                  el == selectedPage && "text-white bg-black"
-                } rounded-lg`}
-              >
-                {el + 1}
-              </button>
-            );
-          })}
-        </div>
+        {productData.length == 0 && (
+          <div className="flex w-full justify-center gap-8 mt-8">
+            {page.map((el) => {
+              return (
+                <button
+                  onClick={() => setSelectedPage(el)}
+                  className={`w-8 h-8 border-[1px] border-solid border-black ${
+                    el == selectedPage && "text-white bg-black"
+                  } rounded-lg`}
+                >
+                  {el + 1}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
