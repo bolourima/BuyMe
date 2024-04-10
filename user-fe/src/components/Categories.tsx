@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Categories() {
+export const Categories = () => {
   return (
     <div className=" w-full flex justify-center">
       <div className=" w-10/12 flex flex-col gap-10">
@@ -42,4 +42,4 @@ export default function Categories() {
       </div>
     </div>
   );
-}
+};

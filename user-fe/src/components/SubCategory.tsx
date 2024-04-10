@@ -3,6 +3,7 @@ import { Slider } from "@mui/material";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
 import Link from "next/link";
+import { ArrowRightSquare } from "lucide-react";
 const MAX: number = 100000;
 const MIN: number = 0;
 const minDistance: number = 10000;
@@ -58,11 +59,16 @@ export const SubCategory = ({
   };
 
   return (
-    <div className="hidden lg:text-black w-[250px] rounded-lg p-4 lg:flex flex-col gap-5 border-2">
+    <div className="hidden lg:text-black w-[250px] rounded-lg shadow p-4 lg:flex flex-col gap-5 border-2">
       <div className="">
-        <div className="flex justify-between" onClick={handleOpenCategory}>
+        <div
+          className="flex justify-between border-b-2 pb-2"
+          onClick={handleOpenCategory}
+        >
           <button className="font-bold uppercase">Category</button>
-          <p className={`${isOpenCategory ? " rotate-90" : ""}`}> &#62;</p>
+          <p className={`${isOpenCategory ? " rotate-90" : ""}`}>
+            <ArrowRightSquare className="text-gray-600" />
+          </p>
         </div>
         <div className={`uppercase ml-1 pl-1 mt-3`}>
           {categoryData.map((subCategory, index) => (
@@ -82,9 +88,14 @@ export const SubCategory = ({
         </div>
       </div>
       <div className="">
-        <div className="flex justify-between" onClick={handleOpenCategory}>
+        <div
+          className="flex justify-between border-b-2 pb-2"
+          onClick={handleOpenCategory}
+        >
           <button className="font-bold uppercase">Subcategory</button>
-          <p className={`${isOpenSubCategory ? " rotate-90" : ""}`}> &#62;</p>
+          <p className={`${isOpenSubCategory ? " rotate-90" : ""}`}>
+            <ArrowRightSquare className="text-gray-600" />
+          </p>
         </div>
         <div className={`uppercase ml-1 pl-1 mt-3`}>
           {subCategoryData.map((subCategory, index) => (
@@ -104,9 +115,14 @@ export const SubCategory = ({
       </div>
 
       <div className="">
-        <div className="flex justify-between" onClick={handleOpenBrands}>
-          <button className="font-bold uppercase">Brands</button>
-          <p className={`${isOpenBrands ? " rotate-90" : ""}`}> &#62;</p>
+        <div
+          className="flex justify-between border-b-2 pb-2"
+          onClick={handleOpenBrands}
+        >
+          <button className="font-bold uppercase ">Brands</button>
+          <p className={`${isOpenBrands ? " rotate-90" : ""}`}>
+            <ArrowRightSquare className="text-gray-600" />
+          </p>
         </div>
         <div className="pl-1 ml-1 uppercase mt-3">
           {subCategoryData[subCategoryIndex].brands.map((brand, index) => (
