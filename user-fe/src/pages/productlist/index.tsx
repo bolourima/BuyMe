@@ -2,10 +2,11 @@ import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { GetServerSideProps } from "next";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
+import { SearchInputContext } from "@/context/searchContext";
 
 function productList({
   productData,
@@ -16,6 +17,8 @@ function productList({
   productData: ProductType[];
   subCategoryBackendData: TypeSubCategory[];
 }) {
+  const { searchedProduct, setSearchedProduct } =
+    useContext(SearchInputContext);
   return (
     <div className="lg:w-full flex flex-col items-center">
       <div className="lg:flex lg:gap-5 ">
@@ -23,7 +26,12 @@ function productList({
           subCategoryData={subCategoryBackendData}
           categoryData={categoryData}
         />
-        <Product productData={productData} favProducts={[]} />
+        <Product
+          productData={
+            searchedProduct.length == 0 ? productData : searchedProduct
+          }
+          favProducts={[]}
+        />
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 import Link from "next/link";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { tree } from "next/dist/build/templates/app-page";
 import CloseIcon from "@/icon/CloseIcon";
 import { TokenContext } from "@/context/TokenContext";
@@ -20,18 +20,24 @@ import { toastifyWarning } from "@/utilities/toastify";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "@/utilities/refreshToken";
 import MobileBareTest from "./MobileBar";
+import { SearchProduct } from "@/utilities/searchProduct";
+import { SearchInputContext } from "@/context/searchContext";
 
 export const Header = () => {
+  const [searchInput, setSearchInput] = useState<string>("");
+  const { searchedProduct, setSearchedProduct } =
+    useContext(SearchInputContext);
   const router = useRouter();
   const { token, setToken } = useContext(TokenContext);
 
-  const [showImput, setShowInput] = useState(false);
+  const [showInput, setShowInput] = useState(false);
 
   const clickSearch = () => {
-    if (showImput === true) {
-      setShowInput(false);
-    } else {
-      setShowInput(true);
+    setShowInput(!showInput);
+    if (showInput === true) {
+      router.push("/productlist");
+      SearchProduct(searchInput, setSearchedProduct);
+      console.log("awdawdaw", searchInput);
     }
   };
 
@@ -92,14 +98,17 @@ export const Header = () => {
         <div>
           <div className=" relative lg:flex gap-6 items-center">
             <div className=" hidden lg:flex gap-6 items-center">
-              {showImput && (
-                <input
-                  type="search"
-                  className="border p-2 rounded absolute right-40 btnn"
-                />
-              )}
-
-              <div onClick={clickSearch}>
+              <input
+                type="text"
+                placeholder="Хайх"
+                className={`border p-2 rounded absolute right-40 btnn ${
+                  showInput ? "block" : "hidden"
+                }`}
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                }}
+              />
+              <div className=" cursor-pointer" onClick={clickSearch}>
                 <SearchIcon />
               </div>
               <button
