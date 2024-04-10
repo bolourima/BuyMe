@@ -32,69 +32,71 @@ export const Qr = ({
     return () => clearInterval(interval);
   }, [seconds]);
   return (
-    <div
-      className={`w-[400px] h-[400px] absolute z-50 ${
-        !isPaid && "bg-gray-200"
-      }  rounded-xl flex justify-center items-center flex-col`}
-    >
-      {!isPaid ? (
-        <div className="w-fit h-fit flex flex-col gap-4 justify-center items-center">
-          <p className="text-2xl font-semibold">Please scan by camera</p>
-          <p>{formatTime(seconds)}</p>
-          <Canvas
-            text={invoice.qPay_shortUrl}
-            options={{
-              errorCorrectionLevel: "M",
-              margin: 3,
-              scale: 4,
-              width: 200,
-              color: {
-                dark: "#000",
-                light: "#fff",
-              },
-            }}
-          />
-          <div className="flex sm:hidden md:hidden lg:hidden flex-wrap gap-4">
-            {invoice.urls.map((url) => {
-              return (
-                <a href={url.link}>
-                  <img className="w-12 h-12" src={url.logo} />
-                </a>
-              );
-            })}
+    <div className="w-full flex justify-center items-center absolute z-50">
+      <div
+        className={`w-[400px] h-[400px]  ${
+          !isPaid && "bg-gray-200"
+        }  rounded-xl flex justify-center items-center flex-col`}
+      >
+        {!isPaid ? (
+          <div className="w-fit h-fit flex flex-col gap-4 justify-center items-center">
+            <p className="text-2xl font-semibold">Please scan by camera</p>
+            <p>{formatTime(seconds)}</p>
+            <Canvas
+              text={invoice.qPay_shortUrl}
+              options={{
+                errorCorrectionLevel: "M",
+                margin: 3,
+                scale: 4,
+                width: 200,
+                color: {
+                  dark: "#000",
+                  light: "#fff",
+                },
+              }}
+            />
+            <div className="flex sm:hidden md:hidden lg:hidden flex-wrap gap-4">
+              {invoice.urls.map((url) => {
+                return (
+                  <a href={url.link}>
+                    <img className="w-12 h-12" src={url.logo} />
+                  </a>
+                );
+              })}
+            </div>
+            <div className="w-full h-fit flex flex-wrap gap-4"></div>
+            <button
+              className="font-semibold text-2xl"
+              onClick={() => {
+                checkPayment(setIsPaid);
+              }}
+            >
+              Check payment
+            </button>
+            <button
+              className="font-semibold text-2xl"
+              onClick={() => setInvoice(invoiceInitial)}
+            >
+              Cancel
+            </button>
           </div>
-          <div className="w-full h-fit flex flex-wrap gap-4"></div>
-          <button
-            className="font-semibold text-2xl"
-            onClick={() => {
-              checkPayment(setIsPaid);
-            }}
-          >
-            Check payment
-          </button>
-          <button
-            className="font-semibold text-2xl"
-            onClick={() => setInvoice(invoiceInitial)}
-          >
-            Cancel
-          </button>
-        </div>
-      ) : (
-        <div className="w-full h-full flex flex-col gap-4 justify-center items-center bg-white p-8 rounded-xl">
-          <p className="text-green-500 text-3xl font-semibold flex justify-center items-center">
-            Paid
-          </p>
-          <div className="w-48 h-48">
-            <Paid />
+        ) : (
+          <div className="w-full h-full flex flex-col gap-4 justify-center items-center bg-white p-8 rounded-xl">
+            <p className="text-green-500 text-3xl font-semibold flex justify-center items-center">
+              Paid
+            </p>
+            <div className="w-48 h-48">
+              <Paid />
+            </div>
+            <button
+              onClick={() => setInvoice(invoiceInitial)}
+              className="bg-green-500 text-white text-2xl font-semibold w-48 h-16 rounded-xl"
+            >
+              Done
+            </button>
           </div>
-          <button
-            onClick={() => setInvoice(invoiceInitial)}
-            className="bg-green-500 text-white text-2xl font-semibold w-48 h-16 rounded-xl"
-          >
-            Done
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
