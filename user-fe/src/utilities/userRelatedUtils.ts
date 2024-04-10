@@ -43,6 +43,7 @@ export const createAddress = async (
 
     if (response.status == 201) {
       toastifySuccess("Хаяг амжилттай хадгалагдлаа");
+      return response.data;
     }
   } catch (error) {
     return toastifyError("Хаяг үүсэж чадсангүй");

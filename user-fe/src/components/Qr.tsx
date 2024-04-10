@@ -52,6 +52,7 @@ export const Qr = ({
               },
             }}
           />
+          <div className="w-full h-fit flex flex-wrap gap-4"></div>
           <button
             className="font-semibold text-2xl"
             onClick={() => {

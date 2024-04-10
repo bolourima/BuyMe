@@ -36,13 +36,7 @@ export const Product = ({
     product: ProductType,
     onDouble: boolean
   ) => {
-    putIntoBasket(
-      product,
-      productsInBasket,
-      setProductsInBasket,
-      token,
-      onDouble
-    );
+    putIntoBasket(product, token);
   };
 
   const getCols = () => {

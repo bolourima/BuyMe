@@ -1,11 +1,3 @@
-import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
-import {
-  AExpressIcon,
-  ApplePayIcon,
-  MasterCardIcon,
-  PayPallIcon,
-  VisaIcon,
-} from "@/icon";
 import { useState } from "react";
 import { AddressInput } from "./AddressInput";
 
@@ -51,7 +43,6 @@ export const PaymentSection = ({
 
             {isOpen && (
               <div className="flex flex-col gap-3 absolute top-[78px] right-0 bottom-0  w-full bg-gray-600 bg-opacity-60  h-full">
-                {" "}
                 <dialog
                   open
                   id="my_modal_1"
