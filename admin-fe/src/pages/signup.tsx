@@ -55,24 +55,21 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
     onSubmit: async (values) => {},
   });
   return (
-    <div className="flex w-full">
-      <div className="w-3/5">
-        <img className="rounded-xl w-full" src="./SignUpPic.png" alt="" />
-      </div>
-      <div className="flex flex-col bg-white w-2/5 gap-2 rounded-r-xl p-[120px]">
+    <div className="flex h-screen justify-center items-center bg-cover bg-[url('/screenshot2.png')]">
+      <div className="flex flex-col bg-gray-100 gap-2 rounded-2xl p-5">
         <div className="flex flex-col items-center  font-bold text-2xl">
-          <h2 className="text-gray-600 font-bold">Create New Admin Account</h2>
+          <h2 className="text-black font-bold">Create New Admin Account</h2>
           <p className="text-sm ">Please enter details</p>
         </div>
         <div>
           <form
             onSubmit={CreateUserBtn}
-            className="flex flex-col items-center gap-4"
+            className="flex flex-col items-center gap-2"
           >
             <div className="flex flex-col gap-2">
-              <label className="font-bold">Shop name </label>
+              <label className="">Shop name </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="text"
                 placeholder="Please enter your name"
                 {...formik.getFieldProps("name")}
@@ -82,9 +79,9 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
               ) : null}
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-bold">Email</label>
+              <label className="">Email</label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="email"
                 placeholder="Please enter your email"
                 {...formik.getFieldProps("email")}
@@ -94,9 +91,9 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
               ) : null}
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-bold">Bank account</label>
+              <label className="">Bank account</label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="number"
                 placeholder="Please enter your bankAccount"
                 {...formik.getFieldProps("bankAccount")}
@@ -106,9 +103,9 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
               ) : null}
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-bold">Password </label>
+              <label className="">Password </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
                 placeholder="Please enter your password"
                 {...formik.getFieldProps("password")}
@@ -118,9 +115,9 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
               ) : null}
             </div>
             <div className="flex flex-col gap-2">
-              <label className="font-bold">RePassword </label>
+              <label className="">RePassword </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
                 placeholder="Please enter your password again"
                 {...formik.getFieldProps("confirmPassword")}
@@ -130,10 +127,10 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
                 <div>{formik.errors.confirmPassword}</div>
               ) : null}
             </div>
-            <div>
+            <div className="flex text-sm gap-1">
               {categoryData.map((el) => {
                 return (
-                  <label key={el._id} className="flex">
+                  <label key={el._id} className="flex gap-1 ">
                     <input
                       type="checkbox"
                       checked={checkedCategories.includes(el._id)}
@@ -144,7 +141,10 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
                 );
               })}
             </div>
-            <button type="submit" className="btn btn-neutral mt-5">
+            <button
+              type="submit"
+              className="bg-black hover:bg-gray-400 hover:text-black hover:font-bold rounded-lg text-white w-[300px] h-[30px]  mt-5"
+            >
               Signup
             </button>
           </form>

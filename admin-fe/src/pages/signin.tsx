@@ -29,24 +29,20 @@ export default function SignIn() {
     },
   });
   return (
-    <div className="flex w-full">
-      <div className="w-3/5">
-        <img className="rounded-l-xl w-full" src="./SignUpPic.png" alt="" />
-      </div>
-      <div className="flex flex-col bg-white w-2/5 gap-2 rounded-r-xl p-[120px]">
+    <div className="flex h-screen justify-center items-center bg-cover bg-[url('/screenshot2.png')]">
+      <div className="flex flex-col bg-gray-100 gap-2 rounded-2xl p-5">
         <div className="flex flex-col items-center  font-bold text-2xl">
-          <h2 className="text-gray-600 font-bold">Create New Account</h2>
-          <p className="text-sm ">Please enter details</p>
+          <h2 className="text-black font-bold">Login</h2>
         </div>
         <div>
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-2">
             <form
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">shopName</label>
+              <label className="">Shop Name</label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="shopName"
                 placeholder="Please enter your shopName"
                 {...formik.getFieldProps("shopName")}
@@ -59,9 +55,9 @@ export default function SignIn() {
               className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
-              <label className="font-bold">Password </label>
+              <label className="">Password </label>
               <input
-                className="input input-bordered max-w-xs w-[300px]"
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
                 type="password"
                 placeholder="Please enter your password"
                 {...formik.getFieldProps("password")}
@@ -69,7 +65,10 @@ export default function SignIn() {
               {formik.touched.password && formik.errors.password ? (
                 <div>{formik.errors.password}</div>
               ) : null}
-              <button className="btn btn-neutral mt-5" type="submit">
+              <button
+                className="bg-black hover:bg-gray-400 hover:text-black hover:font-bold rounded-lg text-white w-[300px] h-[30px]  mt-5"
+                type="submit"
+              >
                 Signin
               </button>
             </form>

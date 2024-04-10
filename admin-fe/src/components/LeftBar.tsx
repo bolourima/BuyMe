@@ -24,7 +24,7 @@ export const LeftBar = () => {
           <Icon2 />
         </div>
         <div>
-          <p>Захилга</p>
+          <p>Захиалга</p>
         </div>
       </Link>
 
