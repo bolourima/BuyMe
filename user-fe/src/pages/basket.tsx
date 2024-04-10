@@ -59,7 +59,7 @@ const Basket = () => {
           <p className="font-semibold text-2xl flex justify-center items-center">
             Your cart is empty
           </p>
-          <a href="/order">
+          <a href="/orders/list">
             <button className="rounded-lg bg-black text-white w-[300px] h-[40px] mt-5 ">
               My orders
             </button>
