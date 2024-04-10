@@ -1,5 +1,7 @@
 import { instance } from "@/instance";
+import { ProductType } from "@/types/productType";
 import { toastifyError, toastifySuccess } from "@/utilities/toastify";
+import { Dispatch, SetStateAction } from "react";
 
 export const addToFavs = async (_id: string, token: string) => {
   try {

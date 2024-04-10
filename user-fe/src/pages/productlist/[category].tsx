@@ -2,13 +2,14 @@ import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
 import { toastifyWarning } from "@/utilities/toastify";
 import { useRouter } from "next/router";
 import { getFavProducts } from "@/helper/getFavProducts";
+import { ProductsInFavContext } from "@/context/ProductsInFavContext";
 type Params = {
   category: string;
 };
@@ -26,10 +27,7 @@ function productList({
   subCategoryBackendData: TypeSubCategory[];
 }) {
   const router = useRouter();
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const setFavs = (products: ProductType[]) => {
-    setProducts(products);
-  };
+  const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
@@ -37,7 +35,7 @@ function productList({
       router.push("/signin");
       return;
     }
-    getFavProducts(accessToken, setFavs);
+    getFavProducts(accessToken, setProductsInFav);
   }, []);
   return (
     <div className="lg:w-full flex flex-col items-center">
@@ -46,7 +44,7 @@ function productList({
           subCategoryData={subCategoryBackendData}
           categoryData={categoryData}
         />
-        <Product productData={productData} favProducts={products} />
+        <Product productData={productData} favProducts={productsInFav} />
       </div>
     </div>
   );
