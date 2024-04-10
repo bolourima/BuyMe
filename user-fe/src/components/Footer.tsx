@@ -23,8 +23,8 @@ export const Footer = () => {
           <InstIcon />
           <FaceIcon />
           <TwiterIcon />
-
           <YoutubeIcon />
+          
         </div>
         <div>
           <h1>© 2023 BuyMe </h1>
