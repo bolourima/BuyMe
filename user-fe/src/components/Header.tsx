@@ -37,7 +37,6 @@ export const Header = () => {
     if (showInput === true) {
       router.push("/productlist");
       SearchProduct(searchInput, setSearchedProduct);
-      console.log("awdawdaw", searchInput);
     }
   };
 
@@ -52,7 +51,7 @@ export const Header = () => {
   return (
     <div
       className={`text-black dark:w-full lg:w-full flex justify-center py-4 bg-white lg:sticky top-0 z-50 shadow ${
-        router.asPath === "/" ? "mb-4" : "mb-10"
+        router.asPath === "/" ? "lg:mb-4" : "mb-10"
       }`}
     >
       <div className=" SideBar  flex lg:flex items-center w-10/12 place-content-between  ">
