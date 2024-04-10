@@ -1,21 +1,23 @@
 import { checkPayment } from "@/helper/checkPayment";
 import { formatTime } from "@/helper/formatDate";
 import { Paid } from "@/icon/Paid";
+import { invoiceInitial } from "@/types/invoiceInitial";
+import { InvoiceType } from "@/types/invoiceType";
 import { useQRCode } from "next-qrcode";
 import { useEffect, useState } from "react";
 
 export const Qr = ({
-  qrcode,
-  setQrcode,
+  invoice,
+  setInvoice,
 }: {
-  qrcode: string;
-  setQrcode: React.Dispatch<React.SetStateAction<string>>;
+  invoice: InvoiceType;
+  setInvoice: React.Dispatch<React.SetStateAction<InvoiceType>>;
 }) => {
   const { Canvas } = useQRCode();
   const [isPaid, setIsPaid] = useState(false);
   if (isPaid) {
     setTimeout(() => {
-      setQrcode("");
+      setInvoice(invoiceInitial);
     }, 3000);
   }
   const [seconds, setSeconds] = useState(300);
@@ -36,11 +38,11 @@ export const Qr = ({
       }  rounded-xl flex justify-center items-center flex-col`}
     >
       {!isPaid ? (
-        <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
+        <div className="w-fit h-fit flex flex-col gap-4 justify-center items-center">
           <p className="text-2xl font-semibold">Please scan by camera</p>
           <p>{formatTime(seconds)}</p>
           <Canvas
-            text={qrcode}
+            text={invoice.qPay_shortUrl}
             options={{
               errorCorrectionLevel: "M",
               margin: 3,
@@ -52,6 +54,15 @@ export const Qr = ({
               },
             }}
           />
+          <div className="flex sm:hidden md:hidden lg:hidden flex-wrap gap-4">
+            {invoice.urls.map((url) => {
+              return (
+                <a href={url.link}>
+                  <img className="w-12 h-12" src={url.logo} />
+                </a>
+              );
+            })}
+          </div>
           <div className="w-full h-fit flex flex-wrap gap-4"></div>
           <button
             className="font-semibold text-2xl"
@@ -63,13 +74,13 @@ export const Qr = ({
           </button>
           <button
             className="font-semibold text-2xl"
-            onClick={() => setQrcode("")}
+            onClick={() => setInvoice(invoiceInitial)}
           >
             Cancel
           </button>
         </div>
       ) : (
-        <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
+        <div className="w-full h-full flex flex-col gap-4 justify-center items-center bg-white p-8 rounded-xl">
           <p className="text-green-500 text-3xl font-semibold flex justify-center items-center">
             Paid
           </p>
@@ -77,7 +88,7 @@ export const Qr = ({
             <Paid />
           </div>
           <button
-            onClick={() => setQrcode("")}
+            onClick={() => setInvoice(invoiceInitial)}
             className="bg-green-500 text-white text-2xl font-semibold w-48 h-16 rounded-xl"
           >
             Done

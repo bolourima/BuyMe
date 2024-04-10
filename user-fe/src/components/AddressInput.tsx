@@ -1,5 +1,6 @@
 import { ProductsInBasketContext } from "@/context/ProductsInCartContext";
 import { TokenContext } from "@/context/TokenContext";
+import { InvoiceType } from "@/types/invoiceType";
 import { userInitial } from "@/types/userInitial";
 import { UserType } from "@/types/userType";
 import { createOrder } from "@/utilities/createOrder";
@@ -15,11 +16,11 @@ import * as Yup from "yup";
 
 export const AddressInput = ({
   total,
-  setQrcode,
+  setInvoice,
 }: {
   total: number;
   token: string;
-  setQrcode: React.Dispatch<React.SetStateAction<string>>;
+  setInvoice: React.Dispatch<React.SetStateAction<InvoiceType>>;
 }) => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
@@ -95,7 +96,7 @@ export const AddressInput = ({
         productsInBasket,
         token,
         total,
-        setQrcode,
+        setInvoice,
         setProductsInBasket,
         addressId
       );
