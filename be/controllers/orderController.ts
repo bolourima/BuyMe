@@ -82,19 +82,21 @@ export const getOrdersInAdmin = async (
               createdAt: el.createdAt,
               product: ele.product,
               selectedProductQuantity: ele.selectedProductQuantity,
+              total: ele.total,
             };
           })
         );
       });
-      return res
-        .status(200)
-        .json({ order: shopIdMatchedProductsOfOrder, subAdmin: true });
+      return res.status(200).json({
+        order: shopIdMatchedProductsOfOrder,
+        subAdmin: true,
+      });
     } else {
       const orders = await Order.find({})
         .populate("user")
         .populate("address")
         .populate("products.product.shopId");
-      return res.status(200).json({ order: orders, subAdmin: false });
+      return res.status(200).json({ order: orders.reverse(), subAdmin: false });
     }
   } catch (error) {
     console.error("error in getOrdersInAdmin", error);
