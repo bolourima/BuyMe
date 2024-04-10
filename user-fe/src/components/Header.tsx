@@ -19,7 +19,7 @@ import { TokenContext } from "@/context/TokenContext";
 import { toastifyWarning } from "@/utilities/toastify";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "@/utilities/refreshToken";
-import MobileBareTest from "./MobileBar";
+import { MobileBareTest } from "./MobileBar";
 
 export const Header = () => {
   const router = useRouter();

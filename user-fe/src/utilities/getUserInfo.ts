@@ -9,7 +9,6 @@ export const getUserInfo = async (
       headers: { Authorization: `Bearer ${token}` },
     });
     getUser(res.data.user);
-    // return res.data.user;
   } catch (error) {
     console.error("error in getUserInfo", error);
   }
