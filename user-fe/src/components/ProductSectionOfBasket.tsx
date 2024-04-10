@@ -1,3 +1,4 @@
+import DeleteIcon from "@/icon/DeleteIcon";
 import { ProductTypeWithQuantity } from "@/types/productWithQuantityType";
 import { changeProductQuantity } from "@/utilities/countChange";
 import { removeFromBasket } from "@/utilities/removeFromBasket";
@@ -37,54 +38,61 @@ export const ProductSectionOfBasket = ({
     }
   };
   return (
-    <div className=" flex flex-col w-full lg:flex lg:flex-col gap-6 lg:w-[900px]">
+    <div className=" flex flex-col w-full lg:flex lg:flex-col gap-6 lg:w-[700px]">
       {productsInBasket &&
         productsInBasket.map((product, i) => {
           return (
             <div
               key={i}
-              className=" flex flex-col lg:flex lg:flex-row gap-2 w-full h-[300px] items-center px-4 my-4"
+              className="w-full shadow-lg bg-[#FBFBFB] rounded-xl flex justify-between lg:flex lg:flex-row gap-2 h-[235px] "
             >
-              <img src={product.product?.images[0]} className="w-1/2 h-full" />
-              <div className="lg:flex flex-col w-1/2 pl-4 h-full">
-                <p>Name: {product.product?.name}</p>
-                <p>Category: {product.product?.categoryId.name}</p>
-                <p>SubCategory: {product.product?.subCategoryName}</p>
-                <p>Brand: {product.product?.brandName}</p>
+              <div className="w-2/5 flex justify-center items-center ml-4">
+                <img
+                  src={product.product?.images[0]}
+                  className="h-[190px] rounded-md"
+                />
+              </div>
+              <div className="lg:flex flex-col py-8 ml-5 justify-between w-2/5 h-full">
                 <div>
-                  Price:
-                  {product.product?.disCount.isSale ? (
-                    <p>
-                      <p className="line-through">
-                        {product.product?.price.toLocaleString()}
-                      </p>
-                      {(
-                        product.product.price *
-                        ((100 - product.product.disCount.salePercent) / 100)
-                      ).toLocaleString()}
-                      ₮
+                  <div className="flex gap-4 mb-3">
+                    <p className="text-xl font-sans font-semibold">
+                      {product.product?.name}
                     </p>
-                  ) : (
-                    product.product?.price.toLocaleString()
-                  )}
+                  </div>
+                  <div className="flex gap-4">
+                    <div>
+                      {product.product?.disCount.isSale ? (
+                        <p>
+                          <p className="line-through text-xl font-sans text-red-700 ">
+                            {product.product?.price.toLocaleString()} ₮
+                          </p>
+                          <p className="text-xl font-sans text-green-500">
+                            {(
+                              product.product.price *
+                              ((100 - product.product.disCount.salePercent) /
+                                100)
+                            ).toLocaleString()}
+                            ₮
+                          </p>
+                        </p>
+                      ) : (
+                        <p className="text-xl font-sans text-green-500">
+                          {product.product?.price.toLocaleString()} ₮
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <p>
-                  Discount:
-                  {product.product?.disCount.isSale
-                    ? "   " + product.product?.disCount.salePercent + "%"
-                    : "   Хямдралгүй"}
-                </p>
-                <p>Tags: {product.product?.tag}</p>
-                <div className="w-full h-fit justify-between flex my-4">
+                <div className="flex gap-5 rounded-lg">
                   <button
                     onClick={() => {
                       clickMinus(product);
                     }}
-                    className="w-1/6 h-12 rounded-lg bg-black text-white flex justify-center items-center"
+                    className="h-10 w-10 rounded-lg bg-black text-white flex justify-center items-center hover:bg-gray-400 hover:text-black hover:font-bold"
                   >
                     -
                   </button>
-                  <p className="h-15 w-fit flex justify-center items-center">
+                  <p className="h-15 flex justify-center items-center text-lg font-sans">
                     {product.selectedProductQuantity}
                   </p>
                   <button
@@ -97,11 +105,13 @@ export const ProductSectionOfBasket = ({
                         token
                       )
                     }
-                    className="w-1/6 h-12 rounded-lg bg-black text-white flex justify-center items-center"
+                    className="h-10 w-10 rounded-lg bg-black text-white flex justify-center items-center hover:bg-gray-400 hover:text-black hover:font-bold"
                   >
                     +
                   </button>
                 </div>
+              </div>
+              <div className="flex items-start p-6">
                 <button
                   onClick={() =>
                     removeFromBasket(
@@ -111,9 +121,9 @@ export const ProductSectionOfBasket = ({
                       token
                     )
                   }
-                  className="w-full bg-black h-12 rounded-lg text-white flex justify-center items-center"
+                  className=""
                 >
-                  Delete from basket
+                  <DeleteIcon />
                 </button>
               </div>
             </div>

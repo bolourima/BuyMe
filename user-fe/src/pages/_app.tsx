@@ -21,8 +21,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Token>
         <ProductsInBasket>
           <ToastContainer
-            position="top-right"
-            autoClose={5000}
+            position="top-center"
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

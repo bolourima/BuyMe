@@ -46,6 +46,7 @@ const Order = () => {
                 );
               })}
             </div>
+            <p>{order.address?.addressName}</p>
             <p
               className={`text-white w-24 h-8 rounded-2xl flex justify-center items-center ${
                 order.deliveryStatus === "PENDING" && "bg-blue-500"

@@ -31,12 +31,7 @@ export const newAddress = async (req: AuthenticatedRequest, res: Response) => {
         new: true,
       }
     );
-
-    console.log({ updatedUser });
-
-    return res.status(201).json({
-      message: `New address created for ${user}, Address id:${newAddresId}`,
-    });
+    return res.status(201).send(newAddresId);
   } catch (error) {
     console.error(error);
     return res.status(400).json({ message: "User creation failed" });

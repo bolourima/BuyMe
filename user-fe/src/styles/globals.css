@@ -104,3 +104,11 @@ span{
 .bttn:hover svg{
   fill: white;
 }
+
+.bbtn:hover #love{
+  fill: black
+}
+.btnn:hover #gray{
+  fill: #9ca3af
+}
+

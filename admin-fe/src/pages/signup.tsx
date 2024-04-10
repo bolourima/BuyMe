@@ -52,9 +52,7 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
         .oneOf([Yup.ref("password")], "Өмнөх нууц үгтэй ижилхэн байх ёстой")
         .required("Нууц үгээ оруулна уу"),
     }),
-    onSubmit: async (values) => {
-      // console.log("first");
-    },
+    onSubmit: async (values) => {},
   });
   return (
     <div className="flex w-full">

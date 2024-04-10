@@ -36,7 +36,6 @@ export const getServerSideProps = async () => {
   const productData = productRes.data;
   const subCategoryBackendData = subCategoryRes.data;
   const categoryData = categoryRes.data;
-  console.log("bumaa", subCategoryBackendData);
 
   return {
     props: { productData, subCategoryBackendData, categoryData },

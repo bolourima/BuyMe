@@ -90,13 +90,14 @@ export const AddressInput = ({
         building: formik.values.building,
         deliveryNote: formik.values.deliveryNote,
       };
-      await createAddress(addressInfo, token, router.push);
+      const addressId = await createAddress(addressInfo, token, router.push);
       await createOrder(
         productsInBasket,
         token,
         total,
         setQrcode,
-        setProductsInBasket
+        setProductsInBasket,
+        addressId
       );
     },
   });
@@ -184,7 +185,7 @@ export const AddressInput = ({
           ) : null}
         </div>
         <button
-          className="border-gray-500 rounded-lg bg-black text-white w-[300px] h-[40px]  mt-5"
+          className="border-gray-500 rounded-lg bg-black text-white w-[300px] h-[40px] mt-5 hover:bg-gray-400 hover:text-black hover:font-bold"
           type="submit"
         >
           PAY

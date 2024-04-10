@@ -16,7 +16,8 @@ export const createOrder = async (
   token: string,
   total: number,
   setQrcode: React.Dispatch<React.SetStateAction<string>>,
-  setProductsInBasket: Dispatch<SetStateAction<ProductTypeWithQuantity[]>>
+  setProductsInBasket: Dispatch<SetStateAction<ProductTypeWithQuantity[]>>,
+  addressId: string
 ) => {
   try {
     const selectedProductContainer: Order[] = [];
@@ -50,6 +51,7 @@ export const createOrder = async (
         total: total,
         invoiceId: invoiceRes.data.invoice_id,
         orderNumber: orderNumberGenerator(),
+        addressId: addressId,
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -57,5 +59,6 @@ export const createOrder = async (
     return toastifySuccess("Order created");
   } catch (error) {
     toastifyError("Failed to order");
+    console.error("error: ", error);
   }
 };

@@ -15,8 +15,8 @@ type ProductsFromOrder = {
   createdAt: string;
   images: string[];
   selectedQuantity: number;
+  shopId: { bankAccount: number; email: string; shopName: string };
 };
-
 export type OrderType = {
   _id: string;
   products: { product: ProductsFromOrder; selectedProductQuantity: number }[];
@@ -32,4 +32,21 @@ export type OrderType = {
   total: number;
   createdAt: Date;
   updatedAt: Date;
+  deliveryStatus: string;
+  paymentStatus: string;
+  address: {
+    addressName: string;
+    city: string;
+    district: string;
+    khoroo: string | number;
+    building: string;
+    deliveryNote: string;
+  };
 };
+export type productTypeForShop = {
+  product: ProductsFromOrder;
+  selectedProductQuantity: number;
+  user: string;
+  orderNumber: number;
+  createdAt: Date;
+}[];

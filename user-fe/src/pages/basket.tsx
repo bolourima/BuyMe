@@ -55,12 +55,12 @@ const Basket = () => {
           <PaymentSection total={total} token={token} setQrcode={setQrcode} />
         </div>
       ) : (
-        <div className="flex flex-col mt-60 items-center">
+        <div className="flex flex-col mt-32 items-center">
           <p className="font-semibold text-2xl flex justify-center items-center">
             Your cart is empty
           </p>
           <a href="/order">
-            <button className="rounded-lg bg-black text-white w-[300px] h-[40px]  mt-5">
+            <button className="rounded-lg bg-black text-white w-[300px] h-[40px] mt-5 ">
               My orders
             </button>
           </a>

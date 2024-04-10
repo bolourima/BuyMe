@@ -64,15 +64,26 @@ export const Header = () => {
         </div>
 
         <div className=" hidden lg:flex w-10/12 justify-center  gap-6 items-center  ">
-          <h1
-            className={`font-semibold text-xl ${
-              router.asPath === "/" ? "font-bold" : "font-normal text-zinc-500"
-            }`}
-          >
-            Home
-          </h1>
+          <Link href={"/"}>
+            <h1
+              className={`font-semibold text-xl ${
+                router.asPath === "/"
+                  ? "font-bold"
+                  : "font-normal text-zinc-500"
+              }`}
+            >
+              Home
+            </h1>
+          </Link>
+
           <Link href={"/productlist"}>
-            <h1 className=" lg:content-center text-xl flex items-center gap-2 hover:border p-2 rounded-md ">
+            <h1
+              className={`lg:content-center text-xl flex items-center font-semibold gap-2 hover:border p-2 rounded-md ${
+                router.asPath === "/productlist"
+                  ? "font-bold"
+                  : "font-normal text-zinc-500"
+              }`}
+            >
               Categories
               <DownIcon />
             </h1>
@@ -84,7 +95,7 @@ export const Header = () => {
               {showImput && (
                 <input
                   type="search"
-                  className="border p-2 rounded absolute right-40"
+                  className="border p-2 rounded absolute right-40 btnn"
                 />
               )}
 
@@ -93,11 +104,12 @@ export const Header = () => {
               </div>
               <button
                 onClick={() => router.push("/favorites")}
-                className="w-4 h-4"
+                className="w-4 h-4 btnn"
               >
                 <OrderIcon />
               </button>
               <button
+                className="btnn"
                 onClick={() => {
                   if (!token) toastifyWarning("Please sign in");
                   else router.push("/basket");
@@ -108,6 +120,7 @@ export const Header = () => {
             </div>
             <div className=" flex ">
               <button
+                className="btnn"
                 onClick={() => {
                   if (!token) {
                     toastifyWarning("Please sign in"), router.push("/signin");
