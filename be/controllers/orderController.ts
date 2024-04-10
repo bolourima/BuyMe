@@ -82,7 +82,7 @@ export const getOrdersInAdmin = async (
               createdAt: el.createdAt,
               product: ele.product,
               selectedProductQuantity: ele.selectedProductQuantity,
-              total: ele.total,
+              total: el.total,
             };
           })
         );

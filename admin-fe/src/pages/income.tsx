@@ -3,6 +3,7 @@ import DownloadIcon from "@/icon/DownloadIcon";
 import { IconMonthly } from "@/svg/IconMonthly";
 import { getOrders } from "@/utilities/getOrders";
 import { OrderType, productTypeForShop } from "@/types/orderType";
+import { calculateTotal } from "@/helper/calculateTotal";
 
 export default function Income() {
   const [orderData, setOrderData] = useState<productTypeForShop[]>([]);
@@ -36,7 +37,12 @@ export default function Income() {
             </div>
             <div className="flex justify-between items-center h-[56px] px-6 pt-5">
               <div className="text-3xl">
-                <p>{totalIncome(orderDataForAdmin).toLocaleString()}₮</p>
+                {orderData.length > 0 && (
+                  <p>{calculateTotal(orderData).toLocaleString()}₮</p>
+                )}
+                {orderDataForAdmin.length > 0 && (
+                  <p>{totalIncome(orderDataForAdmin).toLocaleString()}</p>
+                )}
               </div>
               <div className="flex gap-2 items-center justify-center ">
                 <button className="flex w-[94px] h-[36px] border-[#ECEDF0] border-[1px] bg-white text-black hover:bg-[#18BA51] rounded-lg hover:text-white text-sm justify-center items-center px-1 py-2">
@@ -66,17 +72,38 @@ export default function Income() {
                 <th>Огноо</th>
               </tr>
             </thead>
-            <tbody>
-              {orderDataForAdmin.toReversed().map((order) => (
-                <tr
-                  key={order.orderNumber}
-                  className="text-xs p-3 bg-white h-[72px] text-[#121316] border-[#ECEDF0] border-[1px]"
-                >
-                  <td>{order.user.name}</td>
-                  <td>{order.total}</td>
-                  <td>{order.createdAt.toString()}</td>
-                </tr>
-              ))}
+            <tbody className="w-full">
+              {orderDataForAdmin.length > 0
+                ? orderDataForAdmin.toReversed().map((order, i) => (
+                    <tr
+                      key={i}
+                      className="text-xs border-b border-gray-200 hover:bg-gray-100"
+                    >
+                      <td className="p-3 text-left">{order.orderNumber}</td>
+                      <td className="p-3 text-left">{order.user.name}</td>
+                      <td className="p-3 text-right">{order.total}</td>
+                      <td className="p-3 text-right">
+                        {order.createdAt?.toString()}
+                      </td>
+                    </tr>
+                  ))
+                : orderData.toReversed().map((order, i) => {
+                    return (
+                      <tr
+                        key={i}
+                        className="text-xs border-b border-gray-200 hover:bg-gray-100"
+                      >
+                        <td className="p-3 text-left">
+                          {order[0]?.orderNumber}
+                        </td>
+                        <td className="p-3 text-left">{order[0]?.user}</td>
+                        <td className="p-3 text-right">{order[0]?.total}</td>
+                        <td className="p-3 text-right">
+                          {order[0]?.createdAt?.toString()}
+                        </td>
+                      </tr>
+                    );
+                  })}
             </tbody>
           </table>
         </div>
