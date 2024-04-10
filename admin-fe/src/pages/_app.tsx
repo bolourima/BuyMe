@@ -29,10 +29,10 @@ export default function App({ Component, pageProps }: AppProps) {
         pauseOnHover
         theme="dark"
       />
-      <NavBar />
+      {IsVisibleSlidebar && <NavBar />}
       <div className="flex">
         {IsVisibleSlidebar && <LeftBar />}
-        <div className=" w-10/12">
+        <div className=" w-full">
           <Component {...pageProps} />
         </div>
       </div>
