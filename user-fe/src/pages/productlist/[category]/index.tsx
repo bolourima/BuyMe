@@ -53,8 +53,10 @@ export default productList;
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   params
 ) => {
-  const { category } = params.query;
-  const productRes = await instance.get(`/getProducts/${category}`);
+  const { category, subCategory } = params.query;
+  const productRes = await instance.get(
+    `/getProducts/${category}/${subCategory}`
+  );
   const subCategoryRes = await instance.get(`/getSubCategorys/${category}`);
   const categoryRes = await instance.get(`/getCategories`);
   const productData = productRes.data;

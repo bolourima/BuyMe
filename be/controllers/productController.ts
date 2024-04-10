@@ -7,11 +7,22 @@ interface AuthenticatedRequest extends Request {
 }
 export const getFilteredProducts = async (req: Request, res: Response) => {
   try {
-    const name = req.params.category;
-    const filteredCategory = await Category.find({ name });
+    const categoryName = req.params.category;
+    const subCategory = req.params.subCategory;
+    const filteredCategory = await Category.find({ name: categoryName });
     const categoryId = filteredCategory[0]._id;
-    const products = await Product.find({ categoryId }).populate("categoryId");
-    return res.status(200).send(products);
+    if (subCategory.toString() === "undefined") {
+      const products = await Product.find({
+        categoryId,
+      }).populate("categoryId");
+      return res.status(200).send(products);
+    } else {
+      const products = await Product.find({
+        categoryId,
+        subCategoryName: subCategory,
+      }).populate("categoryId");
+      return res.status(200).send(products);
+    }
   } catch (error) {
     console.error("error in getProducts", "PRODUCT ERRER", error);
     return res.status(400).send("Failed to getProducts");

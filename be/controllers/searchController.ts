@@ -15,6 +15,16 @@ export const searchProduct = async (req: Request, res: Response) => {
     return res.status(200).send(products);
   } catch (error) {
     console.error("Error in searchProduct:", error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(400).send("Internal Server Error");
+  }
+};
+export const filterSubCategory = async (req: Request, res: Response) => {
+  try {
+    const filterInputs = req.body.input
+    const {brandName,maxPrice,minPrice} = filterInputs
+    const products =  
+  } catch (error) {
+    console.error("Error in filterSubCategory:", error);
+    return res.status(400).send("Internal Server Error");
   }
 };

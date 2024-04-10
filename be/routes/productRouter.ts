@@ -21,7 +21,7 @@ productRouter
   .post(upload.single("img"), accessTokenAuth, uploadSingleImage);
 productRouter.route("/getProducts").get(getProducts).post(searchProduct);
 productRouter
-  .route("/getProducts/:category")
+  .route("/getProducts/:category/:subCategory")
   .get(getFilteredProducts)
   .post(searchProduct);
 productRouter

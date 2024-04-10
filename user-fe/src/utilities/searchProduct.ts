@@ -17,3 +17,19 @@ export const SearchProduct = async (
     return toastifyError("noting to search");
   }
 };
+export const filterWithCategory = async (
+  filterInput: string,
+  category: string,
+  setFilteredProduct: React.Dispatch<React.SetStateAction<ProductType[]>>
+) => {
+  try {
+    if (!filterInput) {
+      return;
+    }
+    const response = await instance.post(`/getProducts/${category}`, {
+      input: filterInput,
+    });
+  } catch (error) {
+    return toastifyError("filterSubCategory Error");
+  }
+};

@@ -4,6 +4,8 @@ import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
 import Link from "next/link";
 import { ArrowRightSquare } from "lucide-react";
+import { useRouter } from "next/router";
+import { toastifySuccess } from "@/utilities/toastify";
 const MAX: number = 100000;
 const MIN: number = 0;
 const minDistance: number = 10000;
@@ -17,6 +19,8 @@ export const SubCategory = ({
   categoryData: categoryType[];
   subCategoryData: TypeSubCategory[];
 }) => {
+  const router = useRouter();
+
   const [value2, setValue2] = useState<number[]>([MIN, MAX]);
 
   const handleChange2 = (
@@ -46,8 +50,20 @@ export const SubCategory = ({
   const [isOpenBrands, setOpenBrands] = useState(true);
   const [subCategoryIndex, setCategoryIndex] = useState(1);
 
-  const handlerSubCategory = (categoryindex: number) => {
+  const handlerSubCategory = (
+    categoryindex: number,
+    subCategoryName: string
+  ) => {
     setCategoryIndex(categoryindex);
+    let category = router.query.category;
+    if (!category) {
+      const filteredCategory = subCategoryData.filter((el) => {
+        return el.name === subCategoryName;
+      });
+      category = filteredCategory[0].category.name;
+    }
+
+    router.push(`/productlist/${category}/${subCategoryName}`);
   };
 
   const handleOpenCategory = () => {
@@ -71,8 +87,8 @@ export const SubCategory = ({
           </p>
         </div>
         <div className={`uppercase ml-1 pl-1 mt-3`}>
-          {categoryData.map((subCategory, index) => (
-            <Link href={`/productlist/${subCategory.name}`}>
+          {categoryData.map((Category, index) => (
+            <Link href={`/productlist/${Category.name}`}>
               <div
                 key={index}
                 className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
@@ -80,7 +96,7 @@ export const SubCategory = ({
                 }`}
               >
                 <button className={`transition-all uppercase `}>
-                  {subCategory.name}
+                  {Category.name}
                 </button>
               </div>
             </Link>
@@ -104,7 +120,7 @@ export const SubCategory = ({
               className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
                 isOpenSubCategory ? "block" : "hidden"
               }`}
-              onClick={() => handlerSubCategory(index)}
+              onClick={() => handlerSubCategory(index, subCategory.name)}
             >
               <button className={`transition-all uppercase `}>
                 {subCategory.name}
