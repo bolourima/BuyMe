@@ -37,6 +37,7 @@ const OrderSchema = new Schema({
     type: String,
     enum: ["PENDING", "SHIPPED", "DELIVERED", "CANCELED"],
   },
+  address: { type: Schema.ObjectId, ref: "Address", required: true },
 });
 const Order = model("Order", OrderSchema);
 export default Order;

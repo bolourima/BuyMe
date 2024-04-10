@@ -8,7 +8,6 @@ export const Orders = ({
   orderData: productTypeForShop[];
   orderDataForAdmin: OrderType[];
 }) => {
-  console.log(orderDataForAdmin);
   return (
     <div className="overflow-x-auto w-full">
       <table className="w-full border-collapse">
@@ -27,6 +26,7 @@ export const Orders = ({
               <th className="p-3">Order Number</th>
               <th className="p-3">Products</th>
               <th className="p-3">Total</th>
+              <th className="p-3">Address</th>
               <th className="p-3">Delivery status</th>
               <th className="p-3">Payment status</th>
               <th className="p-3">Created at</th>
@@ -98,6 +98,7 @@ export const Orders = ({
                       </div>
                     </td>
                     <td className="p-3">{order.total.toLocaleString()}₮</td>
+                    <td className="p-3">{order.address?.addressName}</td>
                     <td className="p-3">
                       <p
                         className={`text-white w-fit p-2 rounded-lg ${

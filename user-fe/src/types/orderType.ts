@@ -12,5 +12,13 @@ export type OrderType = {
   invoiceId: string;
   paymentStatus: string;
   deliveryStatus: string;
+  address: {
+    addressName: string;
+    city: string;
+    district: string;
+    khoroo: string | number;
+    building: string;
+    deliveryNote: string;
+  };
   __v: number;
 };

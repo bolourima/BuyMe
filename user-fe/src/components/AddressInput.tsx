@@ -90,15 +90,15 @@ export const AddressInput = ({
         building: formik.values.building,
         deliveryNote: formik.values.deliveryNote,
       };
-      await createAddress(addressInfo, token, router.push);
-      console.log(productsInBasket, token, total);
-      // await createOrder(
-      //   productsInBasket,
-      //   token,
-      //   total,
-      //   setQrcode,
-      //   setProductsInBasket
-      // );
+      const addressId = await createAddress(addressInfo, token, router.push);
+      await createOrder(
+        productsInBasket,
+        token,
+        total,
+        setQrcode,
+        setProductsInBasket,
+        addressId
+      );
     },
   });
   return (

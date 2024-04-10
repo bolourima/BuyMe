@@ -17,6 +17,7 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
       invoiceId: req.body.invoiceId,
       paymentStatus: "UNPAID",
       deliveryStatus: "PENDING",
+      address: req.body.addressId,
     });
     await Basket.findOneAndUpdate(
       { user: req.user.id },
@@ -89,6 +90,7 @@ export const getOrdersInAdmin = async (
     } else {
       const orders = await Order.find({})
         .populate("user")
+        .populate("address")
         .populate("products.product.shopId");
       return res.status(200).json({ order: orders, subAdmin: false });
     }
@@ -102,7 +104,9 @@ export const getOrdersOfUser = async (
   res: Response
 ) => {
   try {
-    const orders = await Order.find({ user: req.user.id }).populate("user");
+    const orders = await Order.find({ user: req.user.id })
+      .populate("user")
+      .populate("address");
     return res.status(200).send(orders);
   } catch (error) {
     console.error("error in getordersofuser", error);

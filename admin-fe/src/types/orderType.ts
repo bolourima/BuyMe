@@ -34,6 +34,14 @@ export type OrderType = {
   updatedAt: Date;
   deliveryStatus: string;
   paymentStatus: string;
+  address: {
+    addressName: string;
+    city: string;
+    district: string;
+    khoroo: string | number;
+    building: string;
+    deliveryNote: string;
+  };
 };
 export type productTypeForShop = {
   product: ProductsFromOrder;
