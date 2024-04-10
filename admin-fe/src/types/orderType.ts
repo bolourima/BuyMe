@@ -49,4 +49,5 @@ export type productTypeForShop = {
   user: string;
   orderNumber: number;
   createdAt: Date;
+  total: number;
 }[];

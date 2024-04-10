@@ -54,7 +54,7 @@ export const Orders = ({
                               alt={productsWithQty.product.name}
                             />
                             <p className="text-sm">
-                              Quantity:{" "}
+                              Quantity:
                               {productsWithQty.selectedProductQuantity}
                             </p>
                           </div>
@@ -62,9 +62,7 @@ export const Orders = ({
                       ))}
                     </div>
                   </td>
-                  <td className="p-3">
-                    {calculateTotal(order).toLocaleString()}₮
-                  </td>
+                  <td className="p-3">{order[0].total.toLocaleString()}₮</td>
                   <td className="p-3">
                     {new Date(order[0].createdAt).toLocaleString()}
                   </td>
