@@ -32,6 +32,7 @@ export const adminSignup = async (req: Request, res: Response) => {
         subAdmin: true,
         categories: req.body.categories,
         bankAccount: req.body.bankAccount,
+        description: req.body.description,
       });
     } else {
       const newAdmin = await Admin.create({

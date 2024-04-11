@@ -179,9 +179,7 @@ export const getProductsFromShop = async (req: Request, res: Response) => {
     const products = await Product.find({ shopId: req.params.id }).populate(
       "shopId"
     );
-    const adminInfo = await Admin.findById(req.params.id).populate(
-      "categories"
-    );
+    const adminInfo = await Admin.findById(req.params.id);
     return res.status(200).json({ products: products, adminInfo: adminInfo });
   } catch (error) {
     console.error("errorin get products from shop", error);
