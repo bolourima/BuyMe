@@ -31,7 +31,7 @@ export const Qr = ({
     return () => clearInterval(interval);
   }, [seconds]);
   return (
-    <div className="w-full lg:w-[450px] px-8 h-fit mt-8 flex justify-center items-center absolute top-16 lg:top-32 z-50">
+    <div className="w-full lg:w-[450px] px-8 h-fit mt-24 flex justify-center items-center absolute z-50">
       <div
         className={`w-full h-full  ${
           !isPaid && ""
@@ -43,19 +43,22 @@ export const Qr = ({
               Please scan by camera
             </p>
             <p>{formatTime(seconds)}</p>
-            <Canvas
-              text={invoice.qPay_shortUrl}
-              options={{
-                errorCorrectionLevel: "M",
-                margin: 3,
-                scale: 4,
-                width: 200,
-                color: {
-                  dark: "#000",
-                  light: "#fff",
-                },
-              }}
-            />
+            <div className="hidden lg:block">
+              <Canvas
+                text={invoice.qPay_shortUrl}
+                options={{
+                  errorCorrectionLevel: "M",
+                  margin: 3,
+                  scale: 4,
+                  width: 200,
+                  color: {
+                    dark: "#000",
+                    light: "#fff",
+                  },
+                }}
+              />
+            </div>
+
             <div className="flex sm:hidden md:hidden lg:hidden flex-wrap justify-center items-center gap-4">
               {invoice.urls.map((url) => {
                 return (
