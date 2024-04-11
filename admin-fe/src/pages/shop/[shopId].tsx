@@ -2,6 +2,7 @@ import { calculateTotal } from "@/helper/calculateTotal";
 import { totalIncome } from "@/helper/totalIncome";
 import { instance } from "@/instance";
 import { OrderType } from "@/types/orderType";
+import { toastifyWarning } from "@/utilities/toastify";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 type Params = {
@@ -10,86 +11,40 @@ type Params = {
 type Props = {
   orderData: OrderType[];
 };
-type OrderTypeTest = {
-  _id: string;
-  products: {
-    product: {
-      _id: string;
-      name: string;
-      description: string;
-      price: number;
-      productCode: number;
-      quantity: number;
-      tag: string;
-      disCount: { isSale: boolean; salePercent: number };
-      categoryId: {
-        _id: string;
-        name: string;
-      };
-      subCategoryName: string;
-      brandName: string;
-      createdAt: string;
-      images: string[];
-      selectedQuantity: number;
-      shopId: {
-        bankAccount: number;
-        email: string;
-        shopName: string;
-        _id: string;
-      };
-    };
-    selectedProductQuantity: number;
-  }[];
-  orderNumber: number;
-  user: {
-    _id: string;
-    name: string;
-    email: string;
-    phoneNumber: number;
-    password: string;
-    __v: number;
-  };
-  total: number;
-  createdAt: Date;
-  updatedAt: Date;
-  deliveryStatus: string;
-  paymentStatus: string;
-  address: {
-    addressName: string;
-    city: string;
-    district: string;
-    khoroo: string | number;
-    building: string;
-    deliveryNote: string;
-  };
-};
-const Shop = ({ orderData }: { orderData: OrderTypeTest[] }) => {
+const Shop = ({ orderData, id }: { orderData: OrderType[]; id: string }) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-
-  const filteredOrders = orderData.filter((order) => {
-    if (!startDate || !endDate) return true;
-    const orderDate = new Date(order.createdAt);
-    return orderDate >= startDate && orderDate <= endDate;
-  });
-  //   const filterByDate = async () => {
-  //     try {
-
-  //     } catch (error) {
-  //         console.error("error")
-  //     }
-  //   }
-  //   useEffect(() => {
-  //     const response = await instance.post({})
-  //   }, [startDate, endDate])
-  return (
-    <div className="min-h-screen py-12 px-4 flex flex-col justify-center items-center">
+  const [filteredOrderData, setFilteredOrderData] = useState<OrderType[]>([]);
+  const filterByDate = async () => {
+    try {
+      const response = await instance.post(`/filterByDate`, {
+        endDate: endDate,
+        startDate: startDate,
+        id: id,
+      });
+      setFilteredOrderData(response.data.orderData);
+    } catch (error) {
+      console.error("error in filter by date", error);
+    }
+  };
+  useEffect(() => {
+    if (startDate && endDate) {
+      filterByDate();
+    }
+  }, [startDate, endDate]);
+  const displayArray = !startDate && !endDate ? orderData : filteredOrderData;
+  return orderData.length == 0 ? (
+    <p className="w-full min-h-screen flex justify-center items-center pb-32">
+      Хараахан захиалга байхгүй байна
+    </p>
+  ) : (
+    <div className="min-h-screen py-12 px-4 flex flex-col items-center">
       <div className="w-10/12 flex justify-between items-center mb-8">
         <p className="text-xl font-semibold">Orders:</p>
         <p className="font-semibold text-xl">
           Total income:{" "}
           {totalIncome(
-            orderData.filter((el) => {
+            displayArray.filter((el) => {
               return el.paymentStatus === "PAID";
             })
           ).toLocaleString()}
@@ -112,7 +67,7 @@ const Shop = ({ orderData }: { orderData: OrderTypeTest[] }) => {
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-32 w-10/12">
-        {orderData.map((order) => (
+        {displayArray.map((order) => (
           <div
             key={order._id}
             className="bg-white rounded-md shadow-md overflow-hidden"
@@ -172,6 +127,7 @@ export default Shop;
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   params
 ) => {
+  const id = params.query.shopId;
   const shopRelatedData = await instance.get(
     `/shopRelatedData/${params.query.shopId}`
   );
@@ -179,6 +135,7 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   return {
     props: {
       orderData,
+      id,
     },
   };
 };

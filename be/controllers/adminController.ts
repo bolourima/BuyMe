@@ -5,7 +5,62 @@ import jwt from "jsonwebtoken";
 import Order from "../models/orderModel";
 import { Types } from "mongoose";
 const jwtPrivateKey = process.env.SECRET_KEY;
-
+export const getAllAdmins = async (req: Request, res: Response) => {
+  try {
+    const admins = await Admin.find({ subAdmin: req.body.subAdmin });
+    return res.status(200).send(admins);
+  } catch (error) {
+    console.error("error in get all admins", error);
+    return res.status(400).json({ err: error });
+  }
+};
+export const filterByDate = async (req: Request, res: Response) => {
+  try {
+    const pipeline = [
+      {
+        $match: {
+          "products.product.shopId": new Types.ObjectId(req.body.id),
+        },
+      },
+      {
+        $unwind: "$products",
+      },
+      {
+        $match: {
+          "products.product.shopId": new Types.ObjectId(req.body.id),
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          products: { $push: "$products" },
+          orderNumber: { $first: "$orderNumber" },
+          user: { $first: "$user" },
+          total: { $first: "$total" },
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" },
+          invoiceId: { $first: "$invoiceId" },
+          paymentStatus: { $first: "$paymentStatus" },
+          deliveryStatus: { $first: "$deliveryStatus" },
+        },
+      },
+    ];
+    const result = await Order.aggregate(pipeline);
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(req.body.endDate);
+    const filteredOrder = result.filter((order) => {
+      const orderDate = new Date(order.createdAt);
+      return orderDate >= startDate && orderDate <= endDate;
+    });
+    filteredOrder.sort(function (a, b) {
+      return b.createdAt - a.createdAt;
+    });
+    return res.status(200).json({ orderData: filteredOrder });
+  } catch (error) {
+    console.error("error in fiter by date", error);
+    return res.status(400).json({ error: error });
+  }
+};
 export const getOrdersOfSelectedAdmin = async (req: Request, res: Response) => {
   try {
     const pipeline = [
