@@ -6,10 +6,12 @@ export const PaymentSection = ({
   total,
   token,
   setInvoice,
+  setLoading,
 }: {
   total: number;
   token: string;
   setInvoice: React.Dispatch<React.SetStateAction<InvoiceType>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
@@ -39,7 +41,7 @@ export const PaymentSection = ({
               className="bg-black text-white w-full h-[54px] rounded-lg hover:bg-gray-400 hover:text-black hover:font-bold"
               onClick={openModal}
             >
-              Create order
+              Order
             </button>
             {isOpen && (
               <div className="flex flex-col gap-3 absolute top-[78px] right-0 bottom-0  w-full bg-gray-600 bg-opacity-60  h-full">
@@ -52,6 +54,7 @@ export const PaymentSection = ({
                     total={total}
                     token={token}
                     setInvoice={setInvoice}
+                    setLoading={setLoading}
                   />
                   <button
                     className="w-full flex justify-center py-4"

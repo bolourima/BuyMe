@@ -6,7 +6,8 @@ import { Dispatch, SetStateAction } from "react";
 export const payPayment = async (
   setInvoice: Dispatch<SetStateAction<InvoiceType>>,
   order: OrderType,
-  token: string
+  token: string,
+  setLoading: Dispatch<SetStateAction<boolean>>
 ) => {
   try {
     const tokenRes = await instance.post(
@@ -37,5 +38,7 @@ export const payPayment = async (
   } catch (error) {
     toastifyError("Failed to pay");
     console.error("error in pay payment", error);
+  } finally {
+    setLoading(false);
   }
 };

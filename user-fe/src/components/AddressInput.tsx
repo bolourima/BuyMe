@@ -17,10 +17,12 @@ import * as Yup from "yup";
 export const AddressInput = ({
   total,
   setInvoice,
+  setLoading,
 }: {
   total: number;
   token: string;
   setInvoice: React.Dispatch<React.SetStateAction<InvoiceType>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
@@ -82,24 +84,31 @@ export const AddressInput = ({
         .max(30, "30-с бага тэмдэгт оруулна уу"),
     }),
     onSubmit: async (values) => {
-      const addressInfo = {
-        user: user._id,
-        addressName: formik.values.addressName,
-        city: formik.values.city,
-        district: formik.values.district,
-        khoroo: formik.values.khoroo,
-        building: formik.values.building,
-        deliveryNote: formik.values.deliveryNote,
-      };
-      const addressId = await createAddress(addressInfo, token, router.push);
-      await createOrder(
-        productsInBasket,
-        token,
-        total,
-        setInvoice,
-        setProductsInBasket,
-        addressId
-      );
+      setLoading(true);
+      try {
+        const addressInfo = {
+          user: user._id,
+          addressName: formik.values.addressName,
+          city: formik.values.city,
+          district: formik.values.district,
+          khoroo: formik.values.khoroo,
+          building: formik.values.building,
+          deliveryNote: formik.values.deliveryNote,
+        };
+        const addressId = await createAddress(addressInfo, token, router.push);
+        await createOrder(
+          productsInBasket,
+          token,
+          total,
+          setInvoice,
+          setProductsInBasket,
+          addressId
+        );
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     },
   });
   return (

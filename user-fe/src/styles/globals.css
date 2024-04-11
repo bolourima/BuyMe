@@ -110,3 +110,9 @@
 .btnn:hover #gray {
   fill: #9ca3af;
 }
+.progressContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
