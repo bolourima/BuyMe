@@ -1,5 +1,5 @@
-import { calculateTotal } from "@/helper/calculateTotal";
 import { OrderType, productTypeForShop } from "@/types/orderType";
+import Link from "next/link";
 
 export const Orders = ({
   orderData,
@@ -36,7 +36,7 @@ export const Orders = ({
         </thead>
         <tbody>
           {orderData.length != 0
-            ? orderData.map((order) => (
+            ? orderData.toReversed().map((order) => (
                 <tr key={order[0].orderNumber} className="border-b">
                   <td className="p-3">{order[0].user}</td>
                   <td className="p-3">{order[0].orderNumber}</td>
@@ -54,7 +54,7 @@ export const Orders = ({
                               alt={productsWithQty.product.name}
                             />
                             <p className="text-sm">
-                              Quantity:{" "}
+                              Quantity:
                               {productsWithQty.selectedProductQuantity}
                             </p>
                           </div>
@@ -62,9 +62,7 @@ export const Orders = ({
                       ))}
                     </div>
                   </td>
-                  <td className="p-3">
-                    {calculateTotal(order).toLocaleString()}₮
-                  </td>
+                  <td className="p-3">{order[0].total?.toLocaleString()}₮</td>
                   <td className="p-3">
                     {new Date(order[0].createdAt).toLocaleString()}
                   </td>
@@ -80,9 +78,12 @@ export const Orders = ({
                         {order.products.map((productsWithQty, i) => {
                           return (
                             <div className="flex flex-col">
-                              <p className="text-green-500">
+                              <Link
+                                href={`shop/${productsWithQty.product.shopId._id}`}
+                                className="text-green-500"
+                              >
                                 {order.products[i].product.shopId.shopName}
-                              </p>
+                              </Link>
                               <p>{productsWithQty.product.name}</p>
                               <div className="flex">
                                 <img

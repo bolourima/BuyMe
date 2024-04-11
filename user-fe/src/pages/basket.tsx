@@ -48,7 +48,7 @@ const Basket = () => {
     <div className="lg:w-full min-h-screen flex justify-center">
       {invoice.invoice_id && <Qr invoice={invoice} setInvoice={setInvoice} />}
       {productsInBasket.length ? (
-        <div className="flex flex-col lg:w-full lg:flex lg:flex-row justify-center pt-16 lg:gap-16">
+        <div className="flex flex-col lg:w-full lg:flex lg:flex-row lg:justify-center lg:pt-16 lg:gap-16 place-con">
           <ProductSectionOfBasket
             productsInBasket={productsInBasket}
             setProductsInBasket={setProductsInBasket}
@@ -61,7 +61,7 @@ const Basket = () => {
           <p className="font-semibold text-2xl flex justify-center items-center">
             Your cart is empty
           </p>
-          <a href="/order">
+          <a href="/orders/list">
             <button className="rounded-lg bg-black text-white w-[300px] h-[40px] mt-5 ">
               My orders
             </button>

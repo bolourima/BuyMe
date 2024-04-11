@@ -40,12 +40,9 @@ export default function MyProfile() {
   }, []);
   return (
     <>
-      <div className="flex flex-col bg-white text-black p-5 gap-14 w-full ">
-        <div className="flex justify-center">
-          <p className="text-2xl">My Profile</p>
-        </div>
+      <div className="lg:flex flex-col bg-white text-black p-5 gap-4 w-full h-fit">
         <div className=" flex flex-col lg:flex lg:flex-row ">
-          <div className=" hidden lg:flex w-1/4">
+          <div className=" hidden  lg:flex lg:w-1/4">
             <ProfileSideBar user={user} />
           </div>
           <div className="flex flex-col gap-6 lg:w-3/4 lg:px-5">
@@ -56,12 +53,13 @@ export default function MyProfile() {
                   img={newAvatarImage}
                   setImg={setNewAvatarImg}
                   token={token}
+                  editUser={editUser}
                 />
               </div>
               <div className="flex flex-col gap-5">
                 <button
                   onClick={() => setEditUser(!editUser)}
-                  className="bbtn flex bg-black text-white w-[250px] h-[30px] justify-center items-center rounded-md hover:bg-gray-400 hover:font-bold hover:text-black "
+                  className=" w-[200px] lg:bbtn flex bg-black text-white lg:w-[250px] h-[30px] justify-center items-center rounded-md hover:bg-gray-400 hover:font-bold hover:text-black "
                 >
                   <div className="w-5 h-5 mx-4">
                     <EditIconWhite />
@@ -75,7 +73,7 @@ export default function MyProfile() {
                     router.push("/signin");
                     toastifySuccess("Successfully signed out");
                   }}
-                  className="flex bg-black text-white w-[250px] h-[30px] justify-center items-center rounded-md hover:bg-gray-400 hover:font-bold hover:text-black"
+                  className=" w-[200px] lg: flex bg-black text-white lg:w-[250px] h-[30px] justify-center items-center rounded-md hover:bg-gray-400 hover:font-bold hover:text-black"
                 >
                   <p>Sign out</p>
                 </button>

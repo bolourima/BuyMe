@@ -15,7 +15,7 @@ type ProductsFromOrder = {
   createdAt: string;
   images: string[];
   selectedQuantity: number;
-  shopId: { bankAccount: number; email: string; shopName: string };
+  shopId: { bankAccount: number; email: string; shopName: string; _id: string };
 };
 export type OrderType = {
   _id: string;
@@ -49,4 +49,5 @@ export type productTypeForShop = {
   user: string;
   orderNumber: number;
   createdAt: Date;
+  total: number;
 }[];

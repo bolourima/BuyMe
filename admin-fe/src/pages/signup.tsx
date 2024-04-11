@@ -18,6 +18,7 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
       password: formik.values.password,
       subAdmin: true,
       categories: checkedCategories,
+      description: formik.values.description,
     };
     createUser(accountInfo, router.push);
   };
@@ -37,6 +38,7 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
       bankAccount: null,
       password: "",
       confirmPassword: "",
+      description: "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -51,6 +53,7 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password")], "Өмнөх нууц үгтэй ижилхэн байх ёстой")
         .required("Нууц үгээ оруулна уу"),
+      description: Yup.string().min(4).max(400).required(),
     }),
     onSubmit: async (values) => {},
   });
@@ -127,7 +130,18 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
                 <div>{formik.errors.confirmPassword}</div>
               ) : null}
             </div>
-
+            <div className="flex flex-col gap-2">
+              <label className="">Description</label>
+              <input
+                className="w-[300px] h-[30px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
+                type="description"
+                placeholder="Please enter your Description"
+                {...formik.getFieldProps("Description")}
+              />
+              {formik.touched.description && formik.errors.description ? (
+                <div>{formik.errors.description}</div>
+              ) : null}
+            </div>
             <div className="flex mt-5">
               <label>Category </label>
             </div>

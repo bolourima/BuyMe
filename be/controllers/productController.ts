@@ -2,9 +2,21 @@ import { Request, Response } from "express";
 import cloudinary from "../utilities/Cloudinary";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
+import Admin from "../models/adminModel";
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
+export const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find({})
+      .limit(10)
+      .skip(Number(req.params.page) * 10);
+    return res.status(200).send(products);
+  } catch (error) {
+    console.error("error in get all product", error);
+    return res.status(400).json({ err: error });
+  }
+};
 export const getFilteredProducts = async (req: Request, res: Response) => {
   try {
     const categoryName = req.params.category;
@@ -175,10 +187,22 @@ export const getSelectedProductsInAdmin = async (
 };
 export const getProductsFromShop = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find({ shopId: req.params.id });
-    return res.status(200).send(products);
+    const products = await Product.find({ shopId: req.params.id }).populate(
+      "shopId"
+    );
+    const adminInfo = await Admin.findById(req.params.id);
+    return res.status(200).json({ products: products, adminInfo: adminInfo });
   } catch (error) {
     console.error("errorin get products from shop", error);
     return res.status(400).json({ err: error });
+  }
+};
+export const getQuantityOfProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find({});
+    const qty = products.length;
+    return res.status(200).json({ qty: qty });
+  } catch (error) {
+    console.error("error in getQuantityOfProducts", error);
   }
 };

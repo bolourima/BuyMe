@@ -49,7 +49,7 @@ export const MobileBar = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <div className="w-7">
+        <div className="w-5 mt-[8px]">
           <Bar />
         </div>
       </SheetTrigger>
@@ -68,48 +68,47 @@ export const MobileBar = () => {
                     alt=""
                   />
                 </div>
-                <h1 className=" font-semibold text-xl">{user.name}</h1>
+                <h1 className="font-semibold text-xl">{user.name}</h1>
               </div>
 
-              <div className="  w-full border-y-2 py-9 flex flex-col gap-4">
+              <div className="w-full border-y-2 py-9 flex flex-col gap-4">
                 <div
                   onClick={() => router.push("/basket")}
                   className=" flex items-center gap-5 "
                 >
-                  <div className="  w-7  h-7">
+                  <div className="w-7 h-7">
                     <CartIcon />
                   </div>
-                  <h1 className="  text-lg font-semibold ">Cart</h1>
+                  <h1 className="text-lg font-semibold ">Cart</h1>
                 </div>
                 <div
                   onClick={() => router.push("/favorites")}
-                  className=" flex items-center gap-5 "
+                  className="flex items-center gap-5 "
                 >
-                  <div className=" ml-1">
+                  <div className="ml-1">
                     <LoveMb />
                   </div>
-                  <h1 className="  text-lg font-semibold ">favorites</h1>
+                  <h1 className="text-lg font-semibold ">Favorites</h1>
                 </div>
                 <div
-                  onClick={() => router.push("/order")}
+                  onClick={() => router.push("/orders/list")}
                   className=" flex items-center gap-5 "
                 >
                   <div className="ml-2 ">
                     <CheckIcon />
                   </div>
-                  <h1 className="  text-xl font-semibold ">order</h1>
+                  <h1 className="text-lg font-semibold ">My orders</h1>
                 </div>
               </div>
               <h1
-                className=" text-xl font-bold"
+                className="text-lg font-semibold"
                 onClick={() => router.push("/productlist")}
               >
                 All products
               </h1>
-
-              <div className=" flex flex-col items-start gap-3 pl-1 ">
+              <div className="flex flex-col items-start gap-3 pl-1 ">
                 <h1
-                  className=" text-lg font-semibold"
+                  className="text-lg font-semibold"
                   onClick={() => router.push("/productlist/clothing")}
                 >
                   Clothing
@@ -125,6 +124,18 @@ export const MobileBar = () => {
                   onClick={() => router.push("/productlist/books")}
                 >
                   Books
+                </h1>
+                <h1
+                  className=" text-lg font-semibold"
+                  onClick={() => router.push("/productlist/furniture")}
+                >
+                  Furniture
+                </h1>
+                <h1
+                  className=" text-lg font-semibold"
+                  onClick={() => router.push("/productlist/foods")}
+                >
+                  Foods
                 </h1>
               </div>
             </div>
