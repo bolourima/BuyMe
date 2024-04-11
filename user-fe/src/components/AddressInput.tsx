@@ -52,29 +52,15 @@ export const AddressInput = ({
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      addressName: "",
-      city: "",
       district: "",
-      khoroo: "",
       building: "",
       deliveryNote: "",
     },
     validationSchema: Yup.object({
-      addressName: Yup.string()
-        .min(2, "2-с дээш тэмдэгт ашиглана уу")
-        .max(30, "30-с бага тэмдэгт оруулна уу"),
-      city: Yup.string()
-        .min(2, "2-с дээш тэмдэгт ашиглана уу")
-        .max(30, "30-с бага тэмдэгт оруулна уу")
-        .required("Хотын нэрээ оруулна уу"),
       district: Yup.string()
         .min(2, "2-с дээш тэмдэгт ашиглана уу")
         .max(30, "30-с бага тэмдэгт оруулна уу")
         .required("Дүүргээ оруулна уу"),
-      khoroo: Yup.string()
-        .min(2, "2-с дээш тэмдэгт ашиглана уу")
-        .max(30, "30-с бага тэмдэгт оруулна уу")
-        .required("Хороогоо оруулна уу"),
       building: Yup.string()
         .min(2, "2-с дээш тэмдэгт ашиглана уу")
         .max(30, "30-с бага тэмдэгт оруулна уу")
@@ -84,14 +70,26 @@ export const AddressInput = ({
         .max(30, "30-с бага тэмдэгт оруулна уу"),
     }),
     onSubmit: async (values) => {
+      const addressInfo = {
+        user: user._id,
+        district: formik.values.district,
+        building: formik.values.building,
+        deliveryNote: formik.values.deliveryNote,
+      };
+      const addressId = await createAddress(addressInfo, token, router.push);
+      await createOrder(
+        productsInBasket,
+        token,
+        total,
+        setInvoice,
+        setProductsInBasket,
+        addressId
+      );
       setLoading(true);
       try {
         const addressInfo = {
           user: user._id,
-          addressName: formik.values.addressName,
-          city: formik.values.city,
           district: formik.values.district,
-          khoroo: formik.values.khoroo,
           building: formik.values.building,
           deliveryNote: formik.values.deliveryNote,
         };
@@ -121,32 +119,8 @@ export const AddressInput = ({
         onSubmit={formik.handleSubmit}
       >
         <div className="flex flex-col">
-          <label className="text-xl font-sans font-semibold my-3">
-            Address name
-          </label>
-          <input
-            className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="Example: Home, Office"
-            {...formik.getFieldProps("addressName")}
-          />
-          {formik.touched.addressName && formik.errors.addressName ? (
-            <div>{formik.errors.addressName}</div>
-          ) : null}
-        </div>
-        <div className="flex flex-col">
-          <label className="text-xl font-sans font-semibold my-3">City</label>
-          <input
-            className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="Ulaanbaatar"
-            {...formik.getFieldProps("city")}
-          />
-          {formik.touched.city && formik.errors.city ? (
-            <div>{formik.errors.city}</div>
-          ) : null}
-        </div>
-        <div className="flex flex-col">
-          <label className="text-xl font-sans font-semibold my-3">
-            District
+          <label className="text-lg font-sans font-semibold my-3">
+            District, Khoroo
           </label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
@@ -158,19 +132,8 @@ export const AddressInput = ({
           ) : null}
         </div>
         <div className="flex flex-col">
-          <label className="text-xl font-sans font-semibold my-3">Khoroo</label>
-          <input
-            className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
-            placeholder="khoroo"
-            {...formik.getFieldProps("khoroo")}
-          />
-          {formik.touched.khoroo && formik.errors.khoroo ? (
-            <div>{formik.errors.khoroo}</div>
-          ) : null}
-        </div>
-        <div className="flex flex-col">
-          <label className="text-xl font-sans font-semibold my-3">
-            Building
+          <label className="text-lg font-sans font-semibold my-3">
+            Apartment, suite, etc.
           </label>
           <input
             className="w-[300px] h-[40px] p-4 bg-transparent border-gray-500 rounded-md border-[1px]"
@@ -182,7 +145,7 @@ export const AddressInput = ({
           ) : null}
         </div>
         <div className="flex flex-col">
-          <label className="text-xl font-sans font-semibold my-3">
+          <label className="text-lg font-sans font-semibold my-3">
             Additional information
           </label>
           <input

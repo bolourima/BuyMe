@@ -24,7 +24,6 @@ export const filterSubCategory = async (req: Request, res: Response) => {
     const products = await Product.find({
       $or: [{ price: { $gte: inputValue[0], $lte: inputValue[1] } }],
     });
-    console.log(products);
     return res.status(200).send(products);
   } catch (error) {
     console.error("Error in filterSubCategory:", error);

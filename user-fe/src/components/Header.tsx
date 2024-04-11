@@ -116,17 +116,7 @@ export const Header = () => {
               >
                 <OrderIcon />
               </button>
-              <button
-                className="btnn"
-                onClick={() => {
-                  if (!token) toastifyWarning("Please sign in");
-                  else router.push("/basket");
-                }}
-              >
-                <MyCartIcon />
-              </button>
-            </div>
-            <div className=" flex ">
+
               <button
                 className="btnn"
                 onClick={() => {
@@ -136,6 +126,18 @@ export const Header = () => {
                 }}
               >
                 <ProfileIcon />
+              </button>
+            </div>
+            <div className=" flex ">
+              {" "}
+              <button
+                className="btnn"
+                onClick={() => {
+                  if (!token) toastifyWarning("Please sign in");
+                  else router.push("/basket");
+                }}
+              >
+                <MyCartIcon />
               </button>
             </div>
           </div>

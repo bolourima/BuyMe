@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
@@ -10,19 +10,23 @@ import { toastifyError } from "@/utilities/toastify";
 import { ShopIcon } from "@/icon/ShopIcon";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
+import { putIntoBasket } from "@/utilities/putIntoBasket";
+import { TokenContext } from "@/context/TokenContext";
+import { ProductsInFavContext } from "@/context/ProductsInFavContext";
+import { addToFavs } from "@/helper/addToFavs";
+import { removeFromFavs } from "@/helper/removeFromBasket";
+import { RedLoveIcon } from "@/icon/RedLoveIcon";
 
-export default function ProductId({
-  data,
-}: {
-  data: ProductType;
-  setProductData: ClickHandler;
-}) {
+const ProductId = ({ data }: { data: ProductType }) => {
   const router = useRouter();
   const id = router.query.id;
   const [productData, setProductData] = useState<ProductType>(ProductInitial);
   const [selectedImg, setSelectedImg] = useState<string>("");
   const [onDescription, setOnDescription] = useState(true);
   const [onReviews, setOnReviews] = useState(false);
+  const { token, setToken } = useContext(TokenContext);
+  const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
+
   const getProduct = async (productId: idType) => {
     try {
       const productRes = await instance.get(`/productDetail/${productId}`);
@@ -48,7 +52,7 @@ export default function ProductId({
       setOnReviews(true);
     }
   };
-  console.log("h");
+  const isFav = true;
   return (
     <>
       <NextSeo
@@ -69,6 +73,21 @@ export default function ProductId({
       />
 
       <div className="w-full flex flex-col justify-center items-center ">
+        <div className="flex justify-center lg:mb-7">
+          <Link
+            className="flex gap-4 w-full cursor-pointer"
+            as={`/shop/${productData.shopId._id}`}
+            href={`/shop/[id]`}
+          >
+            <button className="w-8 h-8">
+              <ShopIcon />
+            </button>
+            <p className="text-2xl font-semibold hover:text-green-600">
+              {productData.shopId.shopName}
+            </p>
+          </Link>
+        </div>
+
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="flex flex-col items-center justify-center lg:flex-col lg:w-1/2">
             <img src={selectedImg} className="h-[400px] shadow-xl rounded-md" />
@@ -85,35 +104,22 @@ export default function ProductId({
               })}
             </div>
           </div>
-          <div className="flex flex-col items-center lg:flex-col lg:w-1/2 justify-center gap-5">
-            <Link
-              className="flex gap-4 w-full cursor-pointer"
-              as={`/shop/${productData.shopId._id}`}
-              href={`/shop/[id]`}
-            >
-              <button className="w-8 h-8">
-                <ShopIcon />
-              </button>
-              <p className="text-2xl font-semibold text-green-500">
-                {productData.shopId.shopName}
-              </p>
-            </Link>
-            <p className="text-2xl font-semibold">{productData?.name}</p>
+          <div className="flex flex-col lg:flex-col lg:w-1/2 gap-5 lg:ml-8">
+            <p className="text-2xl font-semibold lg:mt-10">
+              {productData?.name}
+            </p>
             <p className="text-green-600">
               {productData?.price.toLocaleString()}₮
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => {
-                  setProductData(data);
+                  putIntoBasket(productData, token);
                 }}
-                className="bg-black text-white hover:bg-gray-400 hover:text-black hover:font-bold h-8 rounded-lg px-4 text-center text-sm sm:w-[180px] lg:w-[270px]"
+                className="bg-black text-white hover:bg-gray-400 hover:text-black hover:font-bold h-8 rounded-lg px-4 text-center text-sm sm:w-[180px] lg:w-[290px]"
               >
                 ADD TO CART
               </button>
-              <div className="bbtn p-2 rounded-lg bg-black w-14  hover:bg-gray-400 flex justify-center items-center h-8">
-                <LoveIcon />
-              </div>
             </div>
           </div>
         </div>
@@ -150,4 +156,5 @@ export default function ProductId({
       </div>
     </>
   );
-}
+};
+export default ProductId;

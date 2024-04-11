@@ -34,8 +34,8 @@ export default function SignUp() {
       email: Yup.string().email("Буруу емайл байна").required("Required"),
       phoneNumber: Yup.number().min(8).required("Required"),
       password: Yup.string()
-        .max(14, "Нууц үг 14 тэмдэгтээс бага байх ёстой")
-        .min(4, "Нууц үг 4-ё дээш тэмдэгттэй байх ёстой")
+        .max(30, "Нууц үг 30 тэмдэгтээс бага байх ёстой")
+        .min(4, "Нууц үг 4-c дээш тэмдэгттэй байх ёстой")
         .required("Required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password")], "Өмнөх нууц үгтэй ижилхэн байх ёстой")
