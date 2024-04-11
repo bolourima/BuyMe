@@ -5,7 +5,7 @@ const adminSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   bankAccount: { type: Number, required: true },
-  subAdmin: { type: String, required: true },
+  subAdmin: { type: Boolean, required: true },
   categories: [{ type: Schema.ObjectId, ref: "Category" }],
   description: { type: String, required: true },
 });
