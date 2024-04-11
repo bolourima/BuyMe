@@ -31,15 +31,17 @@ export const Qr = ({
     return () => clearInterval(interval);
   }, [seconds]);
   return (
-    <div className="w-full px-8 h-fit mt-8 flex justify-center items-center absolute z-50">
+    <div className="w-full lg:w-[450px] px-8 h-fit mt-8 flex justify-center items-center absolute top-16 lg:top-32 z-50">
       <div
         className={`w-full h-full  ${
-          !isPaid && "bg-gray-200"
-        }  rounded-xl flex justify-center items-center py-8 lg:px-24 lg:py-8 flex-col`}
+          !isPaid && ""
+        }  rounded-xl flex  justify-center items-center py-8 lg:px-24 lg:py-8 flex-col`}
       >
         {!isPaid ? (
-          <div className="w-fit h-fit flex flex-col gap-4 justify-center items-center">
-            <p className="text-2xl font-semibold">Please scan by camera</p>
+          <div className="w-fit h-fit flex flex-col gap-4 justify-center items-center bg-gray-200 rounded-lg p-3">
+            <p className="text-xl font-semibold flex justify-center w-[300px]">
+              Please scan by camera
+            </p>
             <p>{formatTime(seconds)}</p>
             <Canvas
               text={invoice.qPay_shortUrl}
@@ -65,7 +67,7 @@ export const Qr = ({
             </div>
             <div className="w-full h-fit flex flex-wrap gap-4"></div>
             <button
-              className="font-semibold text-2xl"
+              className="font-semibold text-lg border-2 rounded-xl bg-gray-900 text-white p-3 hover:bg-gray-600"
               onClick={() => {
                 checkPayment(setIsPaid);
               }}
@@ -73,23 +75,23 @@ export const Qr = ({
               Check payment
             </button>
             <button
-              className="font-semibold text-2xl"
+              className="font-semibold text-lg text-red-700"
               onClick={() => setInvoice(invoiceInitial)}
             >
               Cancel
             </button>
           </div>
         ) : (
-          <div className="w-full h-full flex flex-col gap-8 justify-center items-center bg-white p-8 rounded-xl">
+          <div className="w-[350px] h-full flex flex-col gap-8 justify-center items-center bg-white p-8 rounded-xl">
             <p className="text-green-500 text-3xl font-semibold flex justify-center items-center">
               Order confirmed
             </p>
-            <div className="w-48 h-48">
+            <div className="w-12 h-12">
               <Paid />
             </div>
             <button
               onClick={() => setInvoice(invoiceInitial)}
-              className="bg-green-500 text-white text-2xl font-semibold w-48 h-16 rounded-xl"
+              className="bg-green-500 text-white text-lg font-semibold w-48 h-12 rounded-xl"
             >
               Done
             </button>
