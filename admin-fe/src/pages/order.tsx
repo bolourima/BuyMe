@@ -1,3 +1,4 @@
+import DataTableOrder from "@/components/DataTableOrder";
 import { Orders } from "@/components/Orders";
 import { OrderType, productTypeForShop } from "@/types/orderType";
 import { getOrders } from "@/utilities/getOrders";
@@ -13,7 +14,11 @@ const Order = () => {
   }, []);
   return (
     <div>
-      <Orders orderData={orderData} orderDataForAdmin={orderDataForAdmin} />
+      {/* <Orders orderData={orderData} orderDataForAdmin={orderDataForAdmin} />/ */}
+      <DataTableOrder
+        orderData={orderData}
+        orderDataForAdmin={orderDataForAdmin}
+      />
     </div>
   );
 };
