@@ -15,7 +15,6 @@ const Shop = ({
   productData: ProductType[];
   shopInfo: { email: string; categories: { name: string }[] };
 }) => {
-  console.log(productData[0]);
   return (
     <div className="w-full min-h-screen justify-center items-center flex flex-col gap-8">
       <div className="w-10/12 flex gap-16 justify-between">
@@ -30,12 +29,6 @@ const Shop = ({
             Email: {"  "}
             {shopInfo.email}
           </p>
-          <div className="flex gap-4">
-            Categories:
-            {shopInfo.categories.map((category) => {
-              return <p>{category.name}</p>;
-            })}
-          </div>
         </div>
       </div>
       <div className="grid w-10/12 grid-cols-1 sm:grid-cols-6 md:grid-cols-3 lg:grid-cols-4 gap-16">
