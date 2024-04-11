@@ -1,5 +1,5 @@
-import { calculateTotal } from "@/helper/calculateTotal";
 import { OrderType, productTypeForShop } from "@/types/orderType";
+import Link from "next/link";
 
 export const Orders = ({
   orderData,
@@ -78,9 +78,12 @@ export const Orders = ({
                         {order.products.map((productsWithQty, i) => {
                           return (
                             <div className="flex flex-col">
-                              <p className="text-green-500">
+                              <Link
+                                href={`shop/${productsWithQty.product.shopId._id}`}
+                                className="text-green-500"
+                              >
                                 {order.products[i].product.shopId.shopName}
-                              </p>
+                              </Link>
                               <p>{productsWithQty.product.name}</p>
                               <div className="flex">
                                 <img
