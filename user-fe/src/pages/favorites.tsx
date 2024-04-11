@@ -33,7 +33,7 @@ const favorites = ({
   return (
     <div className="w-full min-h-screen flex flex-col items-center">
       {productsInFav.length > 0 ? (
-        productsInFav.map((product, i) => {
+        productsInFav.toReversed().map((product, i) => {
           return (
             <div className="flex w-10/12 lg:w-full h-fit">
               <div

@@ -36,7 +36,7 @@ export const Orders = ({
         </thead>
         <tbody>
           {orderData.length != 0
-            ? orderData.map((order) => (
+            ? orderData.toReversed().map((order) => (
                 <tr key={order[0].orderNumber} className="border-b">
                   <td className="p-3">{order[0].user}</td>
                   <td className="p-3">{order[0].orderNumber}</td>

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import cloudinary from "../utilities/Cloudinary";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
+import Admin from "../models/adminModel";
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
@@ -175,8 +176,13 @@ export const getSelectedProductsInAdmin = async (
 };
 export const getProductsFromShop = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find({ shopId: req.params.id });
-    return res.status(200).send(products);
+    const products = await Product.find({ shopId: req.params.id }).populate(
+      "shopId"
+    );
+    const adminInfo = await Admin.findById(req.params.id).populate(
+      "categories"
+    );
+    return res.status(200).json({ products: products, adminInfo: adminInfo });
   } catch (error) {
     console.error("errorin get products from shop", error);
     return res.status(400).json({ err: error });
