@@ -31,8 +31,12 @@ const Order = () => {
 
   return (
     <div className="lg:px-32 grid grid-cols-1 lg:grid-cols-2 gap-7">
-      {invoice.invoice_id && <Qr invoice={invoice} setInvoice={setInvoice} />}
-      {orderData.map((order) => {
+      {invoice.invoice_id && (
+        <div className="lg:w-[600px] w-full h-full justify-center items-center lg:ml-[450px] absolute z-50">
+          <Qr invoice={invoice} setInvoice={setInvoice} />
+        </div>
+      )}
+      {orderData.toReversed().map((order) => {
         return (
           <div className="flex justify-center overflow-scroll lg:h-[400px] shadow-lg">
             <div className="border-2 rounded-lg w-full p-6 overflow-scroll ">

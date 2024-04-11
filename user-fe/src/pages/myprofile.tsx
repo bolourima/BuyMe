@@ -40,10 +40,7 @@ export default function MyProfile() {
   }, []);
   return (
     <>
-      <div className="flex flex-col bg-white text-black p-5 gap-14 w-full ">
-        <div className="flex justify-center">
-          <p className="text-2xl">My Profile</p>
-        </div>
+      <div className="flex flex-col bg-white text-black p-5 gap-4 w-full h-fit">
         <div className=" flex flex-col lg:flex lg:flex-row ">
           <div className=" hidden lg:flex w-1/4">
             <ProfileSideBar user={user} />
@@ -56,6 +53,7 @@ export default function MyProfile() {
                   img={newAvatarImage}
                   setImg={setNewAvatarImg}
                   token={token}
+                  editUser={editUser}
                 />
               </div>
               <div className="flex flex-col gap-5">

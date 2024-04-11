@@ -15,11 +15,11 @@ export const Qr = ({
 }) => {
   const { Canvas } = useQRCode();
   const [isPaid, setIsPaid] = useState(false);
-  if (isPaid) {
-    setTimeout(() => {
-      setInvoice(invoiceInitial);
-    }, 3000);
-  }
+  // if (isPaid) {
+  //   setTimeout(() => {
+  //     setInvoice(invoiceInitial);
+  //   }, 3000);
+  // }
   const [seconds, setSeconds] = useState(300);
 
   useEffect(() => {
@@ -28,15 +28,14 @@ export const Qr = ({
         setSeconds((prevSeconds) => prevSeconds - 1);
       }
     }, 1000);
-
     return () => clearInterval(interval);
   }, [seconds]);
   return (
-    <div className="w-full flex justify-center items-center absolute z-50">
+    <div className="w-full px-8 h-fit mt-8 flex justify-center items-center absolute z-50">
       <div
-        className={`w-[400px] h-[400px]  ${
+        className={`w-full h-full  ${
           !isPaid && "bg-gray-200"
-        }  rounded-xl flex justify-center items-center flex-col`}
+        }  rounded-xl flex justify-center items-center py-8 lg:px-24 lg:py-8 flex-col`}
       >
         {!isPaid ? (
           <div className="w-fit h-fit flex flex-col gap-4 justify-center items-center">
@@ -55,7 +54,7 @@ export const Qr = ({
                 },
               }}
             />
-            <div className="flex sm:hidden md:hidden lg:hidden flex-wrap gap-4">
+            <div className="flex sm:hidden md:hidden lg:hidden flex-wrap justify-center items-center gap-4">
               {invoice.urls.map((url) => {
                 return (
                   <a href={url.link}>
@@ -81,9 +80,9 @@ export const Qr = ({
             </button>
           </div>
         ) : (
-          <div className="w-full h-full flex flex-col gap-4 justify-center items-center bg-white p-8 rounded-xl">
+          <div className="w-full h-full flex flex-col gap-8 justify-center items-center bg-white p-8 rounded-xl">
             <p className="text-green-500 text-3xl font-semibold flex justify-center items-center">
-              Paid
+              Order confirmed
             </p>
             <div className="w-48 h-48">
               <Paid />
