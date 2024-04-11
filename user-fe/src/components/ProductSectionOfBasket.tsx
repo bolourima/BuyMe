@@ -40,7 +40,7 @@ export const ProductSectionOfBasket = ({
   return (
     <div className="mt-0 flex flex-col w-full lg:flex lg:flex-col gap-6 lg:w-[700px]">
       {productsInBasket &&
-        productsInBasket.map((product, i) => {
+        productsInBasket.toReversed().map((product, i) => {
           return (
             <div
               key={i}
