@@ -8,6 +8,7 @@ import { instance } from "@/instance";
 import { jwtDecode } from "jwt-decode";
 import { TokenContext } from "@/context/TokenContext";
 import { refresh } from "@/utilities/refreshToken";
+import { toastifyWarning } from "@/utilities/toastify";
 
 export const SearchMobile = () => {
   const router = useRouter();
@@ -25,8 +26,8 @@ export const SearchMobile = () => {
       const response = await instance.post("getProducts", {
         input: formik.values.input,
       });
-      console.log("resdata", response.data);
-      router.push("/productlist");
+      const data = response.data;
+      if (data.length == 0) return toastifyWarning("Product not found");
       setSearchedProduct(response.data);
     },
   });

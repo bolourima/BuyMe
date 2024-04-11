@@ -26,9 +26,10 @@ export const Header = () => {
       input: "",
     },
     validationSchema: Yup.object({
-      input: Yup.string().max(20).required(),
+      input: Yup.string().max(20),
     }),
     onSubmit: async () => {
+      if (!formik.values.input) return router.push("/");
       const response = await instance.post("getProducts", {
         input: formik.values.input,
       });

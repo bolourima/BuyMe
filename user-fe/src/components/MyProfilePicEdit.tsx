@@ -7,11 +7,13 @@ export const MyProfilePicEdit = ({
   img,
   setImg,
   token,
+  editUser,
 }: {
   avatar: string;
   img: string;
   setImg: React.Dispatch<React.SetStateAction<string>>;
   token: string;
+  editUser: boolean;
 }) => {
   const uploadSingleImage = async (file: File) => {
     setImg("./waiting.png");
@@ -31,19 +33,21 @@ export const MyProfilePicEdit = ({
     <div className="">
       <label className="">
         <img
-          className="max-w-none flex w-[70px] h-[70px] rounded-full "
+          className="max-w-none flex w-[120px] h-[120px] rounded-full "
           src={img ? img : avatar}
           alt=""
         />
-        <input
-          type="file"
-          multiple={false}
-          hidden
-          onChange={(e) => {
-            if (!e.target.files) return;
-            uploadSingleImage(e.target.files[0]);
-          }}
-        />
+        {editUser && (
+          <input
+            type="file"
+            multiple={false}
+            hidden
+            onChange={(e) => {
+              if (!e.target.files) return;
+              uploadSingleImage(e.target.files[0]);
+            }}
+          />
+        )}
       </label>
     </div>
   );

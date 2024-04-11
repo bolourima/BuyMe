@@ -110,7 +110,7 @@ export const Product = ({
                   })}
             </ImageList>
           </Box>
-          {productData.length == 0 && (
+          {productData.length == 0 && searchedProduct.length == 0 && (
             <div className="flex w-full justify-center gap-8 mt-8">
               {page.map((el) => {
                 return (
