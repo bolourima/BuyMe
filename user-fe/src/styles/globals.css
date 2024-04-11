@@ -74,41 +74,39 @@
     @apply bg-background text-foreground;
   }
 }
-.hero{
+.hero {
   background-size: 105%;
   transition: all 0.5s ease-in-out;
   background-position: center;
 }
-.hero:hover{
-  background-size:115%;
-
+.hero:hover {
+  background-size: 115%;
 }
 
-.hero:hover span{
+.hero:hover span {
   opacity: 1;
 }
-span{
+.heroSpan {
   opacity: 0;
-    color: white;
-    font-family: sans-serif;
-    
-    transition: all 0.5s ease-in-out;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-   
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  color: white;
+  font-family: sans-serif;
+
+  transition: all 0.5s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.bttn:hover svg{
+.bttn:hover svg {
   fill: white;
 }
 
-.bbtn:hover #love{
-  fill: black
+.bbtn:hover #love {
+  fill: black;
 }
-.btnn:hover #gray{
-  fill: #9ca3af
+.btnn:hover #gray {
+  fill: #9ca3af;
 }
-

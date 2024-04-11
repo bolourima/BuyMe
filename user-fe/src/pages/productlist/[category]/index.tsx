@@ -10,6 +10,7 @@ import { toastifyWarning } from "@/utilities/toastify";
 import { useRouter } from "next/router";
 import { getFavProducts } from "@/helper/getFavProducts";
 import { ProductsInFavContext } from "@/context/ProductsInFavContext";
+import { SearchInputContext } from "@/context/searchContext";
 import { MobileBar } from "@/components/MobileBar";
 type Params = {
   category: string;
@@ -28,6 +29,8 @@ const productList = ({
   subCategoryBackendData: TypeSubCategory[];
 }) => {
   const router = useRouter();
+  const { searchedProduct, setSearchedProduct } =
+    useContext(SearchInputContext);
   const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -45,7 +48,12 @@ const productList = ({
           subCategoryData={subCategoryBackendData}
           categoryData={categoryData}
         />
-        <Product productData={productData} favProducts={productsInFav} />
+        <Product
+          productData={
+            searchedProduct.length == 0 ? productData : searchedProduct
+          }
+          favProducts={productsInFav}
+        />
       </div>
     </div>
   );
@@ -54,8 +62,10 @@ export default productList;
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   params
 ) => {
-  const { category } = params.query;
-  const productRes = await instance.get(`/getProducts/${category}`);
+  const { category, subCategory } = params.query;
+  const productRes = await instance.get(
+    `/getProducts/${category}/${subCategory}`
+  );
   const subCategoryRes = await instance.get(`/getSubCategorys/${category}`);
   const categoryRes = await instance.get(`/getCategories`);
   const productData = productRes.data;

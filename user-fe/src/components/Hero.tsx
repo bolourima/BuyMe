@@ -16,7 +16,7 @@ export const Hero = () => {
               href={"/productlist/clothing"}
               className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
             >
-              <span>Clothing</span>
+              <span className="heroSpan">Clothing</span>
             </Link>
           </div>
 
@@ -31,7 +31,7 @@ export const Hero = () => {
                 href={"/productlist/electronics"}
                 className=" Hero-text text-3xl lg:text-6xl text-white font-extrabold"
               >
-                <span>Electronics</span>
+                <span className="heroSpan">Electronics</span>
               </Link>
             </div>
             <div
@@ -44,7 +44,7 @@ export const Hero = () => {
                 href={"/productlist/books"}
                 className=" Hero-text text-6xl text-white font-extrabold"
               >
-                <span>Books</span>
+                <span className="heroSpan">Books</span>
               </Link>
             </div>
           </div>

@@ -14,7 +14,10 @@ import {
 } from "../controllers/productController";
 import upload from "../middlewares/multer";
 import { accessTokenAuth } from "../middlewares/accessTokenAuth";
-import { searchProduct } from "../controllers/searchController";
+import {
+  filterSubCategory,
+  searchProduct,
+} from "../controllers/searchController";
 export const productRouter = Router();
 productRouter.route("/createProduct").post(accessTokenAuth, createProduct);
 productRouter.route("/editProduct").put(accessTokenAuth, editProduct);
@@ -25,9 +28,9 @@ productRouter.route("/getAllProducts/:page").get(getAllProducts);
 productRouter.route("/getProducts").post(searchProduct);
 productRouter.route("/getQuantityOfProducts").get(getQuantityOfProducts);
 productRouter
-  .route("/getProducts/:category")
+  .route("/getProducts/:category/:subCategory")
   .get(getFilteredProducts)
-  .post(searchProduct);
+  .post(filterSubCategory);
 productRouter
   .route("/deleteProduct/:id")
   .delete(accessTokenAuth, deleteProduct);

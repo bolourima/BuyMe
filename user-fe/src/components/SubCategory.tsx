@@ -1,9 +1,15 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useContext } from "react";
 import { Slider } from "@mui/material";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";
 import Link from "next/link";
 import { ArrowRightSquare } from "lucide-react";
+import { useRouter } from "next/router";
+import { toastifySuccess } from "@/utilities/toastify";
+import { stringify } from "querystring";
+import { instance } from "@/instance";
+import { filterBrandName } from "@/utilities/filter";
+import { SearchInputContext } from "@/context/searchContext";
 const MAX: number = 100000;
 const MIN: number = 0;
 const minDistance: number = 10000;
@@ -17,9 +23,21 @@ export const SubCategory = ({
   categoryData: categoryType[];
   subCategoryData: TypeSubCategory[];
 }) => {
-  const [value2, setValue2] = useState<number[]>([MIN, MAX]);
+  const { searchedProduct, setSearchedProduct } =
+    useContext(SearchInputContext);
+  const [checkedBrands, setCheckedBrands] = useState<string[]>([]);
+  const handleBrandCheckbox = (brand: string) => {
+    if (checkedBrands.includes(brand)) {
+      setCheckedBrands(checkedBrands.filter((brand) => brand !== brand));
+    } else {
+      setCheckedBrands([...checkedBrands, brand]);
+    }
+  };
+  const router = useRouter();
 
-  const handleChange2 = (
+  const [value, setValue] = useState<number[]>([MIN, MAX]);
+
+  const handleChange = (
     event: Event,
     newValue: number | number[],
     activeThumb: number
@@ -31,13 +49,13 @@ export const SubCategory = ({
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], MAX - minDistance);
-        setValue2([clamped, clamped + minDistance]);
+        setValue([clamped, clamped + minDistance]);
       } else {
         const clamped = Math.max(newValue[1], minDistance);
-        setValue2([clamped - minDistance, clamped]);
+        setValue([clamped - minDistance, clamped]);
       }
     } else {
-      setValue2(newValue as number[]);
+      setValue(newValue as number[]);
     }
   };
 
@@ -46,8 +64,20 @@ export const SubCategory = ({
   const [isOpenBrands, setOpenBrands] = useState(true);
   const [subCategoryIndex, setCategoryIndex] = useState(1);
 
-  const handlerSubCategory = (categoryindex: number) => {
+  const handlerSubCategory = (
+    categoryindex: number,
+    subCategoryName: string
+  ) => {
     setCategoryIndex(categoryindex);
+    let category = router.query.category;
+    if (!category) {
+      const filteredCategory = subCategoryData.filter((el) => {
+        return el.name === subCategoryName;
+      });
+      category = filteredCategory[0].category.name;
+    }
+
+    router.push(`/productlist/${category}/${subCategoryName}`);
   };
 
   const handleOpenCategory = () => {
@@ -57,7 +87,9 @@ export const SubCategory = ({
   const handleOpenBrands = () => {
     setOpenBrands(!isOpenBrands);
   };
-
+  const handleSubmit = () => {
+    filterBrandName(value, setSearchedProduct);
+  };
   return (
     <div className="hidden lg:text-black w-[250px] rounded-lg shadow p-4 lg:flex flex-col gap-5 border-2">
       <div className="">
@@ -71,8 +103,8 @@ export const SubCategory = ({
           </p>
         </div>
         <div className={`uppercase ml-1 pl-1 mt-3`}>
-          {categoryData.map((subCategory, index) => (
-            <Link href={`/productlist/${subCategory.name}`}>
+          {categoryData.map((Category, index) => (
+            <Link href={`/productlist/${Category.name}`}>
               <div
                 key={index}
                 className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
@@ -80,7 +112,7 @@ export const SubCategory = ({
                 }`}
               >
                 <button className={`transition-all uppercase `}>
-                  {subCategory.name}
+                  {Category.name}
                 </button>
               </div>
             </Link>
@@ -104,7 +136,7 @@ export const SubCategory = ({
               className={`p-2 hover:bg-slate-300 rounded-l-lg cursor-pointer ${
                 isOpenSubCategory ? "block" : "hidden"
               }`}
-              onClick={() => handlerSubCategory(index)}
+              onClick={() => handlerSubCategory(index, subCategory.name)}
             >
               <button className={`transition-all uppercase `}>
                 {subCategory.name}
@@ -113,45 +145,37 @@ export const SubCategory = ({
           ))}
         </div>
       </div>
-
-      <div className="">
-        <div
-          className="flex justify-between border-b-2 pb-2"
-          onClick={handleOpenBrands}
-        >
-          <button className="font-bold uppercase ">Brands</button>
-          <p className={`${isOpenBrands ? " rotate-90" : ""}`}>
-            <ArrowRightSquare className="text-gray-600" />
-          </p>
-        </div>
-        <div className="pl-1 ml-1 uppercase mt-3">
-          {subCategoryData[subCategoryIndex].brands.map((brand, index) => (
-            <div
-              key={index}
-              className={`p-2 hover:bg-slate-300 rounded-l-lg ${
-                isOpenBrands ? "block" : "hidden"
-              }`}
-            >
-              <div className="flex gap-4">
-                <input type="checkbox" className="" />
-                {brand}
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="flex justify-between border-b-2 pb-2 font-bold uppercase">
+        Budget Range
       </div>
       <Slider
         getAriaLabel={() => "Minimum distance shift"}
-        value={value2}
-        onChange={handleChange2}
+        value={value}
+        onChange={handleChange}
         valueLabelDisplay="auto"
         getAriaValueText={valuetext}
         min={MIN}
         max={MAX}
-        disableSwap
+        aria-label="Temperature"
+        defaultValue={30}
+        // color="primary"
+        style={{ color: "black" }}
       />
-      <input type="text" value={`${value2[0]} MNT`} readOnly />
-      <input type="text" value={`${value2[1]} MNT`} readOnly />
+      <div className="flex">
+        <input
+          type="text"
+          className="w-1/2"
+          value={`${value[0].toLocaleString()}₮`}
+        />
+
+        <input
+          type="text"
+          className="w-1/2"
+          value={`${value[1].toLocaleString()}₮`}
+        />
+      </div>
+
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
