@@ -40,24 +40,8 @@ export const Masonry = ({
   }, []);
   return (
     <>
-      <NextSeo
-        title={name}
-        openGraph={{
-          title: name,
-
-          images: [
-            {
-              url: images[imgFirstFix],
-              width: 800,
-              height: 600,
-              alt: "Product Image",
-            },
-          ],
-          site_name: "Buy Me",
-        }}
-      />
       <ImageListItem className="rounded-lg border-2 border-gray-300 w-[320px] sm:w-[180px] lg:w-[240px] md:w-[200px]">
-        <Link as={`/productdetail/${_id}`} href={`/productdetail/[id]`}>
+        <Link as={`/productdetail/${_id}`} href={`/productdetail/${_id}`}>
           <img src={images[imgFirstFix]} className="rounded-t-lg" />
         </Link>
         <div className="p-5 gap-1">
