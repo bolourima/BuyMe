@@ -10,7 +10,9 @@ import { PaymentSection } from "@/components/PaymentSection";
 import { ProductSectionOfBasket } from "@/components/ProductSectionOfBasket";
 import { InvoiceType } from "@/types/invoiceType";
 import { invoiceInitial } from "@/types/invoiceInitial";
+import { LoadingIcon } from "@/icon/LoadingIcon";
 const Basket = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
@@ -46,6 +48,13 @@ const Basket = () => {
   }, [productsInBasket]);
   return (
     <div className="lg:w-full min-h-screen flex justify-center">
+      {loading && (
+        <div className="w-full flex full justify-center items-center absolute z-50">
+          <button className="w-12 h-12">
+            <LoadingIcon />
+          </button>
+        </div>
+      )}
       {invoice.invoice_id && <Qr invoice={invoice} setInvoice={setInvoice} />}
       {productsInBasket.length ? (
         <div className="flex flex-col lg:w-full lg:flex lg:flex-row lg:justify-center lg:pt-16 lg:gap-16 place-con">
@@ -54,7 +63,12 @@ const Basket = () => {
             setProductsInBasket={setProductsInBasket}
             token={token}
           />
-          <PaymentSection total={total} token={token} setInvoice={setInvoice} />
+          <PaymentSection
+            total={total}
+            token={token}
+            setInvoice={setInvoice}
+            setLoading={setLoading}
+          />
         </div>
       ) : (
         <div className="flex flex-col mt-32 items-center">

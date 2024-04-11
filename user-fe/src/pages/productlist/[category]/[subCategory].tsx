@@ -2,7 +2,7 @@ import { Product } from "@/components/Product";
 import { SubCategory } from "@/components/SubCategory";
 import { instance } from "@/instance";
 import { ProductType } from "@/types/productType";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { TypeSubCategory } from "@/types/subCategoryType";
 import { categoryType } from "@/types/categoryType";

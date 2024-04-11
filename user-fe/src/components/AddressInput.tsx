@@ -17,10 +17,12 @@ import * as Yup from "yup";
 export const AddressInput = ({
   total,
   setInvoice,
+  setLoading,
 }: {
   total: number;
   token: string;
   setInvoice: React.Dispatch<React.SetStateAction<InvoiceType>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { productsInBasket, setProductsInBasket } = useContext(
     ProductsInBasketContext
@@ -83,6 +85,28 @@ export const AddressInput = ({
         setProductsInBasket,
         addressId
       );
+      setLoading(true);
+      try {
+        const addressInfo = {
+          user: user._id,
+          district: formik.values.district,
+          building: formik.values.building,
+          deliveryNote: formik.values.deliveryNote,
+        };
+        const addressId = await createAddress(addressInfo, token, router.push);
+        await createOrder(
+          productsInBasket,
+          token,
+          total,
+          setInvoice,
+          setProductsInBasket,
+          addressId
+        );
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     },
   });
   return (

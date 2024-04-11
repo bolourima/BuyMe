@@ -2,6 +2,7 @@ import { Qr } from "@/components/Qr";
 import { TokenContext } from "@/context/TokenContext";
 import { getOrders } from "@/helper/getOrders";
 import { payPayment } from "@/helper/payPayment";
+import { LoadingIcon } from "@/icon/LoadingIcon";
 import { invoiceInitial } from "@/types/invoiceInitial";
 import { InvoiceType } from "@/types/invoiceType";
 import { OrderType } from "@/types/orderType";
@@ -10,6 +11,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
 const Order = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [orderData, setOrderData] = useState<OrderType[]>([]);
   const [invoice, setInvoice] = useState<InvoiceType>(invoiceInitial);
@@ -28,11 +30,19 @@ const Order = () => {
     setToken(token);
     getOrders(token, setOrder);
   }, []);
-
   return (
     <div className="lg:px-32 grid grid-cols-1 lg:grid-cols-2 gap-7">
+      {loading && (
+        <div className="lg:w-[600px] w-full h-full flex justify-center items-center lg:ml-[450px] absolute z-50">
+          <div className="w-full lg:w-[300px] rounded-lg h-96 bg-gray-200 flex justify-center items-center absolute">
+            <button className="w-12 h-12">
+              <LoadingIcon />
+            </button>
+          </div>
+        </div>
+      )}
       {invoice.invoice_id && (
-        <div className="lg:w-[600px] w-full h-full justify-center items-center lg:ml-[450px] absolute z-50">
+        <div className="lg:w-[600px] flex w-full h-full justify-center items-center lg:ml-[450px] absolute z-50">
           <Qr invoice={invoice} setInvoice={setInvoice} />
         </div>
       )}
@@ -77,7 +87,8 @@ const Order = () => {
                     <button
                       className="w-fit p-2 h-11 rounded-2xl hover:bg-orange-400 bg-orange-700 text-white flex justify-center items-center"
                       onClick={() => {
-                        payPayment(setInvoice, order, token);
+                        setLoading(true);
+                        payPayment(setInvoice, order, token, setLoading);
                       }}
                     >
                       PAYMENT PENDING
