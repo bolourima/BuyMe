@@ -62,7 +62,6 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   params
 ) => {
   const { category, subCategory } = params.query;
-  console.log("category", subCategory);
   const productRes = await instance.get(
     `/getProducts/${category}/${subCategory}`
   );
