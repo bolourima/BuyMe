@@ -35,10 +35,10 @@ const favorites = ({
       {productsInFav.length > 0 ? (
         productsInFav.toReversed().map((product, i) => {
           return (
-            <div className="flex w-10/12 lg:w-full h-fit">
+            <div className="flex w-10/12 lg:w-full lg:h-[270px]">
               <div
                 key={i}
-                className="gap-2 w-[700px] lg:w-10/12 lg:mx-auto border-2 items-center justify-center px-4 my-4 shadow-lg bg-[#FBFBFB] rounded-xl"
+                className="gap-2 w-[700px] lg:mx-auto border-2 items-center justify-center px-4 my-4 shadow-lg bg-[#FBFBFB] rounded-xl"
               >
                 <button
                   onClick={() => {
@@ -49,7 +49,7 @@ const favorites = ({
                       setProductsInFav
                     );
                   }}
-                  className="w-full rounded-lg flex justify-end items-center mt-3"
+                  className="w-full rounded-lg flex justify-end items-center mt-1"
                 >
                   <DeleteIcon />
                 </button>
