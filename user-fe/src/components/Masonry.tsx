@@ -12,7 +12,7 @@ import { toastifyWarning } from "@/utilities/toastify";
 import { removeFromFavs } from "@/helper/removeFromBasket";
 import { RedLoveIcon } from "@/icon/RedLoveIcon";
 import { ProductsInFavContext } from "@/context/ProductsInFavContext";
-
+import { NextSeo } from "next-seo";
 export const Masonry = ({
   data,
   setProductData,
@@ -39,47 +39,49 @@ export const Masonry = ({
     setToken(accessToken);
   }, []);
   return (
-    <ImageListItem className="rounded-lg border-2 border-gray-300 w-[320px] sm:w-[180px] lg:w-[240px] md:w-[200px]">
-      <Link as={`/productdetail/${_id}`} href={`/productdetail/[id]`}>
-        <img src={images[imgFirstFix]} className="rounded-t-lg" />
-      </Link>
-      <div className="p-5 gap-1">
-        <p className="text-lg">{name}</p>
-        <p className="text-lg font-bold">{price.toLocaleString()}</p>
-      </div>
-      <div className="flex gap-2 justify-center items-center mb-4">
-        <button
-          onClick={() => {
-            if (!isFav) {
-              setProductsInFav([...productsInFav, data]);
-              return addToFavs(_id, token);
-            }
-            removeFromFavs(token, _id, productsInFav, setProductsInFav);
-          }}
-          className={`p-1 lg:p-2 rounded-lg ${
-            isFav
-              ? "bg-white border-[1px] border-solid border-red-800"
-              : "bg-black hover:bg-gray-400 bbtn"
-          } w-11  flex justify-center items-center h-7`}
-        >
-          {isFav ? (
-            <div className="w-4 h-4">
-              <RedLoveIcon />
-            </div>
-          ) : (
-            <LoveIcon />
-          )}
-        </button>
-        <button
-          onClick={() => {
-            setProductData(data, false);
-          }}
-          onDoubleClick={() => setProductData(data, true)}
-          className="bg-black text-white h-7 rounded-lg px-2 text-center text-sm font-semibold hover:bg-gray-400 hover:font-bold hover:text-black "
-        >
-          ADD TO CART
-        </button>
-      </div>
-    </ImageListItem>
+    <>
+      <ImageListItem className="rounded-lg border-2 border-gray-300 w-[320px] sm:w-[180px] lg:w-[240px] md:w-[200px]">
+        <Link as={`/productdetail/${_id}`} href={`/productdetail/${_id}`}>
+          <img src={images[imgFirstFix]} className="rounded-t-lg" />
+        </Link>
+        <div className="p-5 gap-1">
+          <p className="text-lg">{name}</p>
+          <p className="text-lg font-bold">{price.toLocaleString()}</p>
+        </div>
+        <div className="flex gap-2 justify-center items-center mb-4">
+          <button
+            onClick={() => {
+              if (!isFav) {
+                setProductsInFav([...productsInFav, data]);
+                return addToFavs(_id, token);
+              }
+              removeFromFavs(token, _id, productsInFav, setProductsInFav);
+            }}
+            className={`p-1 lg:p-2 rounded-lg ${
+              isFav
+                ? "bg-white border-[1px] border-solid border-red-800"
+                : "bg-black hover:bg-gray-400 bbtn"
+            } w-11  flex justify-center items-center h-7`}
+          >
+            {isFav ? (
+              <div className="w-4 h-4">
+                <RedLoveIcon />
+              </div>
+            ) : (
+              <LoveIcon />
+            )}
+          </button>
+          <button
+            onClick={() => {
+              setProductData(data, false);
+            }}
+            onDoubleClick={() => setProductData(data, true)}
+            className="bg-black text-white h-7 rounded-lg px-2 text-center text-sm font-semibold hover:bg-gray-400 hover:font-bold hover:text-black "
+          >
+            ADD TO CART
+          </button>
+        </div>
+      </ImageListItem>
+    </>
   );
 };
