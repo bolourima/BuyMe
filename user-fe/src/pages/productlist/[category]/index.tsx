@@ -10,6 +10,7 @@ import { toastifyWarning } from "@/utilities/toastify";
 import { useRouter } from "next/router";
 import { getFavProducts } from "@/helper/getFavProducts";
 import { ProductsInFavContext } from "@/context/ProductsInFavContext";
+import { SearchInputContext } from "@/context/searchContext";
 type Params = {
   category: string;
 };
@@ -27,6 +28,8 @@ const productList = ({
   subCategoryBackendData: TypeSubCategory[];
 }) => {
   const router = useRouter();
+  const { searchedProduct, setSearchedProduct } =
+    useContext(SearchInputContext);
   const { productsInFav, setProductsInFav } = useContext(ProductsInFavContext);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -44,7 +47,12 @@ const productList = ({
           subCategoryData={subCategoryBackendData}
           categoryData={categoryData}
         />
-        <Product productData={productData} favProducts={productsInFav} />
+        <Product
+          productData={
+            searchedProduct.length == 0 ? productData : searchedProduct
+          }
+          favProducts={productsInFav}
+        />
       </div>
     </div>
   );

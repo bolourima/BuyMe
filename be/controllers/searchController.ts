@@ -20,9 +20,12 @@ export const searchProduct = async (req: Request, res: Response) => {
 };
 export const filterSubCategory = async (req: Request, res: Response) => {
   try {
-    const filterInputs = req.body.input
-    const {brandName,maxPrice,minPrice} = filterInputs
-    const products =  
+    const { inputValue, inputBrandName } = req.body;
+    const products = await Product.find({
+      $or: [{ price: { $gte: inputValue[0], $lte: inputValue[1] } }],
+    });
+    console.log(products);
+    return res.status(200).send(products);
   } catch (error) {
     console.error("Error in filterSubCategory:", error);
     return res.status(400).send("Internal Server Error");

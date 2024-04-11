@@ -18,17 +18,15 @@ export const SearchProduct = async (
   }
 };
 export const filterWithCategory = async (
-  filterInput: string,
-  category: string,
-  setFilteredProduct: React.Dispatch<React.SetStateAction<ProductType[]>>
+  value: number[],
+  setSearchedProduct: React.Dispatch<React.SetStateAction<ProductType[]>>
 ) => {
   try {
-    if (!filterInput) {
-      return;
-    }
-    const response = await instance.post(`/getProducts/${category}`, {
-      input: filterInput,
-    });
+    const response = await instance.post(
+      `/getProducts/:category/:subcategory`,
+      { inputValue: value }
+    );
+    setSearchedProduct(response.data);
   } catch (error) {
     return toastifyError("filterSubCategory Error");
   }
