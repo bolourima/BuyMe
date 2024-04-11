@@ -4,6 +4,7 @@ import { IconMonthly } from "@/svg/IconMonthly";
 import { getOrders } from "@/utilities/getOrders";
 import { OrderType, productTypeForShop } from "@/types/orderType";
 import { calculateTotal } from "@/helper/calculateTotal";
+import { totalIncome } from "@/helper/totalIncome";
 
 export default function Income() {
   const [orderData, setOrderData] = useState<productTypeForShop[]>([]);
@@ -14,12 +15,6 @@ export default function Income() {
     if (!accessToken) return;
     getOrders(accessToken, setOrderData, setOrderDataForAdmin);
   }, []);
-  const totalIncome = (orderDataForAdmin: OrderType[]) => {
-    const total = orderDataForAdmin.reduce((acc, cur) => {
-      return acc + cur.total;
-    }, 0);
-    return total;
-  };
   return (
     <div className="flex flex-col w-full">
       <div className="flex gap-20">

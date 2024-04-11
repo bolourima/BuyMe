@@ -2,7 +2,51 @@ import { Request, Response } from "express";
 import Admin from "../models/adminModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Order from "../models/orderModel";
+import { Types } from "mongoose";
 const jwtPrivateKey = process.env.SECRET_KEY;
+
+export const getOrdersOfSelectedAdmin = async (req: Request, res: Response) => {
+  try {
+    const pipeline = [
+      {
+        $match: {
+          "products.product.shopId": new Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $unwind: "$products",
+      },
+      {
+        $match: {
+          "products.product.shopId": new Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          products: { $push: "$products" },
+          orderNumber: { $first: "$orderNumber" },
+          user: { $first: "$user" },
+          total: { $first: "$total" },
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" },
+          invoiceId: { $first: "$invoiceId" },
+          paymentStatus: { $first: "$paymentStatus" },
+          deliveryStatus: { $first: "$deliveryStatus" },
+        },
+      },
+    ];
+    const result = await Order.aggregate(pipeline);
+    result.sort(function (a, b) {
+      return b.createdAt - a.createdAt;
+    });
+    return res.status(200).json({ orderData: result });
+  } catch (error) {
+    console.error("error in get order of selected admin", error);
+    return res.status(400).json({ err: error });
+  }
+};
 export const adminSignup = async (req: Request, res: Response) => {
   try {
     const bankAccountCoincidence = await Admin.findOne({
