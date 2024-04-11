@@ -60,7 +60,7 @@ export const ProductSectionOfBasket = ({
                     </p>
                   </div>
                   <div className="flex gap-4">
-                    <div>
+                    <div className="mb-1">
                       {product.product?.disCount.isSale ? (
                         <p>
                           <p className="line-through text-xl font-sans text-red-700 ">

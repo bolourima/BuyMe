@@ -9,6 +9,7 @@ import { Router, useRouter } from "next/router";
 import { Token } from "@/context/TokenContext";
 import { SearchedProducts } from "@/context/searchContext";
 import { ProductsInFav } from "@/context/ProductsInFavContext";
+import NextNProgress from "nextjs-progressbar";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -37,6 +38,13 @@ export default function App({ Component, pageProps }: AppProps) {
                 theme="dark"
               />
               {isVisibleHF && <Header />}
+              <NextNProgress
+                color="black"
+                startPosition={10}
+                stopDelayMs={300}
+                height={6}
+                showOnShallow={true}
+              />
               <Component {...pageProps} />
               {isVisibleHF && <Footer />}
             </ProductsInFav>
