@@ -48,6 +48,7 @@ export default function ProductId({
       setOnReviews(true);
     }
   };
+  console.log("h");
   return (
     <>
       <NextSeo
