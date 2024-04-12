@@ -44,7 +44,7 @@ export type OrderType = {
   };
 };
 export type productTypeForShop = {
-  product: ProductsFromOrder[];
+  product: ProductsFromOrder;
   selectedProductQuantity: number;
   user: string;
   orderNumber: number;

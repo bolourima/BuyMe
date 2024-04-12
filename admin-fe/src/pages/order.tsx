@@ -13,10 +13,7 @@ const Order = () => {
   }, []);
   return (
     <div>
-      <DataTableOrder
-        orderData={orderData}
-        orderDataForAdmin={orderDataForAdmin}
-      />
+      <DataTableOrder orderDataForAdmin={orderDataForAdmin} />
     </div>
   );
 };

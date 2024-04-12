@@ -13,9 +13,8 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Link from "next/link";
-import { OrderType, productTypeForShop } from "@/types/orderType";
-import { instance } from "@/instance";
-import { Modal, TablePagination } from "@mui/material";
+import { OrderType } from "@/types/orderType";
+import { TablePagination } from "@mui/material";
 import ChangeStatus from "./ChangeStatus";
 type HandleStatusOpen = (id: string, status: string) => void;
 function AdminRow({
@@ -128,90 +127,10 @@ function AdminRow({
     </React.Fragment>
   );
 }
-function Row({ row }: { row: productTypeForShop }) {
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row[0].orderNumber}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row[0].user}
-        </TableCell>
-        <TableCell>{row[0].total}</TableCell>
-        <TableCell align="right">{row[0].createdAt.toString()}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 0 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Product
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Product Name</TableCell>
-                    <TableCell>Shop Name</TableCell>
-                    <TableCell align="right">Quantity</TableCell>
-                    <TableCell align="right">Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row[0].product.map((productQTY) => (
-                    <TableRow key={productQTY.name}>
-                      <TableCell component="th" scope="row">
-                        {productQTY.name}
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          <img
-                            className="w-16 h-16"
-                            src={productQTY.images[0]}
-                            alt={productQTY.images[0]}
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Link
-                          href={`shop/${productQTY.shopId._id}`}
-                          className="text-green-500 "
-                        >
-                          {productQTY.shopId.shopName}
-                        </Link>
-                      </TableCell>
-                      <TableCell align="right">
-                        {productQTY.selectedQuantity}
-                      </TableCell>
-                      <TableCell align="right">{productQTY.price}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
 
 export default function CollapsibleTable({
-  orderData,
   orderDataForAdmin,
 }: {
-  orderData: productTypeForShop[];
   orderDataForAdmin: OrderType[];
 }) {
   const [page, setPage] = useState(0);
@@ -242,10 +161,13 @@ export default function CollapsibleTable({
   };
   const startIndex = page * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  const displayedOrders =
-    orderData.length !== 0 ? orderData : orderDataForAdmin;
+
   return (
     <TableContainer component={Paper}>
+      <Typography className=" font-bold p-3" variant="h5" gutterBottom>
+        Order List
+      </Typography>
+
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -253,37 +175,29 @@ export default function CollapsibleTable({
             <TableCell>Order Number</TableCell>
             <TableCell>Customer</TableCell>
             <TableCell>Totalprice</TableCell>
-            {shouldShowTableCell && <TableCell>Address</TableCell>}
-            {shouldShowTableCell && <TableCell>Delivery Status</TableCell>}
-            {shouldShowTableCell && <TableCell>Payment Status</TableCell>}
-            {shouldShowTableCell && (
-              <TableCell align="right">Update Date</TableCell>
-            )}
+            <TableCell>Address</TableCell>
+            <TableCell>Delivery Status</TableCell>
+            <TableCell>Payment Status</TableCell>
+
+            <TableCell align="right">Update Date</TableCell>
+
             <TableCell align="right">Created Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {orderData.length != 0
-            ? orderData
-                .slice(startIndex, endIndex)
-                .map((order) => <Row key={order[0].user} row={order} />)
-            : orderDataForAdmin
-                .slice(startIndex, endIndex)
-                .map((order, index) => (
-                  <AdminRow
-                    key={index}
-                    row={order}
-                    handleStatusOpen={handleStatusOpen}
-                  />
-                ))}
+          {orderDataForAdmin.slice(startIndex, endIndex).map((order, index) => (
+            <AdminRow
+              key={index}
+              row={order}
+              handleStatusOpen={handleStatusOpen}
+            />
+          ))}
         </TableBody>
       </Table>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={
-          orderData.length !== 0 ? orderData.length : orderDataForAdmin.length
-        }
+        count={orderDataForAdmin.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
