@@ -6,7 +6,7 @@ import { OrderType, productTypeForShop } from "@/types/orderType";
 import { calculateTotal } from "@/helper/calculateTotal";
 import { totalIncome } from "@/helper/totalIncome";
 
-export default function Income() {
+const Income = () => {
   const [orderData, setOrderData] = useState<productTypeForShop[]>([]);
   const [orderDataForAdmin, setOrderDataForAdmin] = useState<OrderType[]>([]);
 
@@ -69,7 +69,7 @@ export default function Income() {
             </thead>
             <tbody className="w-full">
               {orderDataForAdmin.length > 0
-                ? orderDataForAdmin.toReversed().map((order, i) => (
+                ? orderDataForAdmin.map((order, i) => (
                     <tr
                       key={i}
                       className="text-xs border-b border-gray-200 hover:bg-gray-100"
@@ -82,7 +82,7 @@ export default function Income() {
                       </td>
                     </tr>
                   ))
-                : orderData.toReversed().map((order, i) => {
+                : orderData.map((order, i) => {
                     return (
                       <tr
                         key={i}
@@ -105,4 +105,5 @@ export default function Income() {
       </div>
     </div>
   );
-}
+};
+export default Income;
