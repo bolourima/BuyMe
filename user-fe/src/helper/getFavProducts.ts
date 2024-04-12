@@ -14,6 +14,5 @@ export const getFavProducts = async (
     setProductsInFav(res.data[0].products);
   } catch (error) {
     console.error("Failed to get favorite products", error);
-    toastifyError("Failed to get favorite products");
   }
 };

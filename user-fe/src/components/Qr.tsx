@@ -39,7 +39,7 @@ export const Qr = ({
       >
         {!isPaid ? (
           <div className="w-fit h-fit flex flex-col gap-4 justify-center items-center bg-gray-200 rounded-lg p-3">
-            <p className="text-xl font-semibold flex justify-center w-[300px]">
+            <p className="hidden lg:flex text-xl font-semibold justify-center w-[300px]">
               Please scan by camera
             </p>
             <p>{formatTime(seconds)}</p>

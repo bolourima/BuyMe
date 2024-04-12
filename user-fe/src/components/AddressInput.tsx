@@ -70,21 +70,6 @@ export const AddressInput = ({
         .max(30, "30-с бага тэмдэгт оруулна уу"),
     }),
     onSubmit: async (values) => {
-      const addressInfo = {
-        user: user._id,
-        district: formik.values.district,
-        building: formik.values.building,
-        deliveryNote: formik.values.deliveryNote,
-      };
-      const addressId = await createAddress(addressInfo, token, router.push);
-      await createOrder(
-        productsInBasket,
-        token,
-        total,
-        setInvoice,
-        setProductsInBasket,
-        addressId
-      );
       setLoading(true);
       try {
         const addressInfo = {
