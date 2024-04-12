@@ -179,3 +179,24 @@ export const adminSignin = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+export const orderStatusChanging = async (req: Request, res: Response) => {
+  try {
+    if (!req.body.id || !req.body.Status) {
+      return res.status(400).json({ msg: "ID and status are required" });
+    }
+    console.log(req.body.Status);
+    const updatedOrder = await Order.findByIdAndUpdate(req.body.id, {
+      deliveryStatus: req.body.Status,
+    });
+
+    if (!updatedOrder) {
+      return res.status(404).json({ msg: "Order not found" });
+    }
+
+    console.log(updatedOrder);
+    return res.status(200).json({ msg: "Order status updated" });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    return res.status(500).json({ msg: "Failed to update order status" });
+  }
+};

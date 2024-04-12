@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -14,7 +14,17 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Link from "next/link";
 import { OrderType, productTypeForShop } from "@/types/orderType";
-function AdminRow({ row }: { row: OrderType }) {
+import { instance } from "@/instance";
+import { Modal, TablePagination } from "@mui/material";
+import ChangeStatus from "./ChangeStatus";
+type HandleStatusOpen = (id: string, status: string) => void;
+function AdminRow({
+  row,
+  handleStatusOpen,
+}: {
+  row: OrderType;
+  handleStatusOpen: HandleStatusOpen;
+}) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -32,16 +42,34 @@ function AdminRow({ row }: { row: OrderType }) {
         <TableCell component="th" scope="row">
           {row.orderNumber}
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.user.name}
-        </TableCell>
+        <TableCell>{row.user.name}</TableCell>
         <TableCell>{row.total}</TableCell>
-        <TableCell>{row.address.addressName}</TableCell>
-        <TableCell align="right">
-          <button>{row.deliveryStatus}</button>
+        <TableCell>
+          {row.address?.district}-{row.address?.building}
         </TableCell>
-        <TableCell align="right">{row.paymentStatus}</TableCell>
+        <TableCell align="right">
+          <p
+            onClick={() => handleStatusOpen(row._id, row.deliveryStatus)}
+            className={`text-white p-2 rounded-lg text-center ${
+              row.deliveryStatus === "PENDING" && "bg-blue-500"
+            } ${row.deliveryStatus === "SHIPPED" && "bg-orange-500"} ${
+              row.deliveryStatus === "DELIVERED" && "bg-green-500"
+            }`}
+          >
+            {row.deliveryStatus}
+          </p>
+        </TableCell>
+        <TableCell>
+          <p
+            className={`p-2 rounded-lg text-white text-center ${
+              row.paymentStatus === "UNPAID" ? "bg-orange-500" : "bg-green-500"
+            }`}
+          >
+            {row.paymentStatus}
+          </p>
+        </TableCell>
         <TableCell align="right">{row.createdAt.toString()}</TableCell>
+        <TableCell align="right">{row.updatedAt.toString()}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -54,6 +82,7 @@ function AdminRow({ row }: { row: OrderType }) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Product Name</TableCell>
+                    <TableCell>Product Imgages</TableCell>
                     <TableCell>Shop Name</TableCell>
                     <TableCell align="right">Quantity</TableCell>
                     <TableCell align="right">Price</TableCell>
@@ -63,10 +92,27 @@ function AdminRow({ row }: { row: OrderType }) {
                   {row.products.map((productQTY) => (
                     <TableRow key={productQTY.product.name}>
                       <TableCell component="th" scope="row">
-                        {productQTY.product.shopId.shopName}
+                        {productQTY.product.name}
+                      </TableCell>
+                      <TableCell>
+                        <div>
+                          <img
+                            className="w-16 h-16"
+                            src={productQTY.product.images[0]}
+                            alt={productQTY.product.images[0]}
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Link
+                          href={`shop/${productQTY.product.shopId._id}`}
+                          className="text-green-500 "
+                        >
+                          {productQTY.product.shopId.shopName}
+                        </Link>
                       </TableCell>
                       <TableCell align="right">
-                        {productQTY.product.quantity}
+                        {productQTY.selectedProductQuantity}
                       </TableCell>
                       <TableCell align="right">
                         {productQTY.product.price}
@@ -107,9 +153,9 @@ function Row({ row }: { row: productTypeForShop }) {
         <TableCell align="right">{row[0].createdAt.toString()}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box sx={{ margin: 0 }}>
               <Typography variant="h6" gutterBottom component="div">
                 Product
               </Typography>
@@ -126,9 +172,28 @@ function Row({ row }: { row: productTypeForShop }) {
                   {row[0].product.map((productQTY) => (
                     <TableRow key={productQTY.name}>
                       <TableCell component="th" scope="row">
-                        {productQTY.shopId.shopName}
+                        {productQTY.name}
                       </TableCell>
-                      <TableCell align="right">{productQTY.quantity}</TableCell>
+                      <TableCell>
+                        <div>
+                          <img
+                            className="w-16 h-16"
+                            src={productQTY.images[0]}
+                            alt={productQTY.images[0]}
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Link
+                          href={`shop/${productQTY.shopId._id}`}
+                          className="text-green-500 "
+                        >
+                          {productQTY.shopId.shopName}
+                        </Link>
+                      </TableCell>
+                      <TableCell align="right">
+                        {productQTY.selectedQuantity}
+                      </TableCell>
                       <TableCell align="right">{productQTY.price}</TableCell>
                     </TableRow>
                   ))}
@@ -149,6 +214,36 @@ export default function CollapsibleTable({
   orderData: productTypeForShop[];
   orderDataForAdmin: OrderType[];
 }) {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); // Reset page to 0 when changing rows per page
+  };
+  const shouldShowTableCell = orderDataForAdmin.length !== 0;
+  const [openModal, setOpenModal] = useState(false);
+  const [orderId, setOrderId] = useState("");
+  const handleStatusOpen = (id: string, status: string) => {
+    setOpenModal(true);
+    setOrderId(id);
+  };
+  const handleStatusClose = () => {
+    setOpenModal(false);
+  };
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const displayedOrders =
+    orderData.length !== 0 ? orderData : orderDataForAdmin;
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -158,21 +253,47 @@ export default function CollapsibleTable({
             <TableCell>Order Number</TableCell>
             <TableCell>Customer</TableCell>
             <TableCell>Totalprice</TableCell>
-            <TableCell>Address</TableCell>
-            <TableCell align="right">Delivery Status</TableCell>
-            <TableCell align="right">Payment Status</TableCell>
+            {shouldShowTableCell && <TableCell>Address</TableCell>}
+            {shouldShowTableCell && <TableCell>Delivery Status</TableCell>}
+            {shouldShowTableCell && <TableCell>Payment Status</TableCell>}
+            {shouldShowTableCell && (
+              <TableCell align="right">Update Date</TableCell>
+            )}
             <TableCell align="right">Created Date</TableCell>
-            <TableCell align="right">Update Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {orderData.length != 0
-            ? orderData.map((order) => <Row key={order[0].user} row={order} />)
-            : orderDataForAdmin.map((order) => (
-                <AdminRow key={order.user._id} row={order} />
-              ))}
+            ? orderData
+                .slice(startIndex, endIndex)
+                .map((order) => <Row key={order[0].user} row={order} />)
+            : orderDataForAdmin
+                .slice(startIndex, endIndex)
+                .map((order, index) => (
+                  <AdminRow
+                    key={index}
+                    row={order}
+                    handleStatusOpen={handleStatusOpen}
+                  />
+                ))}
         </TableBody>
       </Table>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={
+          orderData.length !== 0 ? orderData.length : orderDataForAdmin.length
+        }
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <ChangeStatus
+        id={orderId}
+        openModal={openModal}
+        handleStatusClose={handleStatusClose}
+      />
     </TableContainer>
   );
 }
