@@ -172,6 +172,7 @@ function SignUp({ categoryData }: { categoryData: Category[] }) {
     </div>
   );
 }
+export default SignUp;
 export const getServerSideProps = async () => {
   const res = await instance.get("/getCategories");
   const categoryData = res.data;
@@ -179,4 +180,3 @@ export const getServerSideProps = async () => {
     props: { categoryData },
   };
 };
-export default SignUp;

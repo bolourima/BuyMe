@@ -12,17 +12,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSelectedProductsInAdmin = exports.getProductDetail = exports.deleteProduct = exports.editProduct = exports.createProduct = exports.uploadSingleImage = exports.getProducts = exports.getFilteredProducts = void 0;
+exports.getQuantityOfProducts = exports.getProductsFromShop = exports.getSelectedProductsInAdmin = exports.getProductDetail = exports.deleteProduct = exports.editProduct = exports.createProduct = exports.uploadSingleImage = exports.getProducts = exports.getFilteredProducts = exports.getAllProducts = void 0;
 const Cloudinary_1 = __importDefault(require("../utilities/Cloudinary"));
 const productModel_1 = __importDefault(require("../models/productModel"));
 const categoryModel_1 = __importDefault(require("../models/categoryModel"));
+const adminModel_1 = __importDefault(require("../models/adminModel"));
+const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield productModel_1.default.find({})
+            .limit(10)
+            .skip(Number(req.params.page) * 10);
+        return res.status(200).send(products);
+    }
+    catch (error) {
+        console.error("error in get all product", error);
+        return res.status(400).json({ err: error });
+    }
+});
+exports.getAllProducts = getAllProducts;
 const getFilteredProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const name = req.params.category;
-        const filteredCategory = yield categoryModel_1.default.find({ name });
+        const categoryName = req.params.category;
+        const subCategory = req.params.subCategory;
+        const filteredCategory = yield categoryModel_1.default.find({ name: categoryName });
         const categoryId = filteredCategory[0]._id;
-        const products = yield productModel_1.default.find({ categoryId }).populate("categoryId");
-        return res.status(200).send(products);
+        if (subCategory.toString() === "undefined") {
+            const products = yield productModel_1.default.find({
+                categoryId,
+            }).populate("categoryId");
+            return res.status(200).send(products);
+        }
+        else {
+            const products = yield productModel_1.default.find({
+                categoryId,
+                subCategoryName: subCategory,
+            }).populate("categoryId");
+            return res.status(200).send(products);
+        }
     }
     catch (error) {
         console.error("error in getProducts", "PRODUCT ERRER", error);
@@ -161,7 +187,9 @@ exports.deleteProduct = deleteProduct;
 const getProductDetail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const productId = req.params.id;
-        const product = yield productModel_1.default.findById(productId).populate("categoryId");
+        const product = yield productModel_1.default.findById(productId)
+            .populate("categoryId")
+            .populate("shopId");
         return res.status(200).send(product);
     }
     catch (error) {
@@ -183,3 +211,26 @@ const getSelectedProductsInAdmin = (req, res) => __awaiter(void 0, void 0, void 
     }
 });
 exports.getSelectedProductsInAdmin = getSelectedProductsInAdmin;
+const getProductsFromShop = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield productModel_1.default.find({ shopId: req.params.id }).populate("shopId");
+        const adminInfo = yield adminModel_1.default.findById(req.params.id);
+        return res.status(200).json({ products: products, adminInfo: adminInfo });
+    }
+    catch (error) {
+        console.error("errorin get products from shop", error);
+        return res.status(400).json({ err: error });
+    }
+});
+exports.getProductsFromShop = getProductsFromShop;
+const getQuantityOfProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield productModel_1.default.find({});
+        const qty = products.length;
+        return res.status(200).json({ qty: qty });
+    }
+    catch (error) {
+        console.error("error in getQuantityOfProducts", error);
+    }
+});
+exports.getQuantityOfProducts = getQuantityOfProducts;

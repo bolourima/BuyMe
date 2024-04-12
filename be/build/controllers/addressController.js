@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.newAddress = void 0;
 const addressModel_1 = __importDefault(require("../models/addressModel"));
+const userModel_1 = __importDefault(require("../models/userModel"));
 const newAddress = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user, addressName, city, district, khoroo, building, deliveryNote } = req.body;
     try {
@@ -26,11 +27,18 @@ const newAddress = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             building,
             deliveryNote,
         });
-        return res
-            .status(201)
-            .json({ message: `${user} new address created successfully` });
+        const newAddresId = address._id;
+        const updatedUser = yield userModel_1.default.findOneAndUpdate({ _id: user }, {
+            $push: {
+                addresses: newAddresId,
+            },
+        }, {
+            new: true,
+        });
+        return res.status(201).send(newAddresId);
     }
     catch (error) {
+        console.error(error);
         return res.status(400).json({ message: "User creation failed" });
     }
 });

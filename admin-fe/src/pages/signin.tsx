@@ -76,7 +76,7 @@ export default function SignIn() {
               <p className="text-slate-900 text-base font-normal dark:text-slate-300">
                 Don’t have account?
               </p>
-              <Link href={"./signup"}>
+              <Link href={"/signup"}>
                 <p className=" text-base font-normal cursor-pointer hover:text-blue-400">
                   Sign up
                 </p>

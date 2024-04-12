@@ -15,19 +15,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkPayment = exports.createInvoice = void 0;
 const axios_1 = __importDefault(require("axios"));
 const orderModel_1 = __importDefault(require("../models/orderModel"));
+const invoiceModel_1 = __importDefault(require("../models/invoiceModel"));
 const createInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield axios_1.default.post("https://merchant.qpay.mn/v2/invoice", {
             invoice_code: "POWER_EXPO_INVOICE",
             sender_invoice_no: "1234567",
             invoice_receiver_code: "terminal",
-            invoice_description: "test",
-            amount: 10,
+            invoice_description: "BuyMe",
+            amount: req.body.amount,
             callback_url: "https://buymeuserfe-ofjixqgcj-bolormaas-projects.vercel.app",
         }, {
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
             },
+        });
+        const invoice = yield invoiceModel_1.default.create({
+            id: response.data.invoice_id,
+            user: req.user.id,
+            isPaid: false,
+            createdAt: new Date(),
         });
         return res.status(201).send(response.data);
     }
@@ -54,7 +61,7 @@ const checkPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return res.status(200).send((_b = response.data.rows[0]) === null || _b === void 0 ? void 0 : _b.payment_status);
     }
     catch (error) {
-        console.log("error in checkpayment", error);
+        console.error("error in checkpayment", error);
         return res.status(400).send("Failed");
     }
 });

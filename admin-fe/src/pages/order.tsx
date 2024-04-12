@@ -1,4 +1,4 @@
-import { Orders } from "@/components/Orders";
+import DataTableOrder from "@/components/DataTableOrder";
 import { OrderType, productTypeForShop } from "@/types/orderType";
 import { getOrders } from "@/utilities/getOrders";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ const Order = () => {
   }, []);
   return (
     <div>
-      <Orders orderData={orderData} orderDataForAdmin={orderDataForAdmin} />
+      <DataTableOrder orderDataForAdmin={orderDataForAdmin} />
     </div>
   );
 };

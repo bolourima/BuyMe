@@ -6,3 +6,7 @@ const adminController_1 = require("../controllers/adminController");
 exports.adminRouter = (0, express_1.Router)();
 exports.adminRouter.route("/admin").post(adminController_1.adminSignup);
 exports.adminRouter.route("/signinAdmin").post(adminController_1.adminSignin);
+exports.adminRouter.route("/shopRelatedData/:id").get(adminController_1.getOrdersOfSelectedAdmin);
+exports.adminRouter.route("/filterByDate").post(adminController_1.filterByDate);
+exports.adminRouter.route("/getAllAdmins").post(adminController_1.getAllAdmins);
+exports.adminRouter.route("/orderStatus").post(adminController_1.orderStatusChanging);
