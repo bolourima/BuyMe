@@ -17,6 +17,7 @@ const basketRouter_1 = require("./routes/basketRouter");
 const adminRouter_1 = require("./routes/adminRouter");
 const addressRouter_1 = require("./routes/addressRouter");
 const paymentRouter_1 = require("./routes/paymentRouter");
+const favoritesRouter_1 = require("./routes/favoritesRouter");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -34,6 +35,7 @@ app.use(basketRouter_1.basketRouter);
 app.use(adminRouter_1.adminRouter);
 app.use(addressRouter_1.addressRouter);
 app.use(paymentRouter_1.paymentRouter);
+app.use(favoritesRouter_1.favoritesRouter);
 (0, connectToDB_1.connectToDB)();
 const PORT = 8000;
 app.listen(PORT, () => {

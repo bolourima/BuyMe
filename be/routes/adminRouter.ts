@@ -5,6 +5,7 @@ import {
   filterByDate,
   getAllAdmins,
   getOrdersOfSelectedAdmin,
+  orderStatusChanging,
 } from "../controllers/adminController";
 
 export const adminRouter = Router();
@@ -13,3 +14,4 @@ adminRouter.route("/signinAdmin").post(adminSignin);
 adminRouter.route("/shopRelatedData/:id").get(getOrdersOfSelectedAdmin);
 adminRouter.route("/filterByDate").post(filterByDate);
 adminRouter.route("/getAllAdmins").post(getAllAdmins);
+adminRouter.route("/orderStatus").post(orderStatusChanging);

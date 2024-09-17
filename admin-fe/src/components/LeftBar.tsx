@@ -38,7 +38,7 @@ export const LeftBar = () => {
         </div>
       </Link>
 
-      <Link href={"/income"}>
+      <Link href={"./income"}>
         <div className="flex items-center hover:bg-[#F7F7F8]">
           <div className="flex w-14 h-10 justify-center items-center">
             <Icon3 />
